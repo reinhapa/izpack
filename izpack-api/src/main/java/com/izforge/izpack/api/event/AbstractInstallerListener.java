@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * Abstract implementation of {@link InstallerListener}.
- * <p/>
+ * <p>
  * This provides no-op versions of each of the methods, to simplify implementation of listeners that only need
  * some methods.
  *

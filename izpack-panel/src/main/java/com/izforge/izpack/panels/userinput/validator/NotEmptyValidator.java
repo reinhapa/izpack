@@ -25,7 +25,7 @@ import com.izforge.izpack.panels.userinput.processorclient.ProcessingClient;
 
 /**
  * A validator to enforce non-empty fields.
- * <p/>
+ * <p>
  * This validator can be used for rule input fields in the UserInputPanel to make sure that the user
  * entered something.
  *

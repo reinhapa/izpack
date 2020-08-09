@@ -109,7 +109,7 @@ public class MultiVolumeUnpacker extends UnpackerBase
 
     /**
      * Invoked prior to unpacking.
-     * <p/>
+     * <p>
      * This notifies the {@link ProgressListener}, and any registered {@link InstallerListener listeners}.
      *
      * @param packs the packs to unpack
@@ -203,7 +203,7 @@ public class MultiVolumeUnpacker extends UnpackerBase
 
     /**
      * Tries to return a sensible default media path for multi-volume installations.
-     * <p/>
+     * <p>
      * This returns:
      * <ul>
      * <li>the directory the installer is located in; or </li>

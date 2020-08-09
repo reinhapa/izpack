@@ -51,7 +51,7 @@ public interface GUIListener
     /**
      * This method will be called from the installer frame at end of the methods buildGUI, blockGUI,
      * releaseGUI and switchPanel.<br>
-     * <p/>
+     * <p>
      * The param what indicates from what method this listener was called.<br>
      * If buildGUI is the calling method, the navigation panel will be set as param. At other
      * calling methods param will be null.

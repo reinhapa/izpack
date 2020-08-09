@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 /**
  * A validator to enforce non-empty fields.
- * <p/>
+ * <p>
  * This validator can be used for rule input fields in the UserInputPanel to make sure that the
  * user's entry matches a specified regular expression.
  *

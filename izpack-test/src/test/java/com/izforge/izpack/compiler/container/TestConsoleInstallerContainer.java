@@ -36,7 +36,7 @@ import org.picocontainer.injectors.ProviderAdapter;
 
 /**
  * Test installer container for console based installers.
- * <p/>
+ * <p>
  * This returns:
  * <ul>
  * <li>a {@link TestConsoleInstaller} instead of a {@link ConsoleInstaller}</li>

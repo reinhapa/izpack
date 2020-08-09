@@ -22,7 +22,7 @@ import java.util.Vector;
 
 /**
  * Named collection of include/exclude tags.
- * <p/>
+ * <p>
  * <p>Moved out of MatchingTask to make it a standalone object that
  * could be referenced (by scripts for example).
  */

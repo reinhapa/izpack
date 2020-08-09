@@ -38,12 +38,12 @@ import java.util.Properties;
 /**
  * Sets a property by name, or set of properties (from file or resource) in the project. This is
  * modeled after ant properties
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Properties are immutable: once a property is set it cannot be changed. They are most definitely
  * not variable.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * There are five ways to set properties:
  * <ul>
  * <li>By supplying both the <i>name</i> and <i>value</i> attributes.</li>
@@ -53,37 +53,37 @@ import java.util.Properties;
  * defined for every environment variable by prefixing the supplied name and a period to the name of
  * the variable.</li>
  * </ul>
- * <p/>
+ * <p>
  * Combinations of the above are considered an error.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * The value part of the properties being set, might contain references to other properties. These
  * references are resolved when the properties are set.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * This also holds for properties loaded from a property file.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Properties are case sensitive.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * When specifying the environment attribute, it's value is used as a prefix to use when retrieving
  * environment variables. This functionality is currently only implemented on select platforms.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Thus if you specify environment=&quot;myenv&quot; you will be able to access OS-specific
  * environment variables via property names &quot;myenv.PATH&quot; or &quot;myenv.TERM&quot;.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Note also that properties are case sensitive, even if the environment variables on your operating
  * system are not, e.g. it will be ${env.Path} not ${env.PATH} on Windows 2000.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Note that when specifying either the <code>prefix</code> or <code>environment</code>
  * attributes, if you supply a property name with a final &quot;.&quot; it will not be doubled. ie
  * environment=&quot;myenv.&quot; will still allow access of environment variables through
  * &quot;myenv.PATH&quot; and &quot;myenv.TERM&quot;.
- * <p/>
+ * <p>
  */
 public class PropertyManager
 {

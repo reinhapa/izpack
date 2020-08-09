@@ -19,7 +19,7 @@ package com.izforge.izpack.util.file.types;
 
 /**
  * Describes a File or a ZipEntry.
- * <p/>
+ * <p>
  * This class is meant to be used by classes needing to record path
  * and date/time information about a file, a zip entry or some similar
  * resource (URL, archive in a version control repository, ...).
@@ -46,7 +46,7 @@ public class Resource implements Cloneable, Comparable<Object>
 
     /**
      * Only sets the name.
-     * <p/>
+     * <p>
      * <p>This is a dummy, used for not existing resources.</p>
      *
      * @param name relative path of the resource.  Expects
@@ -110,11 +110,11 @@ public class Resource implements Cloneable, Comparable<Object>
      * Name attribute will contain the path of a file relative to the
      * root directory of its fileset or the recorded path of a zip
      * entry.
-     * <p/>
+     * <p>
      * <p>example for a file with fullpath /var/opt/adm/resource.txt
      * in a file set with root dir /var/opt it will be
      * adm/resource.txt.</p>
-     * <p/>
+     * <p>
      * <p>&quot;/&quot; will be used as the directory separator.</p>
      *
      * @return the name of this resource.

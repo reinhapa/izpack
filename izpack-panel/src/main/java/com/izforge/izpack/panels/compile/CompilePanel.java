@@ -57,9 +57,9 @@ import com.izforge.izpack.util.PlatformModelMatcher;
 
 /**
  * The compile panel class.
- * <p/>
+ * <p>
  * This class allows .java files to be compiled after installation.
- * <p/>
+ * <p>
  * Parts of the code have been taken from InstallPanel.java and modified a lot.
  *
  * @author Tino Schwarze
@@ -507,7 +507,7 @@ public class CompilePanel extends IzPanel implements ActionListener, CompileHand
 
     /**
      * Show a special dialog for compiler errors.
-     * <p/>
+     * <p>
      * This dialog is neccessary because we have lots of information if compilation failed. We'd
      * also like the user to chose whether to ignore the error or not.
      */
@@ -557,7 +557,7 @@ public class CompilePanel extends IzPanel implements ActionListener, CompileHand
 
         /**
          * This method is called from within the constructor to initialize the form.
-         * <p/>
+         * <p>
          * Generated with help from NetBeans IDE.
          */
         private void initComponents()

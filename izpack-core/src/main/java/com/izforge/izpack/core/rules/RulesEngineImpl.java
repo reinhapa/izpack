@@ -563,12 +563,12 @@ public class RulesEngineImpl implements RulesEngine
      * Parses the given complex expression into a condition.
      * Understands the boolean operations && (AND), || (OR)
      * and ! (NOT).
-     * <p/>
+     * <p>
      * Precedence is:
      * NOT is evaluated first.
      * AND is evaluated after NOT, but before OR.
      * OR is evaluated last.
-     * <p/>
+     * <p>
      * Parentheses may be added at a later time.
      *
      * @param expression given complex condition

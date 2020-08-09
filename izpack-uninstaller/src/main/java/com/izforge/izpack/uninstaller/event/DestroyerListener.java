@@ -47,7 +47,7 @@ public abstract class DestroyerListener implements ProgressListener
 
     /**
      * Set the number of substeps.
-     * <p/>
+     * <p>
      * This may be used if the number of substeps changes during an action.
      *
      * @param subSteps The number of substeps.
@@ -60,7 +60,7 @@ public abstract class DestroyerListener implements ProgressListener
 
     /**
      * Invoked to notify progress.
-     * <p/>
+     * <p>
      * This increments the current step.
      *
      * @param message a message describing the step

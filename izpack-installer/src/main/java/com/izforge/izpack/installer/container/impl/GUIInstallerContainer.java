@@ -40,7 +40,7 @@ public class GUIInstallerContainer extends InstallerContainer
 
     /**
      * Constructs a <tt>GUIInstallerContainer</tt>.
-     * <p/>
+     * <p>
      * This constructor is provided for testing purposes.
      *
      * @param container the underlying container

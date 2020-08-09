@@ -323,7 +323,7 @@ public abstract class Field
 
     /**
      * Returns the initial value to use for this field with resolved variables.
-     * <p/>
+     * <p>
      * The following non-null value is used from the following search order
      * <ul>
      * <li>initial value (substituting variables)
@@ -340,7 +340,7 @@ public abstract class Field
 
     /**
      * Returns the initial value to use for this field.
-     * <p/>
+     * <p>
      * The following non-null value is used from the following search order
      * <ul>
      * <li>initial value (substituting variables)

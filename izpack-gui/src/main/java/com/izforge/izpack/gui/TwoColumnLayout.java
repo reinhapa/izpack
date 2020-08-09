@@ -46,7 +46,7 @@ import java.util.ArrayList;
  * the case that they do not occupy the entire available real estate.
  * <li>Individual components can be indented.
  * </ul>
- * <p/>
+ * <p>
  * <b>The Layout Behavior</b> <br>
  * <br>
  * The left and right margin are absolute. This means that they can not be penetrated by components.

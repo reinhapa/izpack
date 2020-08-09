@@ -26,7 +26,7 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 /**
  * A Path tokenizer takes a path and returns the components that make up
  * that path.
- * <p/>
+ * <p>
  * The path can use path separators of either ':' or ';' and file separators
  * of either '/' or '\'.
  */

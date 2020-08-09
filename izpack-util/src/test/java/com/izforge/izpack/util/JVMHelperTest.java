@@ -76,7 +76,7 @@ public class JVMHelperTest
 
     /**
      * Tests {@link JVMHelper#getJVMArguments()} for arguments that contain spaces.
-     * <p/>
+     * <p>
      * Due to a bug in {@link java.lang.management.RuntimeMXBean#getInputArguments()}, arguments with spaces are
      * split. See http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6459832 for more details.
      */

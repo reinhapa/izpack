@@ -40,7 +40,7 @@ import com.izforge.izpack.integration.datavalidator.TestDataValidator;
 
 /**
  * Test {@link PanelAction} implementation.
- * <p/>
+ * <p>
  * This also implements {@link DataValidator} to verify the sequence of events.
  *
  * @author Tim Anderson
@@ -117,7 +117,7 @@ public class TestPanelAction extends TestDataValidator implements PanelAction
 
     /**
      * Executes the action.
-     * <p/>
+     * <p>
      * This verifies that actions are invoked, and in the correct order.
      *
      * @param installData the installation data

@@ -28,7 +28,7 @@ import com.izforge.izpack.api.installer.DataValidator;
 
 /**
  * Test {@link DataValidator} implementation.
- * <p/>
+ * <p>
  * This enables the result of the validation for a panel to be determined by specifying a variable named
  * <em>&lt;panelId&gt;.status</em>. E.g.:
  * <pre>

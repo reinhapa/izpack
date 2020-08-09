@@ -54,7 +54,7 @@ public class HTMLInfoConsolePanel extends AbstractTextConsolePanel
 
     /**
      * Runs the panel using the specified console.
-     * <p/>
+     * <p>
      * If there is no text to display, the panel will return {@code false}.
      *
      * @param installData the installation data

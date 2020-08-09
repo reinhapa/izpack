@@ -49,7 +49,7 @@ public class UninstallHelper
 
     /**
      * Uninstalls an application.
-     * <p/>
+     * <p>
      * This copies the uninstaller jar so that the original can be removed.
      *
      * @param installData the installation data
@@ -78,7 +78,7 @@ public class UninstallHelper
     /**
      * Uninstalls the application at the specified path, by running the {@link Destroyer} in the supplied uninstall
      * jar, using the console uninstaller container.
-     * <p/>
+     * <p>
      * The Destroyer is launched in an isolated class loader as it locates resources using its class loader.
      * This also ensures it has all the classes it needs to run.
      *
@@ -101,7 +101,7 @@ public class UninstallHelper
 
     /**
      * Uninstalls the application at the specified path, by running the GUI uninstaller.
-     * <p/>
+     * <p>
      * The uninstaller is launched in an isolated class loader as it locates resources using its class loader.
      * This also ensures it has all the classes it needs to run.
      *

@@ -88,7 +88,7 @@ public class RulesProvider implements Provider
 
     /**
      * Reads conditions using the resources.
-     * <p/>
+     * <p>
      * This looks for a serialized resource named <em>"rules"</em>.
      *
      * @param resources the resources
@@ -115,7 +115,7 @@ public class RulesProvider implements Provider
 
     /**
      * Reads conditions from the class path.
-     * <p/>
+     * <p>
      * This looks for an XML resource named <em>"conditions.xml"</em>.
      *
      * @return the conditions, or <tt>null</tt> if they cannot be read

@@ -91,7 +91,7 @@ public class TitleField extends Field
 
     /**
      * Returns the icon name.
-     * <p/>
+     * <p>
      * This tries to locate a localised name for the icon from the supplied {@code messages}, using the
      * {@link #getIconId() icon identifier} as the key.
      *
@@ -126,7 +126,7 @@ public class TitleField extends Field
 
     /**
      * Returns the title size.
-     * <p/>
+     * <p>
      * This is used as a multiplier for the default font size.
      *
      * @return the title size

@@ -28,7 +28,7 @@ import java.net.ServerSocket;
 
 /**
  * A validator to check wheter a host:port is available (free).
- * <p/>
+ * <p>
  * This validator can be used for rule input fields in the UserInputPanel to make sure that the port
  * the user entered is not in use.
  *

@@ -89,7 +89,7 @@ public class XMLHelper
     /**
      * Determines if the named attribute in true. True is represented by any of the
      * following strings and is not case sensitive. <br>
-     * <p/>
+     * <p>
      * <ul>
      * <li>
      * yes
@@ -104,7 +104,7 @@ public class XMLHelper
      * on
      * </li>
      * </ul>
-     * <p/>
+     * <p>
      * <br> Every other string, including the empty string as well as the non-existence of
      * the attribute will cuase <code>false</code> to be returned.
      *

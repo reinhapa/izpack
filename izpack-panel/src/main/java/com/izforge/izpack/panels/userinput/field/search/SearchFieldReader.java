@@ -178,9 +178,9 @@ public class SearchFieldReader extends FieldReader implements SearchFieldConfig
 
     /**
      * Returns the index of the selected choice.
-     * <p/>
+     * <p>
      * A choice is selected if the "set" attribute is 'true'.
-     * <p/>
+     * <p>
      * This is only valid after {@link #getChoices()} is invoked.
      *
      * @return the selected index or {@code -1} if no choice is selected

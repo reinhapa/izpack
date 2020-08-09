@@ -33,7 +33,7 @@ import com.izforge.izpack.util.file.types.Mapper;
  * or directory.  Files are only copied if the source file is newer
  * than the destination file, or when the destination file does not
  * exist.  It is possible to explicitly overwrite existing files.</p>
- * <p/>
+ * <p>
  * <p>This implementation is based on Arnout Kuiper's initial design
  * document, the following mailing list discussions, and the
  * copyfile/copydir tasks.</p>

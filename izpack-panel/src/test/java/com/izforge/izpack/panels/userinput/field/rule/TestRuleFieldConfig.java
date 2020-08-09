@@ -76,7 +76,7 @@ public class TestRuleFieldConfig extends TestFieldConfig implements RuleFieldCon
 
     /**
      * Returns the field separator.
-     * <p/>
+     * <p>
      * This is a string used for separating the contents of individual fields.
      *
      * @return the field separator. May be {@code null}

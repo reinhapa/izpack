@@ -91,7 +91,7 @@ public class DefaultLocales implements Locales
 
     /**
      * Constructs a {@code DefaultLocales}.
-     * <p/>
+     * <p>
      * The locale will default to that of the current host if supported, else it will be set to the first supported
      * locale.
      *
@@ -106,7 +106,7 @@ public class DefaultLocales implements Locales
 
     /**
      * Constructs a {@code DefaultLocales}.
-     * <p/>
+     * <p>
      * The locale will default to that supplied if supported, else it will be set to the first supported locale.
      *
      * @param resources the resources
@@ -169,7 +169,7 @@ public class DefaultLocales implements Locales
 
     /**
      * Sets the current locale.
-     * <p/>
+     * <p>
      * This uses a 2 or 3 letter ISO country or language code to locate the corresponding locale.
      *
      * @param code the ISO code
@@ -186,7 +186,7 @@ public class DefaultLocales implements Locales
 
     /**
      * Returns the current locale's 3 character ISO code.
-     * <p/>
+     * <p>
      * This is the code that was used to select the locale's messages and may be a country or language code.
      *
      * @return the current locale's ISO code, or {@code null} if there is no current locale
@@ -227,7 +227,7 @@ public class DefaultLocales implements Locales
 
     /**
      * Returns the 3 character ISO codes of the supported locales.
-     * <p/>
+     * <p>
      * For backward compatibility:
      * <ol>
      * <li>these should all be lowercase; and</li>
@@ -307,7 +307,7 @@ public class DefaultLocales implements Locales
 
     /**
      * Adds a locale to the supplied locales, keying it on its 2 and 3 character ISO country and language codes.
-     * <p/>
+     * <p>
      * Where multiple locales have the same language code, the locale not associated with a country will be used,
      * unless it is the default locale.
      *

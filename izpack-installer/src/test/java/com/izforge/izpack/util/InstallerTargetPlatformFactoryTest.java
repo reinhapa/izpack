@@ -92,7 +92,7 @@ public class InstallerTargetPlatformFactoryTest
 
     /**
      * Verifies that the correct {@link Shortcut} is created for a platform.
-     * <p/>
+     * <p>
      * Currently:
      * <ul>
      * <li>{@link Unix_Shortcut} is created for all Unix platforms.</li>
@@ -120,7 +120,7 @@ public class InstallerTargetPlatformFactoryTest
 
     /**
      * Verifies that the correct {@link RegistryHandler} is created for a platform.
-     * <p/>
+     * <p>
      * Currently:
      * <ul>
      * <li>{@link Win_RegistryHandler} is created for all Windows platforms</li>

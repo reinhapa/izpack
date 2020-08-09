@@ -119,7 +119,7 @@ public abstract class IzPanel extends JPanel implements AbstractUIHandler, Layou
 
     /**
      * Constructs an <tt>IzPanel</tt> with the given layout manager.
-     * <p/>
+     * <p>
      * Valid layout manager are the  {@link IzPanelLayout} and <tt>GridBagLayout</tt>.
      * New panels should be use IzPanelLayout. If layoutManager is
      * null, no layout manager will be created or initialized.
@@ -167,7 +167,7 @@ public abstract class IzPanel extends JPanel implements AbstractUIHandler, Layou
      * Build the IzPanel internal Headline. If an external headline# is used, this method returns
      * immediately with false. Allows also to display a leading Icon for the PanelHeadline. This
      * Icon can also be different if the panel has more than one Instances. The UserInputPanel is
-     * one of these Candidates. <p/> by marc.eppelmann&#064;gmx.de
+     * one of these Candidates. <p> by marc.eppelmann&#064;gmx.de
      *
      * @param imageIconName  an Iconname
      */

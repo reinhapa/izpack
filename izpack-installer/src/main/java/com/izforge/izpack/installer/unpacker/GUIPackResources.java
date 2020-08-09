@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  * {@link PackResources} implementation for the GUI-based installer.
- * <p/>
+ * <p>
  * This supports both local and web-based pack resources.
  */
 public class GUIPackResources extends AbstractPackResources

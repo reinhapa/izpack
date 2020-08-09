@@ -64,7 +64,7 @@ public abstract class AbstractTextConsolePanel extends AbstractConsolePanel
 
     /**
      * Runs the panel using the specified console.
-     * <p/>
+     * <p>
      * If there is no text to display, the panel will return <tt>false</tt>.
      *
      * @param installData the installation data

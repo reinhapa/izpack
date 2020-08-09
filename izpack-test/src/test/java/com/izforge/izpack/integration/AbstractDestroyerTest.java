@@ -47,7 +47,7 @@ public class AbstractDestroyerTest extends AbstractInstallationTest
 
     /**
      * Runs the {@link Destroyer} in the supplied uninstall jar.
-     * <p/>
+     * <p>
      * The Destroyer is launched in an isolated class loader as it locates resources using its class loader
      *
      * @param uninstallJar the uninstaller jar

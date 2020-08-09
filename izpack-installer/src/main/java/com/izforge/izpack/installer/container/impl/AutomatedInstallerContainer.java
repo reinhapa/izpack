@@ -53,7 +53,7 @@ public class AutomatedInstallerContainer extends InstallerContainer
 
     /**
      * Constructs a <tt>AutomatedInstallerContainer</tt>.
-     * <p/>
+     * <p>
      * This constructor is provided for testing purposes.
      *
      * @param container the underlying container

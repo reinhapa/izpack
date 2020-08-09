@@ -118,7 +118,7 @@ public class ConsoleInstaller implements InstallerBase
 
     /**
      * Runs the installation.
-     * <p/>
+     * <p>
      * This method does not return - it invokes {@code System.exit(0)} on successful installation, or
      * {@code System.exit(1)} on failure.
      *

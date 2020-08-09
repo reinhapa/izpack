@@ -86,7 +86,7 @@ public class ProgressHandler extends PromptUIHandler implements ProgressListener
 
     /**
      * Sets the number of sub-steps.
-     * <p/>
+     * <p>
      * This may be used if the number of sub-steps changes during an action.
      *
      * @param subSteps the number of sub-steps
@@ -111,7 +111,7 @@ public class ProgressHandler extends PromptUIHandler implements ProgressListener
 
     /**
      * Invoked to notify progress.
-     * <p/>
+     * <p>
      * This increments the current step.
      *
      * @param message a message describing the step

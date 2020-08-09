@@ -28,7 +28,7 @@ import com.izforge.izpack.test.util.TestHousekeeper;
 
 /**
  * Test implementation of the {@link ConsoleInstaller}.
- * <p/>
+ * <p>
  * This supports running the installer against a script of input commands.
  *
  * @author Tim Anderson

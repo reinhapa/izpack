@@ -23,14 +23,14 @@ public interface InstallationListener
     
     /**
      * Determines if the listener should be notified of every file and directory installation / deletion.
-     * <p/>
+     * <p>
      * For InstallerListeners:
      * If <tt>true</tt>, the {@link #beforeFile} and {@link #afterFile} methods will be invoked for every installed
      * file, and {@link #beforeDir}, and {@link #afterDir} invoked for each directory creation.
      * For UnnstallerListeners:
      * If <tt>true</tt>, the {@link #beforeDelete(File)} and {@link #afterDelete(File)} methods will be invoked for
      * each file.
-     * <p/>
+     * <p>
      * Listeners that return <tt>true</tt> should ensure they don't do any long running operations, to avoid
      * performance issues.
      *

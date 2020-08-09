@@ -20,12 +20,12 @@ package com.izforge.izpack.util.file;
 /**
  * Implementation of FileNameMapper that does simple wildcard pattern
  * replacements.
- * <p/>
+ * <p>
  * <p>This does simple translations like *.foo -> *.bar where the
  * prefix to .foo will be left unchanged. It only handles a single *
  * character, use regular expressions for more complicated
  * situations.</p>
- * <p/>
+ * <p>
  * <p>This is one of the more useful Mappers, it is used by javac for
  * example.</p>
  */

@@ -108,7 +108,7 @@ public class ExpiredChecker implements RequirementChecker
     
     /**
      * Invoked when the installer has expired.
-     * <p/>
+     * <p>
      * This tells the user why we're canceling.
      */
     protected void showExpired()

@@ -30,7 +30,7 @@ import com.izforge.izpack.util.Housekeeper;
 
 /**
  * Test installer container for GUI based installers.
- * <p/>
+ * <p>
  * This returns a {@link TestHousekeeper} instead of an {@link Housekeeper}.
  *
  * @author Tim Anderson

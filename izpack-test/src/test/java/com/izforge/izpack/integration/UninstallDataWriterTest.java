@@ -221,7 +221,7 @@ public class UninstallDataWriterTest
 
     /**
      * Verifies that the <em>com.coi.tools.os</em> packages are written if the OS is Windows.
-     * <p/>
+     * <p>
      * Strictly speaking these are only required if {@link com.izforge.izpack.event.RegistryUninstallerListener}
      * is used, but for now just right them out for all windows installations.
      */

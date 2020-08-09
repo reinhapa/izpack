@@ -27,7 +27,7 @@ import com.izforge.izpack.api.exception.IzPackClassNotFoundException;
 
 /**
  * Class loader for the compiler.
- * <p/>
+ * <p>
  * This enables:
  * <ul>
  * <li>jars to be dynamically added</li>
@@ -80,7 +80,7 @@ public class CompilerClassLoader extends URLClassLoader
 
     /**
      * Loads the class with the specified name, ensuring it is of the specified type.
-     * <p/>
+     * <p>
      * This uses the {@link ClassNameMapper} to try and map it to a known class.
      *
      * @param name the class name
@@ -115,7 +115,7 @@ public class CompilerClassLoader extends URLClassLoader
 
     /**
      * Finds the class with the specified name.
-     * <p/>
+     * <p>
      * This uses the {@link ClassNameMapper} to try and map it to a known class.
      *
      * @param name the name of the class

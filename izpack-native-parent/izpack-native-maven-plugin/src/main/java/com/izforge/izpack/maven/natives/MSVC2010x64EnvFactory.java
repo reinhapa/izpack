@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * Factory for Microsoft Visual C++ 2010 environment variables for a x64 environment.
- * <p/>
+ * <p>
  * This makes the following assumptions:
  * <ul>
  * <li>.NET 4.0 is being used</li>
@@ -18,9 +18,9 @@ public class MSVC2010x64EnvFactory extends AbstractMSVC2010EnvFactory
 
     /**
      * Returns the Microsoft Windows SDK dir.
-     * <p/>
+     * <p>
      * Note that if multiple versions of the Windows SDK have been installed, this may return the wrong directory.
-     * <p/>
+     * <p>
      * It will return <tt>c:\\Program Files\\Miscrosoft SDKs\\Windows\\v7.1</tt> if it exists, in preference to any
      * other.
      *
@@ -46,7 +46,7 @@ public class MSVC2010x64EnvFactory extends AbstractMSVC2010EnvFactory
 
     /**
      * Returns the LIB environment variable path.
-     * <p/>
+     * <p>
      * E.g.:
      * <pre>
      * c:\\Program Files\\Microsoft Visual Studio\\10.0\\VC\\ATLMFC\\lib\\amdy64;
@@ -66,7 +66,7 @@ public class MSVC2010x64EnvFactory extends AbstractMSVC2010EnvFactory
 
     /**
      * Returns the LIBPATH environment variable path.
-     * <p/>
+     * <p>
      * E.g.:
      * <pre>
      * C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319;
@@ -115,7 +115,7 @@ public class MSVC2010x64EnvFactory extends AbstractMSVC2010EnvFactory
 
     /**
      * Returns the Visual C++ bin dir.
-     * <p/>
+     * <p>
      * E.g.: <pre>c:\\Program Files (x86)\\Microsoft Visual Studio 10.0\\VC\\bin\\amd64</pre>
      *
      * @param vcInstallDir the Visual C++ install dir

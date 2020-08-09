@@ -60,7 +60,7 @@ public class PlatformsTest extends AbstractPlatformTest
 
     /**
      * Tests the {@link Platforms#getCurrentPlatform(String, String)} method.
-     * <p/>
+     * <p>
      * NOTE: the following don't query the underlying OS, so are safe to test on any platform
      */
     @Test

@@ -65,7 +65,7 @@ import com.izforge.izpack.util.os.ShellLink;
 
 /**
  * Test installation on Windows.
- * <p/>
+ * <p>
  * Verifies that:
  * <ul>
  * <li>An <em>Uninstall</em> entry is added to the registry by {@link RegistryInstallerListener} during

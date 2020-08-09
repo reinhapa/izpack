@@ -128,7 +128,7 @@ public class CheckedHelloConsolePanel extends HelloConsolePanel
 
     /**
      * Invoked if the product is already installed.
-     * <p/>
+     * <p>
      * This prompts the user whether to install twice or quit.
      *
      * @param installData the installation data

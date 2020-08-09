@@ -49,7 +49,7 @@ public class MonitorInputStream extends RunnableReader
 
     /**
      * Invoked after a line has been read.
-     * <p/>
+     * <p>
      * This echoes the line to the writer.
      *
      * @param line the line

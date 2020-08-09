@@ -260,7 +260,7 @@ public class CompilePanelAutomationHelper extends PanelAutomationHelper implemen
 
     /**
      * Invoked to notify progress.
-     * <p/>
+     * <p>
      * This increments the current step.
      *
      * @param message a message describing the step

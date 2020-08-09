@@ -29,27 +29,27 @@ import java.awt.*;
  * A flow layout arranges components in a left-to-right flow, much like lines of text in a
  * paragraph. Flow layouts are typically used to arrange buttons in a panel. It will arrange buttons
  * left to right until no more buttons fit on the same line. Each line is centered.
- * <p/>
+ * <p>
  * For example, the following picture shows an applet using the flow layout manager (its default
  * layout manager) to position three buttons:
- * <p/>
+ * <p>
  * <img src="doc-files/FlowLayout-1.gif" ALT="Graphic of Layout for Three Buttons" ALIGN=center
  * HSPACE=10 VSPACE=7>
- * <p/>
+ * <p>
  * Here is the code for this applet:
- * <p/>
+ * <p>
  * <hr>
  * <blockquote>
- * <p/>
+ * <p>
  * <pre>
  * import java.awt.*;
  * import java.applet.Applet;
- * <p/>
+ * <p>
  * public class myButtons extends Applet
  * {
- * <p/>
+ * <p>
  *     Button button1, button2, button3;
- * <p/>
+ * <p>
  *     public void init()
  *     {
  *         button1 = new Button(&quot;Ok&quot;);
@@ -60,14 +60,14 @@ import java.awt.*;
  *         add(button3);
  *     }
  * }
- * <p/>
+ * <p>
  * </pre>
- * <p/>
+ * <p>
  * </blockquote>
  * <hr>
- * <p/>
+ * <p>
  * A flow layout lets each component assume its natural (preferred) size.
- * <p/>
+ * <p>
  * This class is a bit different from java.awt.FlowLayout. <blockquote> java.awt.FlowLayout has a
  * minor problem that was bugging me when I wrote the UserInputPanel. FlowLayout puts some amount of
  * space in between each component that it lays out. In addition it adds that same amount of space
@@ -199,7 +199,7 @@ public class FlowLayout implements LayoutManager
     /**
      * Creates a new flow layout manager with the indicated alignment and the indicated horizontal
      * and vertical gaps.
-     * <p/>
+     * <p>
      * The value of the alignment argument must be one of <code>FlowLayout.LEFT</code>,
      * <code>FlowLayout.RIGHT</code>, or <code>FlowLayout.CENTER</code>.
      *

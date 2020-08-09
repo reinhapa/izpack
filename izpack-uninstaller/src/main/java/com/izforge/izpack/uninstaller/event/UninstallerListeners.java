@@ -122,7 +122,7 @@ public class UninstallerListeners
 
     /**
      * Invoked before a file is deleted.
-     * <p/>
+     * <p>
      * This implementation only invokes those listeners whose {@link UninstallerListener#isFileListener()} returns
      * <tt>true</tt>.
      *
@@ -147,7 +147,7 @@ public class UninstallerListeners
 
     /**
      * Invoked after a file is deleted.
-     * <p/>
+     * <p>
      * This implementation only invokes those listeners whose {@link UninstallerListener#isFileListener()}
      * returns <tt>true</tt>.
      *

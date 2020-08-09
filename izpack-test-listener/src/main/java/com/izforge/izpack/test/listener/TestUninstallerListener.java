@@ -10,11 +10,11 @@ import java.util.List;
 
 /**
  * An {@link UninstallerListener} that tracks invocations for testing purposes.
- * <p/>
+ * <p>
  * As this will be loaded in a separate class loader or JVM to the test case, its state will be written to a file,
  * <em>TestUninstallerListener.log.&Lt;hash&gt;</em>, where <em>hash</em> is derived from the install path, in the
  * <em>java.io.tmpdir</em> directory.
- * <p/>
+ * <p>
  * The addition of the hash lowers the possibility of clashes with other tests. For best results,
  *
  * @author Tim Anderson

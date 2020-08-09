@@ -60,7 +60,7 @@ public abstract class UninstallerContainer extends AbstractContainer
 
     /**
      * Invoked by {@link #initialise} to fill the container.
-     * <p/>
+     * <p>
      *
      * @param container the underlying container
      * @throws ContainerException if initialisation fails

@@ -85,7 +85,7 @@ public class JDKChecker implements RequirementChecker
 
     /**
      * Invoked when the JDK is not found.
-     * <p/>
+     * <p>
      * This prompts the user to proceed with the installation or cancel it
      *
      * @return <tt>true</tt> if the user proceeds with the installation, <tt>false</tt> if they cancel it

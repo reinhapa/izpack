@@ -32,9 +32,9 @@ import com.izforge.izpack.api.resource.Messages;
  * is set using the langpack id <b>FinishPanel.automated.dialog.filterdesc</b>
  * <br />
  * <br />
- * <p/>
+ * <p>
  * Note:
- * <p/>
+ * <p>
  * This file could be replaced in java 1.6 by
  * javax.swing.filechooser.FileNameExtensionFilter, although loading the value
  * from a lang pack would have to use an external reference, so it may be better

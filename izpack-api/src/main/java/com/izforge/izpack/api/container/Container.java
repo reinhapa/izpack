@@ -53,7 +53,7 @@ public interface Container
 
     /**
      * Retrieve a component by its component type.
-     * <p/>
+     * <p>
      * If the component type is registered but an instance does not exist, then it will be created.
      *
      * @param componentType the type of the component
@@ -64,7 +64,7 @@ public interface Container
 
     /**
      * Retrieve a component by its component key or type.
-     * <p/>
+     * <p>
      * If the component type is registered but an instance does not exist, then it will be created.
      *
      * @param componentKeyOrType the key or type of the component
@@ -75,7 +75,7 @@ public interface Container
 
     /**
      * Creates a child container.
-     * <p/>
+     * <p>
      * A child container:
      * <ul>
      * <li>may have different objects keyed on the same identifiers as its parent.</li>

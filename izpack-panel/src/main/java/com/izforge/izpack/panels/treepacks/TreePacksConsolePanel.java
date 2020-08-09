@@ -43,7 +43,7 @@ import com.izforge.izpack.util.Console;
 
 /**
  * Console implementation for the TreePacksPanel.
- * <p/>
+ * <p>
  * Based on PacksConsolePanelHelper
  *
  * @author Sergiy Shyrkov

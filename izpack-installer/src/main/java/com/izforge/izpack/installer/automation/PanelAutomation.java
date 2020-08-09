@@ -29,7 +29,7 @@ import com.izforge.izpack.api.exception.InstallerException;
 /**
  * Defines the Interface that must be implemented for running Panels in automated (or "silent",
  * "headless") install mode.
- * <p/>
+ * <p>
  * Implementing classes MUST NOT link against awt/swing classes. Thus the Panels cannot implement
  * this interface directly, they should use e.g. helper classes instead.
  *

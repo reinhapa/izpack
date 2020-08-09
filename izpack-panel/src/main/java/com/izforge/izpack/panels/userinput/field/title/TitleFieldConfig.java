@@ -56,7 +56,7 @@ public interface TitleFieldConfig extends FieldConfig
 
     /**
      * Returns the title size.
-     * <p/>
+     * <p>
      * This is used as a multiplier for the default font size.
      *
      * @return the title size

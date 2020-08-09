@@ -28,9 +28,9 @@ import com.izforge.izpack.installer.debugger.Debugger;
  * This interface is used to be able to access the common information in the PackPanel and the
  * ImgPacksPAnel through a common type. I introduced it so that I can remove the duplicate
  * PacksModel from each class and create a common one for both.
- * <p/>
+ * <p>
  * This could be avoided by inheriting ImgPacksPanel from PacksPanel
- * <p/>
+ * <p>
  * User: Gaganis Giorgos Date: Sep 17, 2004 Time: 8:29:22 AM
  */
 

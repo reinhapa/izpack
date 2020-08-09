@@ -48,8 +48,8 @@ import java.util.zip.ZipEntry;
 
 /**
  * An {@link com.izforge.izpack.compiler.packager.IPackager} that packs everything into multiple volumes.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Here's an example how to specify an installer which will create multiple volumes. In this example the volumes shall
  * be CDs with 650 megabytes. There will be an additional free space of 150 megabytes on the first volume.
  * <br/>
@@ -120,7 +120,7 @@ public class MultiVolumePackager extends PackagerBase
 
     /**
      * Sets the maximum size of the first volume.
-     * <p/>
+     * <p>
      * Defaults to {@link FileSpanningOutputStream#DEFAULT_VOLUME_SIZE}.
      *
      * @param size the maximum size of the first volume, in bytes
@@ -132,7 +132,7 @@ public class MultiVolumePackager extends PackagerBase
 
     /**
      * Sets the maximum volume size for all volumes bar the first.
-     * <p/>
+     * <p>
      * Defaults to {@link FileSpanningOutputStream#DEFAULT_VOLUME_SIZE}.
      *
      * @param size the maximum volume size, in bytes
@@ -144,7 +144,7 @@ public class MultiVolumePackager extends PackagerBase
 
     /**
      * Parses configuration information.
-     * <p/>
+     * <p>
      * This determines the {@link #setMaxFirstVolumeSize(long) maximum size of the first volume}, and
      * {@link #setMaxVolumeSize(long) maximum size of subsequent volumes} from the <em>firstvolumefreespace</em>
      * and <em>volumesize</em> attributes.
@@ -165,7 +165,7 @@ public class MultiVolumePackager extends PackagerBase
 
     /**
      * Writes packs to one or more <em>.pak</em> volumes.
-     * <p/>
+     * <p>
      * Pack meta-data is written to the installer jar.
      *
      * @throws IOException for any I/O error
@@ -236,7 +236,7 @@ public class MultiVolumePackager extends PackagerBase
 
     /**
      * Writes a pack.
-     * <p/>
+     * <p>
      * Pack information is written to the installer jar, while the actual files are written to the volumes.
      *
      * @param packInfo  the pack information
@@ -266,7 +266,7 @@ public class MultiVolumePackager extends PackagerBase
 
     /**
      * Writes the pack files.
-     * <p/>
+     * <p>
      * The file data is written to <tt>volumes</tt>, whilst the meta-data is written to <tt>packStream</tt>.
      *
      * @param packInfo   the pack information

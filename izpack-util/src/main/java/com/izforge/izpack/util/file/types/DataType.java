@@ -21,7 +21,7 @@ package com.izforge.izpack.util.file.types;
 /**
  * Base class for those classes that can appear inside the build file
  * as stand alone data types.
- * <p/>
+ * <p>
  * <p>This class handles the common description attribute and provides
  * a default implementation for reference handling and checking for
  * circular references that is appropriate for types that can not be
@@ -37,7 +37,7 @@ public abstract class DataType
 
     /**
      * Are we sure we don't hold circular references?
-     * <p/>
+     * <p>
      * <p>Subclasses are responsible for setting this value to false
      * if we'd need to investigate this condition (usually because a
      * child element has been added that is a subclass of

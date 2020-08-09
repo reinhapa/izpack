@@ -285,7 +285,7 @@ public class Platform
 
     /**
      * Returns the symbolic name for the platform.
-     * <p/>
+     * <p>
      * This is not the OS name. It is an arbitrary name that may be used to help identify a platform.
      * E.g. windows_7 for name=WINDOWS,version=6.1.
      *
@@ -368,7 +368,9 @@ public class Platform
     /**
      * Determine invalid directory character for the given OS.
      * Expects the the driver name has already been trimmed of.
-     * @return
+     * 
+     * @param directoryPath the directory path to be validated
+     * @return {@code true} if the directory path is valid, otherwise {@code false}
      */
     public boolean isValidDirectorySyntax(String directoryPath)
     {
@@ -389,8 +391,9 @@ public class Platform
 
     /**
      * Check if a fully qualified directory path contains valid syntax.
-     * @param directory
-     * @return
+     * 
+     * @param directory the directory to be validate
+     * @return {@code true} if the directory path is valid, otherwise {@code false}
      */
     public boolean isValidDirectoryPath(File directory)
     {

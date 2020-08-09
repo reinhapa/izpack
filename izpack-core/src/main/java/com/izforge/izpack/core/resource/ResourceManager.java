@@ -33,7 +33,7 @@ import java.util.Locale;
 
 /**
  * With this ResourceManager you are able to get resources from the jar file.
- * <p/>
+ * <p>
  * All resources are loaded language dependent as it's done in java.util.ResourceBundle. To set a
  * language dependent resource just append '_' and the locale to the end of the Resourcename<br>
  * <br>
@@ -41,7 +41,7 @@ import java.util.Locale;
  * <li>InfoPanel.info - for default value</li>
  * <li>InfoPanel.info_deu - for german value</li>
  * <li>InfoPanel.info_eng - for english value</li> <br>
- * <p/>
+ * <p>
  *
  * @author Marcus Stursberg
  * @author Tim Anderson
@@ -168,7 +168,7 @@ public class ResourceManager extends AbstractResources
 
     /**
      * Resolves relative resource names.
-     * <p/>
+     * <p>
      * This implementation prefixes relative resource names with {@link #getResourceBasePath()}.
      *
      * @param name the resource name

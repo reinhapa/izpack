@@ -60,7 +60,7 @@ import static org.junit.Assert.*;
 
 /**
  * Test installation on Windows.
- * <p/>
+ * <p>
  * Verifies that:
  * <ul>
  * <li>An <em>Uninstall</em> entry is added to the registry by {@link RegistryInstallerListener} during

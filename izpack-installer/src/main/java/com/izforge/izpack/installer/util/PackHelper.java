@@ -33,9 +33,9 @@ public class PackHelper
 {
     /**
      * Returns a localised name for a pack.
-     * <p/>
+     * <p>
      * This uses {@link Pack#getLangPackId()} to locate the localised name for the pack.
-     * <p/>
+     * <p>
      * If no localised name exists, {@link Pack#getName()} will be returned.
      *
      * @param pack     the pack
@@ -58,9 +58,9 @@ public class PackHelper
 
     /**
      * Returns a localised description for a pack.
-     * <p/>
+     * <p>
      * This uses {@code "<langPackId>.description"} to locate the localised name for the pack.
-     * <p/>
+     * <p>
      * If no localised description exists, {@link Pack#getDescription()} wil be returned.
      *
      * @param pack     the pack

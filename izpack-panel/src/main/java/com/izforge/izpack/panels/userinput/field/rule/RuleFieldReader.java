@@ -57,7 +57,7 @@ public class RuleFieldReader extends FieldReader implements RuleFieldConfig
 
     /**
      * Returns the field separator.
-     * <p/>
+     * <p>
      * This is a string used for separating the contents of individual fields.
      *
      * @return the field separator. May be {@code null}

@@ -108,6 +108,7 @@ public class FileUtil
      * @param fileName A file to read from.
      * @return List of individual line of the specified file. List may be empty but not
      *         null.
+     * @throws IOException when file can not be read
      */
     public static List<String> getFileContent(String fileName)
             throws IOException

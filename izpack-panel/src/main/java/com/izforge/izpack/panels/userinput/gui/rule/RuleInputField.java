@@ -52,7 +52,7 @@ import com.izforge.izpack.panels.userinput.field.rule.RuleFormat;
  * entering numbers as painless as possible. <br>
  * <br>
  * <b>Formatting:</b>
- * <p/>
+ * <p>
  * <ul>
  * <li><code>N:X:Y </code>- numeric field, accepts digits only
  * <li><code>H:X:Y </code>- hex field, accepts only hexadecimal digits

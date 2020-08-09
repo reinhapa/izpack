@@ -241,7 +241,7 @@ public class RegistryHandler implements MSWinConstants
 
     /**
      * Sets the root for the next registry access.
-     * <p/>
+     * <p>
      * TODO - this doesn't support multi-threaded access
      *
      * @param i an integer which refers to a HKEY

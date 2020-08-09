@@ -152,7 +152,7 @@ public interface Navigator
 
     /**
      * Quits installation, if quit is enabled, and installation is complete.
-     * <p/>
+     * <p>
      * This method does not return if the quit is accepted.
      */
     void quit();

@@ -776,7 +776,7 @@ public class CompilerConfig extends Thread
 
     /**
      * Add packs and their contents to the installer without checking the dependencies and includes.
-     * <p/>
+     * <p>
      * Helper method to recursively add more packs from refpack XML packs definitions
      *
      * @param data The XML data
@@ -2741,7 +2741,7 @@ public class CompilerConfig extends Thread
 
     /**
      * Variable declaration is a fragment of the xml file. For example:
-     * <p/>
+     * <p>
      * <pre>
      * &lt;p/&gt;
      * &lt;p/&gt;
@@ -2756,7 +2756,7 @@ public class CompilerConfig extends Thread
      * &lt;p/&gt;
      * &lt;p/&gt;
      * </pre>
-     * <p/>
+     * <p>
      * variable declared in this can be referred to in parsable files.
      *
      * @param data The XML data.
@@ -3225,8 +3225,8 @@ public class CompilerConfig extends Thread
     }
 
     /**
-     * Properties declaration is a fragment of the xml file. For example: <p/>
-     * <p/>
+     * Properties declaration is a fragment of the xml file. For example: <p>
+     * <p>
      * <pre>
      * &lt;p/&gt;
      * &lt;p/&gt;
@@ -3245,7 +3245,7 @@ public class CompilerConfig extends Thread
      * &lt;p/&gt;
      * &lt;p/&gt;
      * </pre>
-     * <p/>
+     * <p>
      * variable declared in this can be referred to in parsable files.
      *
      * @param data The XML data.
@@ -3527,14 +3527,14 @@ public class CompilerConfig extends Thread
     /**
      * A function to merge multiple packsLang-files into a single file for each identifier, e.g. two
      * resource files
-     * <p/>
+     * <p>
      * <pre>
      *    &lt;res src=&quot;./packsLang01.xml&quot; id=&quot;packsLang.xml&quot;/&gt;
      *    &lt;res src=&quot;./packsLang02.xml&quot; id=&quot;packsLang.xml&quot;/&gt;
      * </pre>
-     * <p/>
+     * <p>
      * are merged into a single temp-file to act as if the user had defined:
-     * <p/>
+     * <p>
      * <pre>
      *    &lt;res src=&quot;/tmp/izpp47881.tmp&quot; id=&quot;packsLang.xml&quot;/&gt;
      * </pre>

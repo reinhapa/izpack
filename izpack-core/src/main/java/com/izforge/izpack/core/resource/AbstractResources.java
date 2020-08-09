@@ -257,7 +257,7 @@ public abstract class AbstractResources implements Resources
 
     /**
      * Resolves relative resource names.
-     * <p/>
+     * <p>
      * This implementation assumes that all names are absolute.
      *
      * @param name the resource name

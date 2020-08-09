@@ -64,7 +64,7 @@ public class ShellLink implements NativeLibraryClient
      * MINIMIZED (2) <br>
      * <br>
      * and this conversion is done in Win_Shortcut.java
-     * <p/>
+     * <p>
      * Hide the window when starting. This is particularly useful when launching from a *.bat file,
      * because no DOS window and no button for the DOS window on the task bar will show! <br>
      * <br>
@@ -86,7 +86,7 @@ public class ShellLink implements NativeLibraryClient
     /**
      * Show the window minimized when starting. The window will not show but a corresponding button
      * in the task bar will. <p>
-     * <p/>
+     * <p>
      * Newer IShellLink only allows Normal, MinNoActive, Maximized.
      */
     public static final int MINIMIZED = 2;
@@ -255,7 +255,7 @@ public class ShellLink implements NativeLibraryClient
      * there seems to be an error in JNI that causes an access violation if a String that is
      * accessed from native code borders on another type of variable. This caused problems in
      * <code>set()</code> For this reason, the dummy string is placed here. Observed with version:
-     * <p/>
+     * <p>
      * <pre>
      *
      *
@@ -354,14 +354,14 @@ public class ShellLink implements NativeLibraryClient
     /**
      * Creates an instance of <code>ShellLink</code> of a specific type. Initializes
      * currentUserLinkPath and allUsersLinkPath.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * A LinkPath is empty if the combination of linkType and userType, are not valid.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * Note: If a linkPath is empty, the userType is reset to the other userType.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * If both linkPaths are empty, an IllegalArgumentException is thrown.
      *
      * @param type      The type of link desired. The following values can be set:<br>

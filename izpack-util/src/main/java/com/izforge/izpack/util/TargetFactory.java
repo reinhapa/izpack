@@ -294,7 +294,7 @@ public class TargetFactory
 
     /**
      * This method returns an OS specific instance of the requested class.
-     * <p/>
+     * <p>
      * This implementation delegates to {@link DefaultTargetPlatformFactory}, falling back to {@link #makeObject(String)}
      * if the call fails.
      *

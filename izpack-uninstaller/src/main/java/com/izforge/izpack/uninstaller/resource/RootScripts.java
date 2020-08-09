@@ -41,9 +41,9 @@ import java.util.logging.Logger;
 
 /**
  * Scripts to execute after uninstallation is complete.
- * <p/>
+ * <p>
  * Scripts are only run if the current platform is a unix platform.
- * <p/>
+ * <p>
  *
  * @author Tim Anderson
  */
@@ -82,7 +82,7 @@ public class RootScripts
 
     /**
      * Runs the root scripts.
-     * <p/>
+     * <p>
      * NOTE: there is no facility for error detection or reporting. TODO?
      */
     public void run()

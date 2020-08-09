@@ -27,9 +27,9 @@ import java.util.List;
 
 /**
  * This class describes the result of the compilation.
- * <p/>
+ * <p>
  * This class is here because error handling is not straight-forward with regard to compilation.
- * <p/>
+ * <p>
  * The error condition consists of an error message, the full command line which failed to execute
  * plus it's stdout and stderr. The reason for this class to exist is that there are three possible
  * reactions to the error (chosen by the user).

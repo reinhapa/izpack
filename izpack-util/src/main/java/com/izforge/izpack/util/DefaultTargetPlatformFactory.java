@@ -32,7 +32,7 @@ import com.izforge.izpack.api.factory.ObjectFactory;
 
 /**
  * Factory for constructing platform specific implementation implementations of interfaces or classes.
- * <p/>
+ * <p>
  * It is configured using one or more <em>TargetPlatformFactory.properties</em> files, located in the class path
  * under <em>com/izforge/izpack/util/</em>. A template is shown below.
  * <pre>
@@ -401,7 +401,7 @@ public class DefaultTargetPlatformFactory implements TargetPlatformFactory
 
         /**
          * Handles parser warnings.
-         * <p/>
+         * <p>
          * This implementation logs the message
          *
          * @param message the error message

@@ -45,9 +45,9 @@ import com.izforge.izpack.util.PlatformModelMatcher;
 
 /**
  * The process panel class.
- * <p/>
+ * <p>
  * This class allows external processes to be executed during installation.
- * <p/>
+ * <p>
  * Parts of the code have been taken from CompilePanel.java and modified a lot.
  *
  * @author Tino Schwarze

@@ -56,7 +56,7 @@ public class PromptUIHandler implements AbstractUIHandler
 
     /**
      * Notify the user about something.
-     * <p/>
+     * <p>
      * The difference between notification and warning is that a notification should not need user
      * interaction and can safely be ignored.
      *

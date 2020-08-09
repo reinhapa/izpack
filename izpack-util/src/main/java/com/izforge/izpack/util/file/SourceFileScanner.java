@@ -26,7 +26,7 @@ import java.util.Vector;
 /**
  * Utility class that collects the functionality of the various
  * scanDir methods that have been scattered in several tasks before.
- * <p/>
+ * <p>
  * <p>The only method returns an array of source files. The array is a
  * subset of the files given as a parameter and holds only those that
  * are newer than their corresponding target files.</p>

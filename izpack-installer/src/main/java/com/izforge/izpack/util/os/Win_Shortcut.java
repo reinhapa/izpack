@@ -118,7 +118,7 @@ public class Win_Shortcut extends Shortcut
      *
      * @see #setLinkType(int)
      * @see #setUserType(int)
-     *      <p/>
+     *      <p>
      *      translates from ShellLink-UserTypes to Shortcut-UserTypes.
      */
     @Override
@@ -581,7 +581,7 @@ public class Win_Shortcut extends Shortcut
      * @param type the type of user for the link.
      * @see Shortcut#CURRENT_USER
      * @see Shortcut#ALL_USERS
-     *      <p/>
+     *      <p>
      *      if the linkPath for that type is empty, refuse to set.
      */
     /*--------------------------------------------------------------------------*/
@@ -659,7 +659,7 @@ public class Win_Shortcut extends Shortcut
      *
      * @param hotkey incoming 2 byte hotkey is: high byte modifier: SHIFT = 0x01 CONTROL= 0x02 ALT = 0x04 EXT =
      *               0x08
-     *               <p/>
+     *               <p>
      *               lower byte contains ascii letter. ie 0x0278 represents CTRL+x 0x068a represents CTRL+ALT+z
      */
     @Override

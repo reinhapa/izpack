@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Encapsulates OS constraints specified on creation time and allows to check them against the
  * current OS.
- * <p/>
+ * <p>
  * For example, this is used for &lt;executable&gt;s to check whether the executable is suitable for
  * the current OS.
  *

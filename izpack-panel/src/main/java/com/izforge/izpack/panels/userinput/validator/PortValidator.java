@@ -28,7 +28,7 @@ import java.net.ServerSocket;
 
 /**
  * A validator to check whether a port is available (free) on the localhost.
- * <p/>
+ * <p>
  * This validator can be used for rule input fields in the UserInputPanel to make sure that the port
  * the user entered is not in use.
  *

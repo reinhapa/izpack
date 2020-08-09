@@ -97,7 +97,7 @@ public class SimpleChoiceReader extends FieldReader implements ChoiceFieldConfig
 
     /**
      * Determines if a choice is selected.
-     * <p/>
+     * <p>
      * A choice is selected if:
      * <ul>
      * <li>the variable value is the same as the choice "value" attribute; or</li>
@@ -134,13 +134,13 @@ public class SimpleChoiceReader extends FieldReader implements ChoiceFieldConfig
 
     /**
      * Returns the index of the selected choice.
-     * <p/>
+     * <p>
      * A choice is selected if:
      * <ul>
      * <li>the variable value is the same as the choice "value" attribute; or</li>
      * <li>the "set" attribute is 'true'</li>
      * </ul>
-     * <p/>
+     * <p>
      * This is only valid after {@link #()} is invoked.
      *
      * @return the selected index or {@code -1} if no choice is selected

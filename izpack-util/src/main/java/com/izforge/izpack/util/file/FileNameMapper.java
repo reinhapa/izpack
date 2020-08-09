@@ -19,10 +19,10 @@ package com.izforge.izpack.util.file;
 
 /**
  * Interface to be used by SourceFileScanner.
- * <p/>
+ * <p>
  * <p>Used to find the name of the target file(s) corresponding to a
  * source file.</p>
- * <p/>
+ * <p>
  * <p>The rule by which the file names are transformed is specified
  * via the setFrom and setTo methods. The exact meaning of these is
  * implementation dependent.</p>
@@ -43,7 +43,7 @@ public interface FileNameMapper
     /**
      * Returns an array containing the target filename(s) for the
      * given source file.
-     * <p/>
+     * <p>
      * <p>if the given rule doesn't apply to the source file,
      * implementation must return null. SourceFileScanner will then
      * omit the source file in question.</p>

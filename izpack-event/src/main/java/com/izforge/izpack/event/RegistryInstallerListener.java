@@ -250,7 +250,7 @@ public class RegistryInstallerListener extends AbstractProgressInstallerListener
 
     /**
      * Returns the uninstall name, used to initialise the {@link RegistryHandler#setUninstallName(String)}.
-     * <p/>
+     * <p>
      * This implementation returns a concatenation of the <em>APP_NAME</em> and <em>APP_VER</em> variables,
      * separated by a space.
      *

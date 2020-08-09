@@ -120,7 +120,7 @@ public class Compiler extends Thread
 
     /**
      * Sets the packager.
-     * <p/>
+     * <p>
      * This must be set before invoking any other methods.
      *
      * @param packager the packager

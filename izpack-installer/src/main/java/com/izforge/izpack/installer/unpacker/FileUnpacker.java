@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 
 /**
  * Unpacks a file from a pack.
- * <p/>
+ * <p>
  * This manages queueing files that are blocked.
  *
  * @author Tim Anderson
@@ -110,7 +110,7 @@ public abstract class FileUnpacker
 
     /**
      * Copies an input stream to a target, setting its timestamp to that of the pack file.
-     * <p/>
+     * <p>
      * If the target is a blockable file, then a temporary file will be created, and the file queued.
      *
      * @param file   the pack file
@@ -206,7 +206,7 @@ public abstract class FileUnpacker
 
     /**
      * Returns a stream to the target file.
-     * <p/>
+     * <p>
      * If the target file is blockable, then a temporary file will be created, and a stream to this returned instead.
      *
      * @param file   the pack file meta-data
@@ -252,7 +252,7 @@ public abstract class FileUnpacker
 
     /**
      * Determines if a pack file is blockable.
-     * <p/>
+     * <p>
      * Blockable files must be queued using {@link #queue()}.
      *
      * @param file the pack file

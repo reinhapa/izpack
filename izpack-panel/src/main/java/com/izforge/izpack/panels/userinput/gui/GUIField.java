@@ -83,7 +83,7 @@ public abstract class GUIField extends AbstractFieldView
 
     /**
      * Updates the field from the view.
-     * <p/>
+     * <p>
      * This implementation simply returns {@code true}.
      *
      * @param prompt the prompt to display messages
@@ -96,7 +96,7 @@ public abstract class GUIField extends AbstractFieldView
 
     /**
      * Updates the field from the view.
-     * <p/>
+     * <p>
      * This implementation simply returns {@code true}.
      *
      * @param prompt the prompt to display messages
@@ -109,7 +109,7 @@ public abstract class GUIField extends AbstractFieldView
 
     /**
      * Updates the view from the field.
-     * <p/>
+     * <p>
      * This implementation simply returns {@code false}.
      *
      * @return {@code true} if the view was updated
@@ -148,7 +148,7 @@ public abstract class GUIField extends AbstractFieldView
 
     /**
      * Adds the field.
-     * <p/>
+     * <p>
      * This adds the field description (if any), the field label, and field component.
      *
      * @param component the component
@@ -294,7 +294,7 @@ public abstract class GUIField extends AbstractFieldView
 
     /**
      * Adds a field description to the list of UI elements.
-     * <p/>
+     * <p>
      * The description spans both columns.
      */
     protected void addDescription()
@@ -304,7 +304,7 @@ public abstract class GUIField extends AbstractFieldView
 
     /**
      * Adds a static text field.
-     * <p/>
+     * <p>
      * The text spans both columns and may include html.
      *
      * @param text the text. May be {@code null}

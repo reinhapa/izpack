@@ -29,7 +29,7 @@ import com.izforge.izpack.util.file.PathTokenizer;
 /**
  * This object represents a path as used by CLASSPATH or PATH
  * environment variable.
- * <p/>
+ * <p>
  * <code>
  * &lt;sometask&gt;<br>
  * &nbsp;&nbsp;&lt;somepath&gt;<br>
@@ -40,12 +40,12 @@ import com.izforge.izpack.util.file.PathTokenizer;
  * &nbsp;&nbsp;&lt;/somepath&gt;<br>
  * &lt;/sometask&gt;<br>
  * </code>
- * <p/>
+ * <p>
  * The object implemention <code>sometask</code> must provide a method called
  * <code>createSomepath</code> which returns an instance of <code>Path</code>.
  * Nested path definitions are handled by the Path object and must be labeled
  * <code>pathelement</code>.<p>
- * <p/>
+ * <p>
  * The path element takes a parameter <code>path</code> which will be parsed
  * and split into single elements. It will usually be used
  * to define a path from an environment variable.
@@ -447,7 +447,7 @@ public class Path extends DataType implements Cloneable
 
     /**
      * Resolve a filename with Project's help - if we know one that is.
-     * <p/>
+     * <p>
      * <p>Assume the filename is absolute if project is null.</p>
      */
     private static String resolveFile(InstallData idata, String relativeName)

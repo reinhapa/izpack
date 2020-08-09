@@ -650,7 +650,7 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
 
     /**
      * Exits the installer, if quit is enabled.
-     * <p/>
+     * <p>
      * If installation is complete, this writes any uninstallation data, and shuts down.
      * If installation is incomplete, a confirmation dialog will be displayed.
      */
@@ -661,7 +661,7 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
 
     /**
      * Quits the installer.
-     * <p/>
+     * <p>
      * If installation is complete, this writes any uninstallation data, and shuts down.
      * If installation is incomplete, a confirmation dialog will be displayed.
      */
@@ -1410,7 +1410,7 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
 
     /**
      * Writes uninstall data if it is required.
-     * <p/>
+     * <p>
      * An error message will be displayed if the write fails.
      *
      * @return <tt>true</tt> if uninstall data was written successfully or is not required, otherwise <tt>false</tt>
@@ -1434,7 +1434,7 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
 
     /**
      * Shuts down the installer after successful installation.
-     * <p/>
+     * <p>
      * This may trigger a reboot.
      */
     private void shutdown()

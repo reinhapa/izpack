@@ -30,7 +30,7 @@ import java.util.Properties;
 
 /**
  * Defines the Interface that must be implemented for running Panels in console mode.
- * <p/>
+ * <p>
  * Implementing classes MUST NOT link against AWT/Swing classes. Thus the panels cannot implement
  * this interface directly, they should use e.g. helper classes instead.
  *

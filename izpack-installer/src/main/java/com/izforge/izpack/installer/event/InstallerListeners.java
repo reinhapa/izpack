@@ -249,7 +249,7 @@ public class InstallerListeners
 
     /**
      * Invoked before a file is installed.
-     * <p/>
+     * <p>
      * This implementation only invokes those listeners whose {@link #isFileListener()} returns <tt>true</tt>.
      *
      * @param file     the file
@@ -274,7 +274,7 @@ public class InstallerListeners
 
     /**
      * Invoked after a file is installed.
-     * <p/>
+     * <p>
      * This implementation only invokes those listeners whose {@link #isFileListener()} returns <tt>true</tt>.
      *
      * @param file     the file

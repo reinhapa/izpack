@@ -370,7 +370,7 @@ public abstract class UnpackerBase implements IUnpacker
 
     /**
      * Interrupts the unpacker, and waits for it to complete.
-     * <p/>
+     * <p>
      * If interrupts have been prevented ({@link #isInterruptDisabled} returns <tt>true</tt>), then this
      * returns immediately.
      *
@@ -436,7 +436,7 @@ public abstract class UnpackerBase implements IUnpacker
 
     /**
      * Invoked prior to unpacking.
-     * <p/>
+     * <p>
      * This notifies the {@link ProgressListener}, and any registered {@link InstallerListener listeners}.
      *
      * @param packs the packs to unpack
@@ -879,7 +879,7 @@ public abstract class UnpackerBase implements IUnpacker
 
     /**
      * Creates a directory including any necessary but nonexistent parent directories, associated with a pack file.
-     * <p/>
+     * <p>
      * If {@link InstallerListener}s are registered, these will be notified for each directory created.
      *
      * @param dir  the directory to create

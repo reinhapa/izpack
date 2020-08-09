@@ -343,7 +343,7 @@ public class AutomatedInstallData implements InstallData
 
     /**
      * Sets the locale.
-     * <p/>
+     * <p>
      * NOTE: for backwards compatibility, this sets the {@link ScriptParserConstant#ISO3_LANG ISO3} variable to be the
      * the <em>lowercase</em> version of the supplied ISO code.
      *

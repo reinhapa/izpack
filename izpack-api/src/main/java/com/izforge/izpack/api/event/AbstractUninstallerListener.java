@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * Abstract implementation of {@link UninstallerListener}.
- * <p/>
+ * <p>
  * This provides no-op versions of each of the methods, to simplify implementation of listeners that only need
  * some methods.
  *
@@ -113,7 +113,7 @@ public abstract class AbstractUninstallerListener implements UninstallerListener
 
     /**
      * Determines if the listener should be notified of every file deletion.
-     * <p/>
+     * <p>
      * If <tt>true</tt>, the {@link #beforeDelete} and {@link #afterDelete} methods will be invoked for each file.
      *
      * @return <tt>true</tt> if this listener would be informed at every delete operation, else <tt>false</tt>

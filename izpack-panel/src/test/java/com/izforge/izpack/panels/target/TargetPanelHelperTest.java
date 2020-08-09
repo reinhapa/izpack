@@ -105,7 +105,7 @@ public class TargetPanelHelperTest
 
     /**
      * Tests the {@link TargetPanelHelper#getPath(InstallData)} method for Mac.
-     * <p/>
+     * <p>
      * Mac OSX has two parent platforms, Mac and UNIX. This verifies that Mac overrides Unix.
      */
     @Test

@@ -74,7 +74,7 @@ public class GUIMultipleFileField extends GUIField
 
     /**
      * Updates the field from the view.
-     * <p/>
+     * <p>
      * This implementation simply returns {@code true}.
      *
      * @param prompt the prompt to display messages

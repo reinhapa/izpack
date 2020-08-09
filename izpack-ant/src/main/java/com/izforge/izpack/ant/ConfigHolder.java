@@ -54,12 +54,12 @@ public class ConfigHolder
     /**
      * Taken from the ant org.apache.tools.ant.PropertyHelper and '$' replaced
      * with '@' to deal with @{x} style property references.
-     * <p/>
+     * <p>
      * Parses a string containing @{xxx} style property references
      * into two lists. The first list is a collection of text fragments, while
      * the other is a set of string property names. null entries in the
      * first list indicate a property reference from the second list.
-     * <p/>
+     * <p>
      * It can be overridden with a more efficient or customized version.
      *
      * @param value        Text to parse. Must not be null.

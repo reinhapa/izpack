@@ -43,7 +43,7 @@ public class IzPanelsProvider extends PanelsProvider
 {
     /**
      * Creates the panels.
-     * <p/>
+     * <p>
      * This invokes any pre-construction actions associated with them.
      *
      * @param factory     the factory for constructing panels

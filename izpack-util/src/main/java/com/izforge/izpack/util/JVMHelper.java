@@ -35,7 +35,7 @@ class JVMHelper
 
     /**
      * Returns arguments supplied to the JVM.
-     * <p/>
+     * <p>
      * This excludes:
      * <ul>
      * <li>-Xdebug</li>
@@ -79,7 +79,7 @@ class JVMHelper
     /**
      * Joins any arguments that have been split as a workaround for
      * <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6459832">Bug ID 6459832</a>
-     * <p/>
+     * <p>
      * This looks for arguments that aren't prefixed with a '-', concatenating them to the previous argument with a
      * space.
      *

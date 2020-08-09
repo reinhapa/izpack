@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 /**
  * A {@code Runnable} that reads from a {@code Reader} a line at a time.
- * <p/>
+ * <p>
  * Subclasses determine what to do with the read data.
  *
  * @author Tim Anderson
@@ -93,7 +93,7 @@ public abstract class RunnableReader implements Runnable
 
     /**
      * Indicates to the reader to stop.
-     * <p/>
+     * <p>
      * Note that this won't interrupt the reader if it is in a blocking read.
      */
     public void stop()

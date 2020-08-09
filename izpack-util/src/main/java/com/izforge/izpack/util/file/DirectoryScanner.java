@@ -30,12 +30,12 @@ import java.util.*;
 /**
  * Class for scanning a directory for files/directories which match certain
  * criteria.
- * <p/>
+ * <p>
  * These criteria consist of selectors and patterns which have been specified.
  * With the selectors you can select which files you want to have included.
  * Files which are not selected are excluded. With patterns you can include
  * or exclude files based on their filename.
- * <p/>
+ * <p>
  * The idea is simple. A given directory is recursively scanned for all files
  * and directories. Each file/directory is matched against a set of selectors,
  * including special support for matching against filenames with include and
@@ -43,12 +43,12 @@ import java.util.*;
  * pattern of the include pattern list or other file selector, and don't match
  * any pattern of the exclude pattern list or fail to match against a required
  * selector will be placed in the list of files/directories found.
- * <p/>
+ * <p>
  * When no list of include patterns is supplied, "**" will be used, which
  * means that everything will be matched. When no list of exclude patterns is
  * supplied, an empty list is used, such that nothing will be excluded. When
  * no selectors are supplied, none are applied.
- * <p/>
+ * <p>
  * The filename pattern matching is done as follows:
  * The name to be matched is split up in path segments. A path segment is the
  * name of a directory or file, which is bounded by
@@ -56,11 +56,11 @@ import java.util.*;
  * For example, "abc/def/ghi/xyz.java" is split up in the segments "abc",
  * "def","ghi" and "xyz.java".
  * The same is done for the pattern against which should be matched.
- * <p/>
+ * <p>
  * The segments of the name and the pattern are then matched against each
  * other. When '**' is used for a path segment in the pattern, it matches
  * zero or more path segments of the name.
- * <p/>
+ * <p>
  * There is a special case regarding the use of <code>File.separator</code>s
  * at the beginning of the pattern and the string to match:<br>
  * When a pattern starts with a <code>File.separator</code>, the string
@@ -69,27 +69,27 @@ import java.util.*;
  * string to match may not start with a <code>File.separator</code>.
  * When one of these rules is not obeyed, the string will not
  * match.
- * <p/>
+ * <p>
  * When a name path segment is matched against a pattern path segment, the
  * following special characters can be used:<br>
  * '*' matches zero or more characters<br>
  * '?' matches one character.
- * <p/>
+ * <p>
  * Examples:
- * <p/>
+ * <p>
  * "**\*.class" matches all .class files/dirs in a directory tree.
- * <p/>
+ * <p>
  * "test\a??.java" matches all files/dirs which start with an 'a', then two
  * more characters and then ".java", in a directory called test.
- * <p/>
+ * <p>
  * "**" matches everything in a directory tree.
- * <p/>
+ * <p>
  * "**\test\**\XYZ*" matches all files/dirs which start with "XYZ" and where
  * there is a parent directory called test (e.g. "abc\test\def\ghi\XYZ123").
- * <p/>
+ * <p>
  * Case sensitivity may be turned off if necessary. By default, it is
  * turned on.
- * <p/>
+ * <p>
  * Example of usage:
  * <pre>
  *   String[] includes = {"**\\*.class"};
@@ -99,7 +99,7 @@ import java.util.*;
  *   ds.setBasedir(new File("test"));
  *   ds.setCaseSensitive(true);
  *   ds.scan();
- * <p/>
+ * <p>
  *   System.out.println("FILES:");
  *   String[] files = ds.getIncludedFiles();
  *   for (int i = 0; i < files.length; i++) {
@@ -120,7 +120,7 @@ public class DirectoryScanner
 
     /**
      * Patterns which should be excluded by default.
-     * <p/>
+     * <p>
      * <p>Note that you can now add patterns to the list of default
      * excludes.  Added patterns will not become part of this array
      * that has only been kept around for backwards compatibility
@@ -279,10 +279,10 @@ public class DirectoryScanner
     /**
      * Set of all include patterns that are full file names and don't
      * contain any wildcards.
-     * <p/>
+     * <p>
      * <p>If this instance is not case sensitive, the file names get
      * turned to lower case.</p>
-     * <p/>
+     * <p>
      * <p>Gets lazily initialized on the first invocation of
      * isIncluded or isExcluded and cleared at the end of the scan
      * method (cleared in clearCaches, actually).</p>
@@ -292,10 +292,10 @@ public class DirectoryScanner
     /**
      * Set of all include patterns that are full file names and don't
      * contain any wildcards.
-     * <p/>
+     * <p>
      * <p>If this instance is not case sensitive, the file names get
      * turned to lower case.</p>
-     * <p/>
+     * <p>
      * <p>Gets lazily initialized on the first invocation of
      * isIncluded or isExcluded and cleared at the end of the scan
      * method (cleared in clearCaches, actually).</p>
@@ -304,7 +304,7 @@ public class DirectoryScanner
 
     /**
      * Array of all include patterns that contain wildcards.
-     * <p/>
+     * <p>
      * <p>Gets lazily initialized on the first invocation of
      * isIncluded or isExcluded and cleared at the end of the scan
      * method (cleared in clearCaches, actually).</p>
@@ -313,7 +313,7 @@ public class DirectoryScanner
 
     /**
      * Array of all exclude patterns that contain wildcards.
-     * <p/>
+     * <p>
      * <p>Gets lazily initialized on the first invocation of
      * isIncluded or isExcluded and cleared at the end of the scan
      * method (cleared in clearCaches, actually).</p>
@@ -361,7 +361,7 @@ public class DirectoryScanner
     /**
      * Test whether or not a given path matches the start of a given
      * pattern up to the first "**".
-     * <p/>
+     * <p>
      * This is not a general purpose test and should only be used if you
      * can live with false positives. For example, <code>pattern=**\a</code>
      * and <code>str=b</code> will yield <code>true</code>.
@@ -381,7 +381,7 @@ public class DirectoryScanner
     /**
      * Test whether or not a given path matches the start of a given
      * pattern up to the first "**".
-     * <p/>
+     * <p>
      * This is not a general purpose test and should only be used if you
      * can live with false positives. For example, <code>pattern=**\a</code>
      * and <code>str=b</code> will yield <code>true</code>.
@@ -614,7 +614,7 @@ public class DirectoryScanner
      * Set the list of include patterns to use. All '/' and '\' characters
      * are replaced by <code>File.separatorChar</code>, so the separator used
      * need not match <code>File.separatorChar</code>.
-     * <p/>
+     * <p>
      * When a pattern ends with a '/' or '\', "**" is appended.
      *
      * @param includes A list of include patterns.
@@ -643,7 +643,7 @@ public class DirectoryScanner
      * Set the list of exclude patterns to use. All '/' and '\' characters
      * are replaced by <code>File.separatorChar</code>, so the separator used
      * need not match <code>File.separatorChar</code>.
-     * <p/>
+     * <p>
      * When a pattern ends with a '/' or '\', "**" is appended.
      *
      * @param excludes A list of exclude patterns.
@@ -671,7 +671,7 @@ public class DirectoryScanner
      * Add to the list of exclude patterns to use. All '/' and '\'
      * characters are replaced by <code>File.separatorChar</code>, so
      * the separator used need not match <code>File.separatorChar</code>.
-     * <p/>
+     * <p>
      * When a pattern ends with a '/' or '\', "**" is appended.
      *
      * @param excludes A list of exclude patterns.
@@ -706,7 +706,7 @@ public class DirectoryScanner
      * All '/' and '\' characters are replaced by
      * <code>File.separatorChar</code>, so the separator used need not
      * match <code>File.separatorChar</code>.
-     * <p/>
+     * <p>
      * <p> When a pattern ends with a '/' or '\', "**" is appended.
      *
      */
@@ -979,7 +979,7 @@ public class DirectoryScanner
      * list of excluded/included files/directories, whereas a fast scan
      * will only have full results for included files, as it ignores
      * directories which can't possibly hold any included files/directories.
-     * <p/>
+     * <p>
      * Returns immediately if a slow scan has already been completed.
      */
     private void slowScan() throws Exception
@@ -1317,7 +1317,7 @@ public class DirectoryScanner
      * Ideally the comparison should be done based on the depth
      * of the match; that is to say how many file separators have been matched
      * before the first ** or the end of the pattern.
-     * <p/>
+     * <p>
      * IMPORTANT : this function should return false "with care".
      *
      * @param name           the relative path to test.
@@ -1480,7 +1480,7 @@ public class DirectoryScanner
     /**
      * <p>Return the names of the files which were selected out and
      * therefore not ultimately included.</p>
-     * <p/>
+     * <p>
      * <p>The names are relative to the base directory. This involves
      * performing a slow scan if one has not already been completed.</p>
      *
@@ -1567,7 +1567,7 @@ public class DirectoryScanner
     /**
      * <p>Return the names of the directories which were selected out and
      * therefore not ultimately included.</p>
-     * <p/>
+     * <p>
      * <p>The names are relative to the base directory. This involves
      * performing a slow scan if one has not already been completed.</p>
      *
@@ -1737,7 +1737,7 @@ public class DirectoryScanner
     /**
      * Has the directory with the given path relative to the base
      * directory already been scanned?
-     * <p/>
+     * <p>
      * <p>Registers the given directory as scanned as a side effect.</p>
      *
      */

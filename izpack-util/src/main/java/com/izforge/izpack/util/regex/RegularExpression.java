@@ -29,20 +29,20 @@ package com.izforge.izpack.util.regex;
  * regular expression type you are using.  The system property
  * "izpack.regexp.regexpimpl" will be the classname of the implementation
  * that will be used.
- * <p/>
+ * <p>
  * <pre>
  * For jdk  &lt;= 1.3, there are two available implementations:
  *   org.apache.tools.ant.util.regexp.JakartaOroRegexp (the default)
  *        Based on the jakarta-oro package
- * <p/>
+ * <p>
  *   org.apache.tools.ant.util.regexp.JakartaRegexpRegexp
  *        Based on the jakarta-regexp package
- * <p/>
+ * <p>
  * For jdk &gt;= 1.4 an additional implementation is available:
  *   org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp
  *        Based on the jdk 1.4 built in regular expression package.
  * </pre>
- * <p/>
+ * <p>
  * <pre>
  *   &lt;regexp [ [id="id"] pattern="expression" | refid="id" ]
  *   /&gt;

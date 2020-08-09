@@ -47,7 +47,7 @@ import com.izforge.izpack.api.data.InstallData;
  * This class handles informing the user about unusual events during the installation process and
  * therefore about the possibility that the installation may not have succeeded at all or may have
  * succeeded only partially.
- * <p/>
+ * <p>
  * <h1>Usage</h1>
  * To add a message to the install log call one of the <code>addMessage()</code> methods, using
  * the appropriate message index. If the message contains placeholders for variables, provide a
@@ -58,7 +58,7 @@ import com.izforge.izpack.api.data.InstallData;
  * cause the user to be alerted about the fact that the install might not have succeeded completely.
  * <code>addError()</code> goes one step further, by alerting the user that the installation has
  * failed.
- * <p/>
+ * <p>
  * <h1>Adding Messages</h1>
  * Messages are divided into three categories:
  * <ol>
@@ -72,7 +72,7 @@ import com.izforge.izpack.api.data.InstallData;
  * in proper order, so that other programmers have no difficulty to form a correct call for the
  * message. The constants are defined in the individual interfaces <code>LogMessage</code>,
  * <code>LogWarning</code> and <code>LogError</code>.
- * <p/>
+ * <p>
  * To derive a correct integer value for the message index add a new value to either
  * <code>MESSAGE_BASE</code>, <code>WARNING_BASE</code> or <code>ERROR_BASE</code>,
  * depending on the message category. Next, increment the MAX_ constant for the message category, to
@@ -82,37 +82,37 @@ import com.izforge.izpack.api.data.InstallData;
  * appended by the message index (without the base, since this implementation will automatically
  * subtract the base). Variable place holders must conform to the specification for
  * <code>java.text.MessageFormat</code>.
- * <p/>
+ * <p>
  * <h1>Debug Messages</h1>
  * The output of debug messages is controlled through system properties. These properties may be set
  * using the -D command line option. Please note, that the -D option is a command line switch for
  * the VM, not for IzPack. In order for this to work, these options must be listed on the command
  * line before IzPack!
- * <p/>
+ * <p>
  * <h2>Turning Debug On</h2>
  * In order to receive debug output, it is necessary to turn this feature on explicitely. This is
  * done with the command line otprion:
- * <p/>
+ * <p>
  * <pre>
  * -DIzPack.debug=on
  * </pre>
- * <p/>
+ * <p>
  * <h2>Selecting Debug Channels</h2>
  * Setting the list of specific debug channels to trace is accomplished with the following command
  * line option:
- * <p/>
+ * <p>
  * <pre>
  * -DIzPack.debug.channel=&lt;channelA,channelB,...&gt;
  * </pre>
- * <p/>
+ * <p>
  * The parameter is a comma separated list of one or more channel identifiers.
- * <p/>
+ * <p>
  * <h2>Dumping a List of Debug Channels</h2>
- * <p/>
+ * <p>
  * <pre>
  * -DIzPack.debug.dumpList=on
  * </pre>
- * <p/>
+ * <p>
  * To turn debug messages on
  *
  * @author Elmar Grom
@@ -399,14 +399,14 @@ public class Log implements LogError, LogWarning, LogMessage
      * notification. If the user should be notified about a specific situation, please also call the
      * appropriate (message, warning, error) method. Debug messages are not localized, please use
      * English only.
-     * <p/>
+     * <p>
      * In order to prevent flooding developers with messages that are generally of no interest, each
      * message may be associated with a specific channel. A message is associated with a channel
      * simply by providing a channel identifier as call parameter. There is no need for registering
      * channels beforehand. If <code>null</code> or an empty string is used as channel identifier
      * the message will be output, regardless of the channel filter applied. Please use this option
      * sparingly, just for really impotant messages of general interest.
-     * <p/>
+     * <p>
      * To receive output for select channels, start IzPack with the command line option
      * -DIzPack.debug.channel=, followed by a comma separated list of channel identifiers.
      *

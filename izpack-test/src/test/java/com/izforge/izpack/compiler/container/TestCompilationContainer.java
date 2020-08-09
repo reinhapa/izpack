@@ -40,7 +40,7 @@ import java.util.logging.Level;
 
 /**
  * Container for compilation test.
- * <p/>
+ * <p>
  * TODO - merge with TestCompilerContainer from izpack-compiler
  *
  * @author Anthonin Bonnefoy

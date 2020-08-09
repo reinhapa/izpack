@@ -174,7 +174,7 @@ public class BSFUninstallerListenerTest
 
     /**
      * Loads the specified BSFActionsSpec resource, returning the uninstallation actions for the specified pack.
-     * <p/>
+     * <p>
      * This uses {@link BSFInstallerListener} to read and produce the uninstallation actions.
      *
      * @param resource the BSFActionsSpec resource

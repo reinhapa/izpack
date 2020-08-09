@@ -96,17 +96,17 @@ public class SizeSelector extends BaseExtendSelector
      * "k". Others have tried to introduce "K" as a multiple of 1024,
      * but that falls down when you reach "M", since "m" is already
      * defined as 0.001.
-     * <p/>
+     * <p>
      * To get around this complexity, a number of standards bodies
      * have proposed the 2^10 standard, and at least one has adopted
      * it. But we are still left with a populace that isn't clear on
      * how capitalization should work.
-     * <p/>
+     * <p>
      * We therefore ignore capitalization as much as possible.
      * Completely mixed case is not possible, but all upper and lower
      * forms are accepted for all long and short forms. Since we have
      * no need to work with the 0.001 case, this practice works here.
-     * <p/>
+     * <p>
      * This function translates all the long and short forms that a
      * unit prefix can occur in and translates them into a single
      * multiplier.
@@ -322,7 +322,7 @@ public class SizeSelector extends BaseExtendSelector
 
     /**
      * Enumerated attribute with the values for units.
-     * <p/>
+     * <p>
      * This treats the standard SI units as representing powers of ten,
      * as they should. If you want the powers of 2 that approximate
      * the SI units, use the first two characters followed by a
@@ -333,7 +333,7 @@ public class SizeSelector extends BaseExtendSelector
      * by an <code>i</code>. <code>Ki</code>, <code>Mi</code>,
      * <code>Gi</code>, and so on. Capitalization variations on these
      * are also accepted.
-     * <p/>
+     * <p>
      * This binary prefix system is approved by the IEC and appears on
      * its way for approval by other agencies, but it is not an SI
      * standard. It disambiguates things for us, though.

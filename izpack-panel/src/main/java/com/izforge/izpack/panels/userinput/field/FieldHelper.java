@@ -53,7 +53,7 @@ public class FieldHelper
 
     /**
      * Determine if an item is required by any of the selected packs.
-     * <p/>
+     * <p>
      * An item is required if it has no pack constraints, or names one or more selected packs.
      *
      * @param packNames     the item's pack constraints. Each name corresponds to a pack for which the item should be
@@ -83,7 +83,7 @@ public class FieldHelper
 
     /**
      * Determine if an item is required by any of the unselected packs.
-     * <p/>
+     * <p>
      * An item is required if it has no pack constraints, or doesn't name any selected packs.
      *
      * @param packNames     the item's pack constraints. Each name corresponds to a pack for which the item should be

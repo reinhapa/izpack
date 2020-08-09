@@ -84,7 +84,7 @@ public class UninstallDataWriter
 
     /**
      * Determines if uninstall data should be written.
-     * <p/>
+     * <p>
      * Uninstall data should be written if {@link com.izforge.izpack.api.data.Info#getUninstallerCondition()} is
      * empty, or evaluates <tt>true</tt>.
      *
@@ -385,7 +385,7 @@ public class UninstallDataWriter
 
     /**
      * Writes data from {@link com.izforge.izpack.installer.data.UninstallData#getAdditionalData()}.
-     * <p/>
+     * <p>
      * This silently ignores failures to locate custom resources, logging it instead.
      *
      * @throws IOException for any I/O error

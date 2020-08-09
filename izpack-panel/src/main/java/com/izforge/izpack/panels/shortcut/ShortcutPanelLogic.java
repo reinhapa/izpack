@@ -58,7 +58,7 @@ import static com.izforge.izpack.util.Platform.Name.UNIX;
 /**
  * This class implements a the logic for the creation of shortcuts. The logic is used in the
  * ShortcutPanel, ShortcutPanelAutomationHelper.
- * <p/>
+ * <p>
  *
  * @version $Revision: 1.2 $
  */

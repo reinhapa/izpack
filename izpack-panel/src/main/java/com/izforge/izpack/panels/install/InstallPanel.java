@@ -304,7 +304,7 @@ public class InstallPanel extends IzPanel implements ProgressListener
 
     /**
      * Invoked to notify progress.
-     * <p/>
+     * <p>
      * This increments the current step.
      *
      * @param message a message describing the step

@@ -53,7 +53,7 @@ public class PasswordKeystoreValidator implements Validator
      * and 'aliasPassword' (for trying to retrieve the key).
      * An additional parameter 'skipValidation' can be set to 'true' in a checkbox and
      * allow the validator framework to run, but not actually do the validation.
-     * <p/>
+     * <p>
      * Optionally checking the key password of multiple keys within a keystore
      * requires the keystore password (if different from the key password) be set
      * in the keystorePassword parameter.

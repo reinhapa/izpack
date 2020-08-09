@@ -59,7 +59,7 @@ public class ConsoleCheckField extends ConsoleField
 
     /**
      * Displays the field.
-     * <p/>
+     * <p>
      * For fields that update variables, this collects input and validates it.
      *
      * @return {@code true} if the field was displayed and validated successfully

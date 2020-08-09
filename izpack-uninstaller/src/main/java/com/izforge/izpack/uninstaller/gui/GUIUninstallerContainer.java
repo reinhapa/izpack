@@ -46,7 +46,7 @@ public class GUIUninstallerContainer extends UninstallerContainer
 
     /**
      * Invoked by {@link #initialise} to fill the container.
-     * <p/>
+     * <p>
      *
      * @param container the underlying container
      * @throws ContainerException if initialisation fails

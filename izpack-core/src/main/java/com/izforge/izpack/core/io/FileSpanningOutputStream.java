@@ -86,7 +86,7 @@ public class FileSpanningOutputStream extends OutputStream
     /**
      * Constructs a <tt>FileSpanningOutputStream</tt> with specified initial volume path, a maximum size for the first
      * volume, and a maximum volume size for all subsequent volumes.
-     * <p/>
+     * <p>
      * The <tt>maxFirstVolumeSize</tt> argument may be used to specify a different maximum volume size for the first
      * volume; this is useful to leave space on media for other files.
      *
@@ -115,7 +115,7 @@ public class FileSpanningOutputStream extends OutputStream
     /**
      * Constructs a <tt>FileSpanningOutputStream</tt> with specified initial volume, a maximum size for the first
      * volume, and a maximum volume size for all subsequent volumes.
-     * <p/>
+     * <p>
      * The <tt>maxFirstVolumeSize</tt> argument may be used to specify a different maximum volume size for the first
      * volume; this is useful to leave space on media for other files.
      *
@@ -361,7 +361,7 @@ public class FileSpanningOutputStream extends OutputStream
 
         /**
          * Initialises the volume.
-         * <p/>
+         * <p>
          * This writes a random byte array at the start of the volume. Each volume in the collection will have the same
          * bytes at the start, to detect an incorrect volume being used when read back in.
          *

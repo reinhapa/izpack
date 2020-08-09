@@ -82,7 +82,7 @@ public class RootScriptsTest
 
     /**
      * Verifies that the expected root scripts are run on Unix.
-     * <p/>
+     * <p>
      * NOTE: This doesn't perform the actual execution, just that execution would be performed.
      */
     @Test

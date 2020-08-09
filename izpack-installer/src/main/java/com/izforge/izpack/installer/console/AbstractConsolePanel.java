@@ -67,7 +67,7 @@ public abstract class AbstractConsolePanel implements ConsolePanel
 
     /**
      * Prompts to end the console panel.
-     * <p/>
+     * <p>
      * If the panel is valid, this displays a prompt to continue, quit, or redisplay. On redisplay,
      * it invokes {@link #run(InstallData, Console)}. <br/>
      * If the panel is invalid, this invokes {@link #promptRerunPanel(InstallData, Console)}.<br/>
@@ -102,7 +102,7 @@ public abstract class AbstractConsolePanel implements ConsolePanel
 
     /**
      * Prompts to re-run the panel or quit.
-     * <p/>
+     * <p>
      * This displays a prompt to redisplay the panel or quit. On redisplay, it invokes
      * {@link #run(InstallData, Console)}.
      *

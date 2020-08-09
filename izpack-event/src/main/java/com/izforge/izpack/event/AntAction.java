@@ -84,7 +84,7 @@ public class AntAction extends ActionBase
 
     /**
      * Performs all defined install actions.
-     * <p/>
+     * <p>
      * Calls {#performAction performAction(false)}.
      *
      * @throws Exception
@@ -96,7 +96,7 @@ public class AntAction extends ActionBase
 
     /**
      * Performs all defined uninstall actions.
-     * <p/>
+     * <p>
      * Calls {#performAction performAction(true)}.
      *
      * @throws IzPackException for any error

@@ -56,7 +56,7 @@ public final class SelectorUtils
     /**
      * Tests whether or not a given path matches the start of a given
      * pattern up to the first "**".
-     * <p/>
+     * <p>
      * This is not a general purpose test and should only be used if you
      * can live with false positives. For example, <code>pattern=**\a</code>
      * and <code>str=b</code> will yield <code>true</code>.
@@ -76,7 +76,7 @@ public final class SelectorUtils
     /**
      * Tests whether or not a given path matches the start of a given
      * pattern up to the first "**".
-     * <p/>
+     * <p>
      * This is not a general purpose test and should only be used if you
      * can live with false positives. For example, <code>pattern=**\a</code>
      * and <code>str=b</code> will yield <code>true</code>.

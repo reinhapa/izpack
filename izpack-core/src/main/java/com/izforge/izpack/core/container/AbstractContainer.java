@@ -50,7 +50,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Constructs an <tt>AbstractContainer</tt>.
-     * <p/>
+     * <p>
      * The container must be initialised via {@link #initialise()} before use.
      */
     public AbstractContainer()
@@ -60,7 +60,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Constructs an <tt>AbstractContainer</tt>.
-     * <p/>
+     * <p>
      * If a container is provided, {@link #initialise(MutablePicoContainer)} will be invoked. Subclasses should only
      * provide a container if they don't require their constructor to complete before <tt>initialise</tt> is called.
      *
@@ -116,7 +116,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Retrieve a component by its component type.
-     * <p/>
+     * <p>
      * If the component type is registered but an instance does not exist, then it will be created.
      *
      * @param componentType the type of the component
@@ -138,7 +138,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Retrieve a component by its component key or type.
-     * <p/>
+     * <p>
      * If the component type is registered but an instance does not exist, then it will be created.
      *
      * @param componentKeyOrType the key or type of the component
@@ -179,7 +179,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Creates a child container.
-     * <p/>
+     * <p>
      * A child container:
      * <ul>
      * <li>may have different objects keyed on the same identifiers as its parent.</li>
@@ -274,7 +274,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Initialises the container.
-     * <p/>
+     * <p>
      * This must only be invoked once.
      *
      * @throws ContainerException if initialisation fails, or the container has already been initialised
@@ -286,7 +286,7 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Initialises the container.
-     * <p/>
+     * <p>
      * This must only be invoked once.
      *
      * @param container the container
@@ -315,12 +315,12 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Invoked by {@link #initialise} to fill the container.
-     * <p/>
+     * <p>
      * This exposes the underlying <tt>PicoContainer</tt> to enable subclasses to perform complex initialisation.
-     * <p/>
+     * <p>
      * For convenience, implementations are permitted to throw <tt>PicoException</tt> - these
      * will be rethrown as {@link ContainerException}.
-     * <p/>
+     * <p>
      * This implementation delegates to {@link #fillContainer()}.
      *
      * @param container the underlying container
@@ -334,9 +334,9 @@ public abstract class AbstractContainer implements Container
 
     /**
      * Invoked by {@link #initialise} to fill the container.
-     * <p/>
+     * <p>
      * This implementation is a no-op.
-     * <p/>
+     * <p>
      * For convenience, implementations are permitted to throw <tt>PicoException</tt> - these
      * will be rethrown as {@link ContainerException}.
      *

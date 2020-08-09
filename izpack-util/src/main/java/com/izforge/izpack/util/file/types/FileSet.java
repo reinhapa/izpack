@@ -125,7 +125,7 @@ public class FileSet extends DataType
     /**
      * Appends <code>excludes</code> to the current list of exclude
      * patterns.
-     * <p/>
+     * <p>
      * <p>Patterns may be separated by a comma or a space.</p>
      *
      * @param excludes the <code>String</code> containing the exclude patterns.

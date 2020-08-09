@@ -47,7 +47,7 @@ import com.izforge.izpack.util.Platforms;
 
 /**
  * Test for an installation.
- * <p/>
+ * <p>
  * NOTE: this test uses the IzPack install.xml, and will remove any registry entry associated with an existing IzPack
  * installation.
  */

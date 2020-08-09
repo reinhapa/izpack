@@ -137,7 +137,7 @@ public class FieldReader extends ElementReader implements FieldConfig
 
     /**
      * Returns the variable that the field reads and updates.
-     * <p/>
+     * <p>
      * This implementation throws an exception if the variable is not present; subclasses override and return
      * {@code null} if the variable is optional.
      *
@@ -152,7 +152,7 @@ public class FieldReader extends ElementReader implements FieldConfig
 
     /**
      * Returns the summaryKey that the field is associated with.
-     * <p/>
+     * <p>
      *
      * @return the 'summaryKey' attribute, or {@code null}
      */
@@ -210,7 +210,7 @@ public class FieldReader extends ElementReader implements FieldConfig
 
     /**
      * Returns the default value of the field without replacing variables.
-     * <p/>
+     * <p>
      * This is obtained from the 'default' attribute of the 'spec' element.
      *
      * @return the default value. May be {@code null}
@@ -223,7 +223,7 @@ public class FieldReader extends ElementReader implements FieldConfig
 
     /**
      * Returns the initial value of the field without replacing variables.
-     * <p/>
+     * <p>
      * This is obtained from the 'set' attribute of the 'spec' element.
      *
      * @return the default value. May be {@code null}

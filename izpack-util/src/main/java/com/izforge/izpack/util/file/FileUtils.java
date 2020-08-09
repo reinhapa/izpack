@@ -123,7 +123,7 @@ public class FileUtils
 
     /**
      * Checks whether a given file is a symbolic link.
-     * <p/>
+     * <p>
      * <p>It doesn't really test for symbolic links but whether the
      * canonical and absolute paths of the file are identical--this
      * may lead to false positives on some platforms.</p>

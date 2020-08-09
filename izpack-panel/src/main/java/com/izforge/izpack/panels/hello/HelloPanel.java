@@ -67,7 +67,7 @@ public class HelloPanel extends IzPanel
 
     /**
      * Constructs an <tt>HelloPanel</tt> with the given layout manager.
-     * <p/>
+     * <p>
      * Valid layout manager are the  {@link IzPanelLayout} and <tt>GridBagLayout</tt>.
      * New panels should be use IzPanelLayout. If layoutManager is
      * null, no layout manager will be created or initialized.

@@ -42,7 +42,7 @@ public class PanelHelper
 
     /**
      * Returns the IzPanel implementation of an {@link ConsolePanel}.
-     * <p/>
+     * <p>
      * Console implementations must use the naming convention:
      * <p>
      * {@code <prefix>ConsolePanel}
@@ -61,7 +61,7 @@ public class PanelHelper
 
     /**
      * Returns the IzPanel implementation of an {@link ConsolePanel}.
-     * <p/>
+     * <p>
      * Console implementations must use the naming convention:
      * <p>
      * {@code <prefix>ConsolePanel}
@@ -90,7 +90,7 @@ public class PanelHelper
 
     /**
      * Returns the console implementation of an {@link IzPanel}.
-     * <p/>
+     * <p>
      * Console implementations must use the naming convention:
      * <p>
      * {@code <prefix>ConsolePanel}
@@ -109,7 +109,7 @@ public class PanelHelper
 
     /**
      * Returns the console implementation of an {@link IzPanel}.
-     * <p/>
+     * <p>
      * Console implementations must use the naming convention:
      * <p>
      * {@code <prefix>ConsolePanel}

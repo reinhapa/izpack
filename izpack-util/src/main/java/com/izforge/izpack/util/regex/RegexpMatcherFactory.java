@@ -28,7 +28,7 @@ import org.apache.tools.ant.BuildException;
  * RegexpMatcher based on the system property
  * <code>izpack.regexp.matcherimpl</code> and the classes
  * available.
- * <p/>
+ * <p>
  * <p>In a more general framework this class would be abstract and
  * have a static newInstance method.</p>
  *

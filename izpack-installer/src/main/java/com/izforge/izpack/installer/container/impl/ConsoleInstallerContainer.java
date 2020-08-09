@@ -54,7 +54,7 @@ public class ConsoleInstallerContainer extends InstallerContainer
 
     /**
      * Constructs a <tt>ConsoleInstallerContainer</tt>.
-     * <p/>
+     * <p>
      * This constructor is provided for testing purposes.
      *
      * @param container the underlying container

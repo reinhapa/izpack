@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  * Abstract factory for Microsoft Visual C++ 2010 environment variables.
- * <p/>
+ * <p>
  * This makes the following assumptions:
  * <ul>
  * <li>.NET 4.0 is being used</li>
@@ -164,9 +164,9 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the Microsoft Windows SDK dir.
-     * <p/>
+     * <p>
      * Note that if multiple versions of the Windows SDK have been installed, this may return the wrong directory.
-     * <p/>
+     * <p>
      * It will return <tt>c:\\Program Files\\Microsoft SDKs\\Windows\\v7.1</tt> if it exists, in preference to any
      * other.
      *
@@ -208,7 +208,7 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the Visual Studio Install directory.
-     * <p/>
+     * <p>
      * E.g. <pre>c:\\Program Files\\Microsoft Visual Studio\\10.0</pre>
      *
      * @param commonToolsDir the tools dir
@@ -231,7 +231,7 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the .NET Framework dir.
-     * <p/>
+     * <p>
      * E.g.: <pre>c:\\Program Files\\Microsoft.NET\\Framework</pre>
      *
      * @return the .NET framework dir
@@ -243,7 +243,7 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the Visual C++ install dir.
-     * <p/>
+     * <p>
      * E.g.: <pre>c:\\Program Files\\Microsoft Visual Studio\\10.0\\VC</pre>
      *
      * @param vsInstallDir the Visual Studio install dir
@@ -256,7 +256,7 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the Visual C++ bin dir.
-     * <p/>
+     * <p>
      * E.g.: <pre>c:\\Program Files\\Microsoft Visual Studio\\10.0\\VC\\bin</pre>
      *
      * @param vcInstallDir the Visual C++ install dir
@@ -269,7 +269,7 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the LIB environment variable path.
-     * <p/>
+     * <p>
      * E.g.:
      * <pre>
      * c:\\Program Files\\Microsoft Visual Studio\\10.0\\VC\\ATLMFC\\lib;
@@ -288,7 +288,7 @@ public abstract class AbstractMSVC2010EnvFactory extends AbstractMSVCEnvFactory
 
     /**
      * Returns the LIBPATH environment variable path.
-     * <p/>
+     * <p>
      * E.g.:
      * <pre>
      * c:\\Program Files\\Microsoft Visual Studio\\10.0\\VC\\ATLMFC\\lib;

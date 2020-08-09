@@ -19,7 +19,7 @@ package com.izforge.izpack.util.file;
 
 /**
  * Implementation of FileNameMapper that always returns the source file name.
- * <p/>
+ * <p>
  * <p>This is the default FileNameMapper for the copy and move
  * tasks.</p>
  */

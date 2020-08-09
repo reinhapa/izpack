@@ -83,7 +83,7 @@ public class TestHelper
 
     /**
      * Verifies that two files have the same content.
-     * <p/>
+     * <p>
      * The files must have different paths.
      *
      * @param expected   the expected file
@@ -140,7 +140,7 @@ public class TestHelper
 
     /**
      * Verifies that two files have the same content.
-     * <p/>
+     * <p>
      * The files must have different paths.
      *
      * @param expected the expected file

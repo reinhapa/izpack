@@ -90,7 +90,7 @@ public class CustomDataLoader
 
     /**
      * Loads custom data.
-     * <p/>
+     * <p>
      * This includes:
      * <ul>
      * <li>installer listeners</li>

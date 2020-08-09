@@ -54,7 +54,7 @@ import javax.swing.text.Segment;
  * Date: Nov 23, 2009
  * Time: 11:37:06 PM
  * To change this template use File | Settings | File Templates.
- * <p/>
+ * <p>
  * TODO - this class is unused, but was commented out in FileExecutor. FileExecutor shouldn't have any GUI
  * use.
  */

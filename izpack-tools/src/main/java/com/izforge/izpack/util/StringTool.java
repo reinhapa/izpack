@@ -105,8 +105,8 @@ public class StringTool
     /**
      * Escapes all white Space Characters
      *
-     * @param aPathString
-     * @return
+     * @param aPathString the path to replace all space characters
+     * @return the path with all spaces taken out
      */
     public static String escapeSpaces(String aPathString)
     {
@@ -117,8 +117,8 @@ public class StringTool
     /**
      * Escapes all white Space Characters
      *
-     * @param aPathString
-     * @return
+     * @param aPathString the path to replace all space characters
+     * @return the path with all spaces replaced by dash
      */
     public static String replaceSpacesWithMinus(String aPathString)
     {
@@ -128,8 +128,9 @@ public class StringTool
     /**
      * Escapes all white Space Characters
      *
-     * @param aPathString
-     * @return
+     * @param aPathString the path to replace all space characters
+     * @param replaceWith the optional replacement string or {@code null} to remove the spaces 
+     * @return the path with all spaces replaced by the given replacement string
      */
     public static String replaceSpaces(String aPathString, String replaceWith)
     {
@@ -138,7 +139,7 @@ public class StringTool
 
     /**
      * Replaces all given white Space Characters with the replaceOrEscapeWith or Escapes with replaceOrEscapeWith
-     * <p/>
+     * <p>
      * If true was given as Escape-Flag , the Method escapes each whitespace with the replaceOrEscapeWith + replaceWhat[x]
      * Otherwise the replaces each replaceWhat[x] with the replaceOrEscapeWith.
      *
@@ -146,6 +147,7 @@ public class StringTool
      * @param replaceOrEscapeWith The Repace or Escape Char Interpreted depended on the escape Flag
      * @param replaceWhat         The atring array with the Characters, which should be replaced
      * @param escape              The flag, wihch indeicates, how to handle the given replaceOrEscapeWith String.
+     * @return                    The resulting string value
      */
     public static String replaceOrEscapeAll(String aPathString, String replaceOrEscapeWith, String[] replaceWhat, boolean escape)
     {
@@ -170,12 +172,12 @@ public class StringTool
 
     /**
      * Normalizes a Windows or Unix Path.
-     * <p/>
+     * <p>
      * Reason: Javas File accepts / or \ for Pathes. Batches or ShellScripts does it not!
-     * <p/>
-     * TODO: implement support for MAC < MacOSX
+     * <p>
+     * TODO: implement support for MAC &lt; MacOSX
      *
-     * @param destination
+     * @param destination the destination path
      * @param fileSeparator a target-system fileseparator
      * @return the normalized path
      */
@@ -248,7 +250,7 @@ public class StringTool
     /**
      * Transforms a (Array)List of Strings into a line.separator="\n" separated Stringlist.
      *
-     * @param aStringList
+     * @param aStringList the list of object to be converted to a string
      * @return a printable list
      */
     public static String listToString(List<?> aStringList)
@@ -259,7 +261,8 @@ public class StringTool
     /**
      * Transforms a (Array)List of Strings into an aLineSeparator separated Stringlist.
      *
-     * @param aStringList
+     * @param aStringList the list of object to be converted to a string
+     * @param aLineSeparator the line separator to use
      * @return a printable list
      */
     public static String listToString(List<?> aStringList, String aLineSeparator)

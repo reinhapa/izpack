@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 
 /**
  * This class encapsulates a lot of search field functionality.
- * <p/>
+ * <p>
  * A search field supports searching directories and files on the target system. This is a
  * helper class to manage all installDataGUI belonging to a search field.
  */
@@ -230,7 +230,7 @@ public class SearchInputField implements ActionListener
 
     /**
      * This is called if one of the buttons has been pressed.
-     * <p/>
+     * <p>
      * It checks, which button caused the action and acts accordingly.
      */
     /*--------------------------------------------------------------------------*/
@@ -291,7 +291,7 @@ public class SearchInputField implements ActionListener
 
     /**
      * Return the result of the search according to result type.
-     * <p/>
+     * <p>
      * Sometimes, the whole path of the file is wanted, sometimes only the directory where the
      * file is in, sometimes the parent directory.
      *

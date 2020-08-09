@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  * ${NAME} (the latter syntax being useful in situations like ${NAME}NOTPARTOFNAME). If a referenced
  * variable is undefined then it is not substituted but the corresponding part of the stream is
  * copied as is.
- * <p/>
+ * <p>
  * This is a abstract base type for all kinds of variables
  */
 public class VariableSubstitutorImpl implements VariableSubstitutor, Serializable

@@ -51,7 +51,7 @@ public class DefaultObjectFactory implements ObjectFactory
 
     /**
      * Creates a new instance of the specified type.
-     * <p/>
+     * <p>
      * Constructor arguments may be specified as parameters, or injected by the factory.
      * When specified as parameters, order is unimportant, but must be unambiguous.
      *
@@ -83,7 +83,7 @@ public class DefaultObjectFactory implements ObjectFactory
 
     /**
      * Creates a new instance of the specified class name.
-     * <p/>
+     * <p>
      * Constructor arguments may be specified as parameters, or injected by the factory.
      * When specified as parameters, order is unimportant, but must be unambiguous.
      *

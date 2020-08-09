@@ -221,7 +221,7 @@ public class Uninstaller
 
     /**
      * Determines if permission elevation is required to uninstall the application.
-     * <p/>
+     * <p>
      * Permission elevation is required if:
      * <ul>
      * <li>the <em>exec-admin</em> resource exists; and</li>

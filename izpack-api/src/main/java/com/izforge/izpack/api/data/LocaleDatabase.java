@@ -164,7 +164,7 @@ public class LocaleDatabase extends TreeMap<String, String> implements Messages
 
     /**
      * Formats the message with the specified identifier, replacing placeholders with the supplied arguments.
-     * <p/>
+     * <p>
      * This uses {@link java.text.MessageFormat} to format the message.
      *
      * @param id   the message identifier
@@ -217,7 +217,7 @@ public class LocaleDatabase extends TreeMap<String, String> implements Messages
 
     /**
      * Adds messages.
-     * <p/>
+     * <p>
      * This merges the supplied messages with the current messages. If an existing message exists with the same
      * identifier as that supplied, it will be replaced.
      *

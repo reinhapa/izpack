@@ -103,7 +103,7 @@ public class SearchField extends Field
 
     /**
      * Returns the filename to check the existence of.
-     * <p/>
+     * <p>
      * This is used when searching for directories; the file name is appended to a directory to determine if
      * the correct directory has been located.
      *
@@ -296,7 +296,7 @@ public class SearchField extends Field
 
     /**
      * Return the result of the search according to result type.
-     * <p/>
+     * <p>
      * Sometimes, the whole path of the file is wanted, sometimes only the directory where the
      * file is in, sometimes the parent directory.
      *

@@ -84,7 +84,7 @@ public interface RegexpMatcher
     /**
      * Returns a Vector of matched groups found in the argument
      * using default options.
-     * <p/>
+     * <p>
      * <p>Group 0 will be the full match, the rest are the
      * parenthesized subexpressions</p>.
      *

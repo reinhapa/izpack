@@ -73,7 +73,7 @@ import com.izforge.izpack.util.os.Shortcut;
  * This class implements a panel for the creation of shortcuts. The panel prompts the user to select
  * a program group for shortcuts, accept the creation of desktop shortcuts and actually creates the
  * shortcuts.
- * <p/>
+ * <p>
  * Use LateShortcutInstallListener to create the Shortcuts after the Files have been installed.
  *
  * @version $Revision$

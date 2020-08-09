@@ -331,7 +331,7 @@ public class PanelActionTest
 
     /**
      * Verifies that a dialog is being displayed with the specified text.
-     * <p/>
+     * <p>
      * This closes the dialog.
      *
      * @param text the expected text

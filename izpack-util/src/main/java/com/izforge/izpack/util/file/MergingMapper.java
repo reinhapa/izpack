@@ -20,7 +20,7 @@ package com.izforge.izpack.util.file;
 /**
  * Implementation of FileNameMapper that always returns the same
  * target file name.
- * <p/>
+ * <p>
  * <p>This is the default FileNameMapper for the archiving tasks and
  * uptodate.</p>
  */

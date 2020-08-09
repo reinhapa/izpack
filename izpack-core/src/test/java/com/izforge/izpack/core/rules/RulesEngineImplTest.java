@@ -600,7 +600,7 @@ public class RulesEngineImplTest
 
     /**
      * Verifies that conditions can be serialized and deserialized.
-     * <p/>
+     * <p>
      * Any serialized built-in conditions should be ignored on deserialization.
      *
      * @throws Exception for any error
@@ -709,7 +709,7 @@ public class RulesEngineImplTest
 
     /**
      * Verifies that the specified conditions evaluate {@code true} for the specified platform.
-     * <p/>
+     * <p>
      * Platform conditions not specified will be evaluated to ensure they evaluate {@code false}
      *
      * @param platform   the 'current' platform

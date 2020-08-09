@@ -82,7 +82,7 @@ public class Executables
 
     /**
      * Runs the {@link ExecutableFile}s.
-     * <p/>
+     * <p>
      * TODO - should this update the uninstall progress?
      *
      * @return <tt>true</tt> if they were run successfully

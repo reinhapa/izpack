@@ -71,7 +71,7 @@ public interface PanelView<T>
 
     /**
      * Determines if the panel is valid.
-     * <p/>
+     * <p>
      * This:
      * <ol>
      * <li>Refreshes variables</li>
@@ -88,7 +88,7 @@ public interface PanelView<T>
 
     /**
      * Determines if the panel is valid.
-     * <p/>
+     * <p>
      * This:
      * <ol>
      * <li>Executes any pre-validation panel actions</li>

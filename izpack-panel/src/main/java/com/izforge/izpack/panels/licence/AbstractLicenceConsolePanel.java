@@ -106,7 +106,7 @@ public abstract class AbstractLicenceConsolePanel extends AbstractTextConsolePan
 
     /**
      * Prompts to end the license panel.
-     * <p/>
+     * <p>
      * This displays a prompt to accept, reject, or redisplay. On redisplay, it invokes
      * {@link #run(InstallData, Console)}.
      *

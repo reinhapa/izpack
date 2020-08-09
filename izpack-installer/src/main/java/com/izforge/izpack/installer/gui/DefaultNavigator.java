@@ -138,7 +138,7 @@ public class DefaultNavigator implements Navigator
 
     /**
      * Registers the parent installer frame.
-     * <p/>
+     * <p>
      * This should be invoked before using any other methods.
      *
      * @param frame the frame.
@@ -376,7 +376,7 @@ public class DefaultNavigator implements Navigator
 
     /**
      * Quits installation, if quit is enabled, and installation is complete.
-     * <p/>
+     * <p>
      * This method does not return if the quit is accepted.
      */
     @Override
@@ -420,7 +420,7 @@ public class DefaultNavigator implements Navigator
 
     /**
      * Sets the default button.
-     * <p/>
+     * <p>
      * This sets the default to the "next" button if it is enabled. If not it sets it to the "quit" button, if it is
      * enabled.
      *

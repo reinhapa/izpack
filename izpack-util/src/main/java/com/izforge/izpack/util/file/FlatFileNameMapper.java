@@ -20,7 +20,7 @@ package com.izforge.izpack.util.file;
 /**
  * Implementation of FileNameMapper that always returns the source
  * file name without any leading directory information.
- * <p/>
+ * <p>
  * <p>This is the default FileNameMapper for the copy and move
  * tasks if the flatten attribute has been set.</p>
  */

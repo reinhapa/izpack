@@ -56,7 +56,7 @@ import com.izforge.izpack.util.PlatformModelMatcher;
 
 /**
  * This class does alle the work for compiling sources.
- * <p/>
+ * <p>
  * It responsible for
  * <ul>
  * <li>parsing the compilation spec XML file
@@ -150,7 +150,7 @@ public class CompileWorker implements Runnable
 
     /**
      * Set the compiler to use.
-     * <p/>
+     * <p>
      * The compiler is checked before compilation starts.
      *
      * @param compiler compiler to use (not checked)
@@ -223,7 +223,7 @@ public class CompileWorker implements Runnable
 
     /**
      * This is called when the compilation thread is activated.
-     * <p/>
+     * <p>
      * Can also be called directly if asynchronous processing is not desired.
      */
     @Override
@@ -1048,14 +1048,14 @@ public class CompileWorker implements Runnable
 
         /**
          * Check whether the given compiler works.
-         * <p/>
+         * <p>
          * This performs two steps:
          * <ol>
          * <li>check whether we can successfully call "compiler -help"</li>
          * <li>check whether we can successfully call "compiler -help arguments" (not all compilers
          * return an error here)</li>
          * </ol>
-         * <p/>
+         * <p>
          * On failure, the method CompileHandler#errorCompile is called with a descriptive error
          * message.
          *
@@ -1149,7 +1149,7 @@ public class CompileWorker implements Runnable
 
     /**
      * This PrintStream is used to track the Eclipse compiler output.
-     * <p/>
+     * <p>
      * It will pass on all println requests and report progress to the listener.
      */
     private static class EclipseStdOutHandler extends PrintStream
@@ -1173,7 +1173,7 @@ public class CompileWorker implements Runnable
 
         /**
          * Eclipse compiler hopefully only uses println(String).
-         * <p/>
+         * <p>
          * {@inheritDoc}
          */
         @Override
@@ -1202,9 +1202,9 @@ public class CompileWorker implements Runnable
 
         /**
          * Unfortunately, the Eclipse compiler wraps System.out into a BufferedWriter.
-         * <p/>
+         * <p>
          * So we get whole buffers here and cannot do anything about it.
-         * <p/>
+         * <p>
          * {@inheritDoc}
          */
         @Override
@@ -1226,7 +1226,7 @@ public class CompileWorker implements Runnable
 
     /**
      * This PrintStream is used to track the Eclipse compiler error output.
-     * <p/>
+     * <p>
      * It will pass on all println requests and report progress to the listener.
      */
     private static class EclipseStdErrHandler extends PrintStream
@@ -1251,7 +1251,7 @@ public class CompileWorker implements Runnable
 
         /**
          * Eclipse compiler hopefully only uses println(String).
-         * <p/>
+         * <p>
          * {@inheritDoc}
          */
         @Override
@@ -1267,9 +1267,9 @@ public class CompileWorker implements Runnable
 
         /**
          * Unfortunately, the Eclipse compiler wraps System.out into a BufferedWriter.
-         * <p/>
+         * <p>
          * So we get whole buffers here and cannot do anything about it.
-         * <p/>
+         * <p>
          * {@inheritDoc}
          */
         @Override

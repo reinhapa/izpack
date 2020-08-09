@@ -49,7 +49,7 @@ public class TestPackValidator implements PackValidator
 
     /**
      * Validates the selected pack.
-     * <p/>
+     * <p>
      * This returns the value of a <em>&lt;pack&gt;</em>.valid variable.
      *
      * @param handler     the handler

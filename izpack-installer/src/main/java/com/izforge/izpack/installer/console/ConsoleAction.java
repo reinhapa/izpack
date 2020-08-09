@@ -55,7 +55,7 @@ public abstract class ConsoleAction
 
     /**
      * Invoked after the action has been successfully run for each panel.
-     * <p/>
+     * <p>
      * Performs any necessary clean up.
      *
      * @return {@code true} if the operation succeeds; {@code false} if it fails
@@ -64,10 +64,10 @@ public abstract class ConsoleAction
 
     /**
      * Determines if this is an installation action.
-     * <p/>
+     * <p>
      * An installation action is any action that performs installation. Installation actions need to be distinguished
      * from other actions as they may subsequently require a reboot.
-     * <p/>
+     * <p>
      * This default implementation always returns  <tt>true</tt>.
      *
      * @return <tt>true</tt>
@@ -79,7 +79,7 @@ public abstract class ConsoleAction
 
     /**
      * Determines if this action should lead to panel validation.
-     * <p/>
+     * <p>
      * This default implementation always returns  <tt>true</tt>.
      *
      * @return <tt>true</tt>

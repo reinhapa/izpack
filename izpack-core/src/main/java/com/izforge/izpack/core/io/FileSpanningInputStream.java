@@ -279,7 +279,7 @@ public class FileSpanningInputStream extends InputStream
 
         /**
          * Reads up to <code>len</code> bytes of data from the input stream into an array of bytes.
-         * <p/>
+         * <p>
          * An attempt is made to read as many as <code>len</code> bytes, but a smaller number may be read.
          *
          * @param b   the buffer into which the data is read.

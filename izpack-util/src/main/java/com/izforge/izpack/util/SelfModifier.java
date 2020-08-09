@@ -38,27 +38,27 @@ import java.util.zip.ZipEntry;
 /**
  * Allows an application to modify the jar file from which it came, including outright deletion. The
  * jar file of an app is usually locked when java is run so this is normally not possible.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Create a SelfModifier with a target method, then invoke the SelfModifier with arguments to be
  * passed to the target method. The jar file containing the target method's class (obtained by
  * reflection) will be extracted to a temporary directory, and a new java process will be spawned to
  * invoke the target method. The original jar file may now be modified.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * If the constructor or invoke() methods fail, it is generally because secondary java processes
  * could not be started.
- * <p/>
+ * <p>
  * <b>Requirements</b>
  * <ul>
  * <li>The target method, and all it's required classes must be in a jar file.
  * <li>The Self Modifier, and its inner classes must also be in the jar file.
  * </ul>
- * <p/>
+ * <p>
  * There are three system processes (or "phases") involved, the first invoked by the user, the
  * second and third by the SelfModifier.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * <b>Phase 1:</b>
  * <ol>
  * <li>Program is launched, SelfModifier is created, invoke(String[]) is called
@@ -69,7 +69,7 @@ import java.util.zip.ZipEntry;
  * href="#selfmodsysprops">SelfModifier system properties</a> set.
  * <li>Immediately exit so the system unlocks the jar file
  * </ol>
- * <p/>
+ * <p>
  * <b>Phase 2:</b>
  * <ol>
  * <li>Initializes from system properties.
@@ -77,7 +77,7 @@ import java.util.zip.ZipEntry;
  * <li>Wait for phase 3 to die
  * <li>Delete the temporary sandbox
  * </ol>
- * <p/>
+ * <p>
  * <b>Phase 3:</b>
  * <ol>
  * <li>Initializes from system properties.
@@ -86,7 +86,7 @@ import java.util.zip.ZipEntry;
  * <li>The target method is expected to call exit(), or to not start any looping threads (e.g. AWT
  * thread). In other words, the target is the new "main" method.
  * </ol>
- * <p/>
+ * <p>
  * <a name="selfmodsysprops"><b>SelfModifier system properties</b></a> used to pass information
  * between processes. <table border="1">
  * <tr>
@@ -287,7 +287,7 @@ public class SelfModifier
     /**
      * Creates a SelfModifier which will invoke the target method in a separate process from which
      * it may modify it's own jar file.
-     * <p/>
+     * <p>
      * The target method must be public, static, and take a single array of strings as its only
      * parameter. The class which declares the method must also be public. Reflection is used to
      * ensure this.
@@ -348,12 +348,12 @@ public class SelfModifier
      * This method does not normally return. After spawning the secondary process, the current
      * process must die before the jar file is unlocked, therefore calling this method is akin to
      * calling {@link System#exit(int)}.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * The contents of the current jar file are extracted copied to a 'sandbox' directory from which
      * the method is invoked. The path to the original jar file is placed in the system property
      * {@link #JAR_KEY}.
-     * <p/>
+     * <p>
      *
      * @param args arguments to pass to the target method. May be empty or null to indicate no
      *             arguments.

@@ -437,7 +437,7 @@ public abstract class AbstractPanelView<T> implements PanelView<T>
 
     /**
      * Evaluates a validator.
-     * <p/>
+     * <p>
      * If the validator returns a warning status, then a prompt will be displayed asking the user to skip the
      * validation or not.
      *
@@ -488,7 +488,7 @@ public abstract class AbstractPanelView<T> implements PanelView<T>
 
     /**
      * Evaluates a validator.
-     * <p/>
+     * <p>
      * If the validator returns a warning status, then a prompt will be displayed asking the user to skip the
      * validation or not.
      *

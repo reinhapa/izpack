@@ -26,7 +26,7 @@ import com.izforge.izpack.installer.data.UninstallDataWriter;
 
 /**
  * A {@link ConsoleAction} for performing installations.
- * <p/>
+ * <p>
  * This writes uninstallation information if required, at the end of a successful installation.
  *
  * @author Tim Anderson
@@ -53,7 +53,7 @@ public abstract class AbstractInstallAction extends ConsoleAction
 
     /**
      * Invoked after the action has been successfully run for each panel.
-     * <p/>
+     * <p>
      * This writes uninstallation information, if required.
      *
      * @return {@code true} if the operation succeeds; {@code false} if it fails

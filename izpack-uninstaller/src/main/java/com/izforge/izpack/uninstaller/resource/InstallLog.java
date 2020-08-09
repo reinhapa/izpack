@@ -34,7 +34,7 @@ import java.util.TreeSet;
 
 /**
  * The installation log.
- * <p/>
+ * <p>
  * This holds the installation path and the list of installed files.
  *
  * @author Tim Anderson

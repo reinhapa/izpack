@@ -26,7 +26,7 @@ import com.izforge.izpack.api.handler.AbstractUIHandler;
 
 /**
  * Interface for monitoring compilation progress.
- * <p/>
+ * <p>
  * This is used by <code>CompilePanel</code>, <code>CompileWorker</code> and
  * <code>CompilePanelAutomationHelper</code> to display the progress of the compilation.
  *
@@ -38,10 +38,10 @@ public interface CompileHandler extends ProgressListener, AbstractUIHandler
 
     /**
      * An error was encountered.
-     * <p/>
+     * <p>
      * This method should notify the user of the error and request a choice whether to continue,
      * abort or reconfigure. It should alter the error accordingly.
-     * <p/>
+     * <p>
      * Although a CompileResult is passed in, the method is only called if something failed.
      *
      * @param error the error to handle

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 /**
  * This class does alle the work for the process panel.
- * <p/>
+ * <p>
  * It responsible for
  * <ul>
  * <li>parsing the process spec XML file
@@ -282,7 +282,7 @@ public class ProcessPanelWorker implements Runnable
 
     /**
      * This is called when the processing thread is activated.
-     * <p/>
+     * <p>
      * Can also be called directly if asynchronous processing is not desired.
      */
     @Override

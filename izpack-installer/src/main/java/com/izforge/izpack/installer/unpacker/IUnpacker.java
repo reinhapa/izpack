@@ -41,7 +41,7 @@ public interface IUnpacker extends Runnable
 
     /**
      * Interrupts the unpacker, and waits for it to complete.
-     * <p/>
+     * <p>
      * If interrupts have been prevented ({@link #isInterruptDisabled} returns <tt>true</tt>), then this
      * returns immediately.
      *

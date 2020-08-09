@@ -85,7 +85,7 @@ public abstract class AbstractPackagerTest
 
     /**
      * Verifies that the pack size can be specified.
-     * <p/>
+     * <p>
      * Given:
      * <ul>
      * <li>{@code size} = the specified pack size; and</li>

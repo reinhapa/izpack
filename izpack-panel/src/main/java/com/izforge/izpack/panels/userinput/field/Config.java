@@ -248,7 +248,7 @@ public class Config
 
     /**
      * Returns the named attribute as an integer.
-     * <p/>
+     * <p>
      * Any variables are replaced.
      *
      * @param element      the element name

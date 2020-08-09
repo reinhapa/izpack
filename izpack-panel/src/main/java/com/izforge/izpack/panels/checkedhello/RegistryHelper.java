@@ -114,7 +114,7 @@ public class RegistryHelper
 
     /**
      * Returns the installation path of the application.
-     * <p/>
+     * <p>
      * NOTE: this uses the UninstallString registry entry
      *
      * @return the installation path, or {@code null} if the application hasn't been installed or the path cannot
@@ -235,7 +235,7 @@ public class RegistryHelper
 
     /**
      * Determines whether a given value under a given key exists.
-     * <p/>
+     * <p>
      * NOTE: this operation has the side effect that the registry root changes.
      *
      * @param root  the root of the registry access.

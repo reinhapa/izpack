@@ -57,7 +57,7 @@ public class TargetPanelHelper
 
     /**
      * Returns the installation path for the current platform.
-     * <p/>
+     * <p>
      * This looks for a variable in the following order:
      * <ol>
      * <li>{@code TargetPanel.dir.<platform symbolic name>}</li>
@@ -100,7 +100,7 @@ public class TargetPanelHelper
     /**
      * Determines if there is IzPack installation information at the specified path that is incompatible with the
      * current version of IzPack.
-     * <p/>
+     * <p>
      * To be incompatible, the file {@link InstallData#INSTALLATION_INFORMATION} must exist in the supplied directory,
      * and not contain recognised {@link Pack} instances.
      *
@@ -149,7 +149,7 @@ public class TargetPanelHelper
 
     /**
      * Returns the installation path for the current platform.
-     * <p/>
+     * <p>
      * This looks for a variable prefixed with {@code TargetPanel.dir} in the following order:
      * <ol>
      * <li>{@code TargetPanel.dir.<platform symbolic name>}</li>
@@ -181,7 +181,7 @@ public class TargetPanelHelper
 
     /**
      * Returns the installation path for the specified platform name.
-     * <p/>
+     * <p>
      * This looks for a variable named {@code TargetPanel.dir.<platform name>}. If none is found, it searches the
      * parent platforms, in a breadth-first manner.
      *
