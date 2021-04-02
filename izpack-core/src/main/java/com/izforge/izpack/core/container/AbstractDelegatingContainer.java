@@ -65,14 +65,14 @@ public abstract class AbstractDelegatingContainer implements Container
     /**
      * Register a component.
      *
-     * @param componentKey   the component identifier. This must be unique within the container
+     * @param componentType the component type
      * @param implementation the component implementation
      * @throws ContainerException if registration fails
      */
     @Override
-    public void addComponent(Object componentKey, Object implementation)
+    public <T> void addComponent(Class<T> componentType, Object implementation)
     {
-        container.addComponent(componentKey, implementation);
+        container.addComponent(componentType, implementation);
     }
 
     /**
@@ -88,21 +88,6 @@ public abstract class AbstractDelegatingContainer implements Container
     public <T> T getComponent(Class<T> componentType)
     {
         return container.getComponent(componentType);
-    }
-
-    /**
-     * Retrieve a component by its component key or type.
-     * <p/>
-     * If the component type is registered but an instance does not exist, then it will be created.
-     *
-     * @param componentKeyOrType the key or type of the component
-     * @return the corresponding object instance, or <tt>null</tt> if it does not exist
-     * @throws ContainerException if component creation fails
-     */
-    @Override
-    public Object getComponent(Object componentKeyOrType)
-    {
-        return container.getComponent(componentKeyOrType);
     }
 
     /**
@@ -130,9 +115,9 @@ public abstract class AbstractDelegatingContainer implements Container
      * @return <tt>true</tt> if the container was removed
      */
     @Override
-    public boolean removeChildContainer(Container child)
+    public void removeChildContainer(Container child)
     {
-        return container.removeChildContainer(child);
+        container.removeChildContainer(child);
     }
 
     /**

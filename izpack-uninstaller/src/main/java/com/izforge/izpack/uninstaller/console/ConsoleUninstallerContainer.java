@@ -28,8 +28,6 @@ import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.handler.ConsolePrompt;
 import com.izforge.izpack.uninstaller.container.UninstallerContainer;
 import com.izforge.izpack.util.Console;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
 
 
 /**
@@ -52,15 +50,12 @@ public class ConsoleUninstallerContainer extends UninstallerContainer
      * Invoked by {@link #initialise} to fill the container.
      * <p/>
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        super.fillContainer(container);
-
+        super.fillContainer();
         ConsolePrefs consolePrefs = new ConsolePrefs();
         consolePrefs.enableConsoleReader = false;
         addComponent(ConsolePrefs.class, consolePrefs);

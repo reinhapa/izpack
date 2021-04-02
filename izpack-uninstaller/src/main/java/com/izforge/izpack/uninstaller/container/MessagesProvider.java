@@ -23,11 +23,11 @@ package com.izforge.izpack.uninstaller.container;
 
 import java.io.IOException;
 
-import org.picocontainer.injectors.Provider;
-
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Messages;
+
+import jakarta.enterprise.inject.Produces;
 
 
 /**
@@ -35,7 +35,7 @@ import com.izforge.izpack.api.resource.Messages;
  *
  * @author Tim Anderson
  */
-public class MessagesProvider implements Provider
+public class MessagesProvider
 {
 
     /**
@@ -46,6 +46,7 @@ public class MessagesProvider implements Provider
      * @throws IOException               for any I/O error
      * @throws ResourceNotFoundException if <em>langpack.xml</em> cannot be found
      */
+    @Produces
     public Messages provide(Locales locales) throws IOException
     {
         return locales.getMessages("langpack.xml");

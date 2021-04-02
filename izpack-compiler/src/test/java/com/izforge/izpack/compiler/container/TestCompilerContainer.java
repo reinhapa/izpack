@@ -21,22 +21,22 @@ package com.izforge.izpack.compiler.container;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 
-import com.izforge.izpack.compiler.logging.MavenStyleLogFormatter;
 import org.apache.commons.io.FileUtils;
 import org.junit.runners.model.FrameworkMethod;
-import org.picocontainer.MutablePicoContainer;
 
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.compiler.CompilerConfig;
 import com.izforge.izpack.compiler.data.CompilerData;
+import com.izforge.izpack.compiler.logging.MavenStyleLogFormatter;
 import com.izforge.izpack.test.InstallFile;
 import com.izforge.izpack.test.provider.JarFileProvider;
-import com.izforge.izpack.test.util.ClassUtils;
 import com.izforge.izpack.util.FileUtil;
 
 /**
@@ -90,7 +90,8 @@ public class TestCompilerContainer extends CompilerContainer
             CompilerConfig compilerConfig = getComponent(CompilerConfig.class);
             File out = getComponent(File.class);
             compilerConfig.executeCompiler();
-            ClassUtils.loadJarInSystemClassLoader(out);
+            Thread currentThread = Thread.currentThread();
+            currentThread.setContextClassLoader(new URLClassLoader(new URL[] {out.toURI().toURL()}, currentThread.getContextClassLoader()));
         }
         catch (Exception e)
         {
@@ -101,13 +102,12 @@ public class TestCompilerContainer extends CompilerContainer
     /**
      * Fills the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        super.fillContainer(container);
+        super.fillContainer();
         try
         {
             deleteLock();
@@ -133,13 +133,13 @@ public class TestCompilerContainer extends CompilerContainer
         addComponent(CompilerData.class, data);
         addComponent(File.class, out);
 
-        container.addConfig("installFile", installerFile.getAbsolutePath());
-        container.addAdapter(new JarFileProvider());
+        addConfig("installFile", installerFile.getAbsolutePath());
+        addComponent(JarFileProvider.class);
 
         final ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.INFO);
         consoleHandler.setFormatter(new MavenStyleLogFormatter());
-        container.addComponent(Handler.class, consoleHandler);
+        addComponent(Handler.class, consoleHandler);
     }
 
     private void deleteLock() throws IOException

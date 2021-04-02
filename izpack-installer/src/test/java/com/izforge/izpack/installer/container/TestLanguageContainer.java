@@ -3,21 +3,19 @@ package com.izforge.izpack.installer.container;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
-import com.izforge.izpack.api.exception.IzPackException;
-import com.izforge.izpack.api.resource.Resources;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
-import org.picocontainer.injectors.ProviderAdapter;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.resource.DefaultLocales;
@@ -48,14 +46,13 @@ public class TestLanguageContainer extends AbstractContainer
     /**
      * Invoked by {@link #initialise} to fill the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        container.addComponent(System.getProperties());
+        super.fillContainer();
+        addComponent(Properties.class,  System.getProperties());
 
         ResourceManager resourceManager = Mockito.mock(ResourceManager.class);
         when(resourceManager.getObject("langpacks.info")).thenReturn(Arrays.asList("eng", "fra"));
@@ -84,17 +81,16 @@ public class TestLanguageContainer extends AbstractContainer
                 .thenThrow(new IzPackException("Not available"));
 
         DefaultLocales locales = new DefaultLocales(resourceManager);
-        container.addComponent(Variables.class, DefaultVariables.class)
-                .addComponent(resourceManager)
-                .addComponent(Mockito.mock(UninstallData.class))
-                .addComponent(Mockito.mock(UninstallDataWriter.class))
-                .addComponent(Mockito.mock(AutomatedInstaller.class))
-                .addComponent(Mockito.mock(PathResolver.class))
-                .addComponent(locales)
-                .addComponent(Container.class, this);
-        container
-                .addAdapter(new ProviderAdapter(new GUIInstallDataMockProvider()))
-                .addAdapter(new ProviderAdapter(new IconsProvider()));
+        addComponent(Variables.class, DefaultVariables.class);
+        addComponent(ResourceManager.class, resourceManager);
+        addComponent(UninstallData.class, Mockito.mock(UninstallData.class));
+        addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
+        addComponent(AutomatedInstaller.class, Mockito.mock(AutomatedInstaller.class));
+        addComponent(PathResolver.class, Mockito.mock(PathResolver.class));
+        addComponent(DefaultLocales.class, locales);
+        addComponent(Container.class, this);
+        addComponent(GUIInstallDataMockProvider.class);
+        addComponent(IconsProvider.class);
     }
 
 }

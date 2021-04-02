@@ -23,16 +23,18 @@ package com.izforge.izpack.installer.container.impl;
 
 
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.handler.ConsolePrompt;
 import com.izforge.izpack.installer.console.ConsoleInstaller;
 import com.izforge.izpack.installer.console.ConsolePanelAutomationHelper;
-import com.izforge.izpack.installer.container.provider.*;
+import com.izforge.izpack.installer.container.provider.ConsoleInstallDataProvider;
+import com.izforge.izpack.installer.container.provider.ConsolePanelsProvider;
+import com.izforge.izpack.installer.container.provider.ConsolePrefsProvider;
+import com.izforge.izpack.installer.container.provider.MessagesProvider;
 import com.izforge.izpack.installer.language.LanguageConsoleDialog;
 import com.izforge.izpack.installer.multiunpacker.MultiVolumeUnpackerAutomationHelper;
 import com.izforge.izpack.installer.unpacker.ConsolePackResources;
 import com.izforge.izpack.util.Console;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.injectors.ProviderAdapter;
 
 /**
  * Installer container for console installation mode.
@@ -60,34 +62,28 @@ public class ConsoleInstallerContainer extends InstallerContainer
      * @param container the underlying container
      * @throws ContainerException if initialisation fails
      */
-    protected ConsoleInstallerContainer(MutablePicoContainer container)
+    protected ConsoleInstallerContainer(CdiInitializationContext container)
     {
         initialise(container);
     }
 
     /**
      * Registers components with the container.
-     *
-     * @param container the container
      */
     @Override
-    protected void registerComponents(MutablePicoContainer container)
+    protected void registerComponents()
     {
-        super.registerComponents(container);
-
-        container
-                .addAdapter(new ProviderAdapter(new ConsoleInstallDataProvider()))
-                .addAdapter(new ProviderAdapter(new ConsolePanelsProvider()))
-                .addAdapter(new ProviderAdapter(new MessagesProvider())) // required by ConsolePrompt and Console
-                .addAdapter(new ProviderAdapter(new ConsolePrefsProvider())); // required by Console
-
-        container
-                .addComponent(Console.class)
-                .addComponent(ConsolePrompt.class)
-                .addComponent(ConsoleInstaller.class)
-                .addComponent(ConsolePanelAutomationHelper.class)
-                .addComponent(ConsolePackResources.class)
-                .addComponent(MultiVolumeUnpackerAutomationHelper.class)
-                .addComponent(LanguageConsoleDialog.class);
+        super.registerComponents();
+        addComponent(ConsoleInstallDataProvider.class);
+        addComponent(ConsolePanelsProvider.class);
+        addComponent(MessagesProvider.class); // required by ConsolePrompt and Console
+        addComponent(ConsolePrefsProvider.class); // required by Console
+        addComponent(Console.class);
+        addComponent(ConsolePrompt.class);
+        addComponent(ConsoleInstaller.class);
+        addComponent(ConsolePanelAutomationHelper.class);
+        addComponent(ConsolePackResources.class);
+        addComponent(MultiVolumeUnpackerAutomationHelper.class);
+        addComponent(LanguageConsoleDialog.class);
     }
 }

@@ -21,9 +21,6 @@
 package com.izforge.izpack.panels.test;
 
 import org.mockito.Mockito;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
-import org.picocontainer.injectors.ProviderAdapter;
 
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.gui.GUIPrompt;
@@ -54,19 +51,16 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
     /**
      * Invoked by {@link #initialise} to fill the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        super.fillContainer(container);
+        super.fillContainer();
         addComponent(InstallDataConfiguratorWithRules.class);
         addComponent(Log.class, Mockito.mock(Log.class));
         addComponent(GUIPrompt.class);
-
-        container.addAdapter(new ProviderAdapter(new GUIInstallDataMockProvider()));
-        container.addAdapter(new ProviderAdapter(new IconsProvider()));
+        addComponent(GUIInstallDataMockProvider.class);
+        addComponent(IconsProvider.class);
     }
 }

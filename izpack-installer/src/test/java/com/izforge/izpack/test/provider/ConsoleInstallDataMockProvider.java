@@ -20,13 +20,15 @@
  */
 package com.izforge.izpack.test.provider;
 
+import java.io.IOException;
+
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Platforms;
 
-import java.io.IOException;
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Test provider for {@link ConsoleInstallData}.
@@ -44,6 +46,7 @@ public class ConsoleInstallDataMockProvider extends AbstractInstallDataMockProvi
      * @return an {@link ConsoleInstallData}
      * @throws IOException if the default messages cannot be found
      */
+    @Produces
     public ConsoleInstallData provide(Variables variables, Locales locales) throws IOException
     {
         ConsoleInstallData result = createInstallData(variables);

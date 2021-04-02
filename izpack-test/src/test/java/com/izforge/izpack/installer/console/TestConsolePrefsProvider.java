@@ -24,13 +24,14 @@ package com.izforge.izpack.installer.console;
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
-import org.picocontainer.injectors.Provider;
+
+import jakarta.enterprise.inject.Produces;
 
 
 /**
  * Provides an {@link Messages} from the current locale.
  */
-public class TestConsolePrefsProvider implements Provider
+public class TestConsolePrefsProvider
 {
 
     /**
@@ -39,6 +40,7 @@ public class TestConsolePrefsProvider implements Provider
      * @param installData the console installation data
      * @return the console preferences
      */
+    @Produces
     public ConsolePrefs provide(ConsoleInstallData installData)
     {
         ConsolePrefs prefs = installData.consolePrefs;

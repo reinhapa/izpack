@@ -23,10 +23,6 @@ package com.izforge.izpack.uninstaller.container;
 
 import java.util.Properties;
 
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
-import org.picocontainer.injectors.ProviderAdapter;
-
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.factory.ObjectFactory;
@@ -62,13 +58,12 @@ public abstract class UninstallerContainer extends AbstractContainer
      * Invoked by {@link #initialise} to fill the container.
      * <p/>
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
+        super.fillContainer();
         addComponent(Resources.class, DefaultResources.class);
         addComponent(Housekeeper.class);
         addComponent(Librarian.class);
@@ -87,9 +82,8 @@ public abstract class UninstallerContainer extends AbstractContainer
         addComponent(RootScripts.class);
         addComponent(PlatformModelMatcher.class);
         addComponent(Destroyer.class);
-
-        container.addAdapter(new ProviderAdapter(new PlatformProvider()));
-        container.addAdapter(new ProviderAdapter(new UninstallerListenersProvider()));
-        container.addAdapter(new ProviderAdapter(new MessagesProvider()));
+        addComponent(PlatformProvider.class);
+        addComponent(UninstallerListenersProvider.class);
+        addComponent(MessagesProvider.class);
     }
 }

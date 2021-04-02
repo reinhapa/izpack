@@ -33,6 +33,8 @@ import com.izforge.izpack.installer.gui.IzPanelView;
 import com.izforge.izpack.installer.gui.IzPanels;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
+import jakarta.enterprise.inject.Produces;
+
 
 /**
  * Provider of {@link IzPanels}.
@@ -52,10 +54,11 @@ public class IzPanelsProvider extends PanelsProvider
      * @param matcher     the platform-model matcher
      * @throws IzPackException if a panel doesn't have unique identifier
      */
+    @Produces
     public IzPanels provide(ObjectFactory factory, InstallerContainer container, GUIInstallData installData,
                             PlatformModelMatcher matcher)
     {
-        List<IzPanelView> panels = new ArrayList<IzPanelView>();
+        List<IzPanelView> panels = new ArrayList<>();
 
         for (Panel panel : prepare(installData, matcher))
         {

@@ -28,9 +28,6 @@ import com.izforge.izpack.installer.container.provider.MessagesProvider;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.test.provider.ConsoleInstallDataMockProvider;
 import com.izforge.izpack.test.util.TestConsole;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
-import org.picocontainer.injectors.ProviderAdapter;
 
 /**
  * Container for testing console panels.
@@ -48,17 +45,16 @@ public class TestConsolePanelContainer extends AbstractTestPanelContainer
     /**
      * Invoked by {@link #initialise} to fill the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        super.fillContainer(container);
-        container.addAdapter(new ProviderAdapter(new MessagesProvider()));
-        container.addAdapter(new ProviderAdapter(new ConsoleInstallDataMockProvider()));
-        ConsoleInstallData installData = container.getComponent(ConsoleInstallData.class);
+        super.fillContainer();
+        addComponent(MessagesProvider.class);
+        addComponent(ConsoleInstallDataMockProvider.class);
+
+        ConsoleInstallData installData = getComponent(ConsoleInstallData.class);   //TODO:WELD: use provider pattern
         addComponent(ConsolePrefs.class, installData.consolePrefs);
         addComponent(TestConsole.class);
         addComponent(ConsolePrompt.class);

@@ -21,11 +21,11 @@
 
 package com.izforge.izpack.installer.gui;
 
+import java.util.List;
+
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.installer.panel.AbstractPanels;
-
-import java.util.List;
 
 
 /**
@@ -84,7 +84,7 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
             {
                 panelId = view.getClass().getName();
             }
-            container.addComponent(panelId, view);
+            container.addPanel(panelId, view);
         }
     }
 

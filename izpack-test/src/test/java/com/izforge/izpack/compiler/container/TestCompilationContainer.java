@@ -19,6 +19,16 @@
 
 package com.izforge.izpack.compiler.container;
 
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.runners.model.FrameworkMethod;
+
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.compiler.CompilerConfig;
@@ -26,17 +36,7 @@ import com.izforge.izpack.compiler.data.CompilerData;
 import com.izforge.izpack.compiler.logging.MavenStyleLogFormatter;
 import com.izforge.izpack.test.InstallFile;
 import com.izforge.izpack.test.provider.JarFileProvider;
-import com.izforge.izpack.test.util.ClassUtils;
 import com.izforge.izpack.util.FileUtil;
-import org.apache.commons.io.FileUtils;
-import org.junit.runners.model.FrameworkMethod;
-import org.picocontainer.MutablePicoContainer;
-
-import java.io.File;
-import java.net.URL;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
 
 /**
  * Container for compilation test.
@@ -119,7 +119,8 @@ public class TestCompilationContainer extends CompilerContainer
             CompilerConfig compilerConfig = getComponent(CompilerConfig.class);
             File out = getComponent(File.class);
             compilerConfig.executeCompiler();
-            ClassUtils.loadJarInSystemClassLoader(out);
+            Thread currentThread = Thread.currentThread();
+            currentThread.setContextClassLoader(new URLClassLoader(new URL[] {out.toURI().toURL()}, currentThread.getContextClassLoader()));
         }
         catch (Exception e)
         {
@@ -130,13 +131,12 @@ public class TestCompilationContainer extends CompilerContainer
     /**
      * Fills the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        super.fillContainer(container);
+        super.fillContainer();
         deleteLock();
         URL resource = getClass().getClassLoader().getResource(installFile);
         if (resource == null)
@@ -155,15 +155,15 @@ public class TestCompilationContainer extends CompilerContainer
         out.deleteOnExit();
         CompilerData data = new CompilerData(file.getAbsolutePath(), baseDir.getAbsolutePath(), out.getAbsolutePath(),
                                              false);
-        container.addConfig("installFile", file.getAbsolutePath());
-        container.addComponent(CompilerData.class, data);
-        container.addComponent(File.class, out);
-        container.addAdapter(new JarFileProvider());
+        addConfig("installFile", file.getAbsolutePath());
+        addComponent(CompilerData.class, data);
+        addComponent(File.class, out);
+        addComponent(JarFileProvider.class);
 
         final ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.INFO);
         consoleHandler.setFormatter(new MavenStyleLogFormatter());
-        container.addComponent(Handler.class, consoleHandler);
+        addComponent(Handler.class, consoleHandler);
     }
 
     /**

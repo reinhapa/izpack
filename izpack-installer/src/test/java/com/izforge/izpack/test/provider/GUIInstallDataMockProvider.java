@@ -18,6 +18,8 @@
  */
 package com.izforge.izpack.test.provider;
 
+import java.io.IOException;
+
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.Variables;
@@ -25,7 +27,7 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.Platforms;
 
-import java.io.IOException;
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Mock provider for guiInstallData
@@ -41,6 +43,7 @@ public class GUIInstallDataMockProvider extends AbstractInstallDataMockProvider
      * @return an {@link GUIInstallData}
      * @throws IOException if the default messages cannot be found
      */
+    @Produces
     public GUIInstallData provide(Variables variables, Locales locales) throws IOException
     {
         GUIInstallData result = createInstallData(variables);

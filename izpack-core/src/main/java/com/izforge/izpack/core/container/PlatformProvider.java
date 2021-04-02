@@ -22,11 +22,12 @@
 package com.izforge.izpack.core.container;
 
 
+import java.util.logging.Logger;
+
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.Platforms;
-import org.picocontainer.injectors.Provider;
 
-import java.util.logging.Logger;
+import jakarta.enterprise.inject.Produces;
 
 
 /**
@@ -34,7 +35,7 @@ import java.util.logging.Logger;
  *
  * @author Tim Anderson
  */
-public class PlatformProvider implements Provider
+public class PlatformProvider
 {
 
     /**
@@ -48,6 +49,7 @@ public class PlatformProvider implements Provider
      * @param platforms the platform factory
      * @return the current platform
      */
+    @Produces
     public Platform provide(Platforms platforms)
     {
         return platforms.getCurrentPlatform();

@@ -1,5 +1,19 @@
 package com.izforge.izpack.installer.container.provider;
 
+import java.awt.Color;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
+
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.GUIPrefs.LookAndFeel;
 import com.izforge.izpack.api.data.LookAndFeels;
@@ -14,19 +28,7 @@ import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.OsVersion;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.MetalTheme;
-
-import java.awt.Color;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Provide installData for GUI :
@@ -40,8 +42,8 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
     public static final String MODIFIER_USE_LABEL_ICONS = "useLabelIcons";
     public static final String MODIFIER_LABEL_FONT_SIZE = "labelFontSize";
 
-    private static Map<String, String> substanceVariants = new HashMap<String, String>();
-    private static Map<String, String> looksVariants = new HashMap<String, String>();
+    private static Map<String, String> substanceVariants = new HashMap<>();
+    private static Map<String, String> looksVariants = new HashMap<>();
 
     static
     {
@@ -79,6 +81,7 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
     }
 
 
+    @Produces
     public GUIInstallData provide(Resources resources, Locales locales, DefaultVariables variables,
                                   Housekeeper housekeeper, PlatformModelMatcher matcher)
             throws Exception
@@ -255,6 +258,7 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
 
             logger.info("Using laf " + variant);
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                   try {
                       UIManager.setLookAndFeel(variant);

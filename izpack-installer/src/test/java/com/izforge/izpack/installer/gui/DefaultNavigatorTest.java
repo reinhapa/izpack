@@ -20,6 +20,19 @@
  */
 package com.izforge.izpack.installer.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+import org.mockito.Mockito;
+
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.LocaleDatabase;
 import com.izforge.izpack.api.data.Panel;
@@ -37,14 +50,6 @@ import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.installer.panel.Panels;
 import com.izforge.izpack.util.Platforms;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Tests the {@link DefaultNavigator}.
@@ -95,9 +100,9 @@ public class DefaultNavigatorTest
         container = new DefaultContainer()
         {
             {
-                getContainer().addComponent(frame);
-                getContainer().addComponent(resources);
-                getContainer().addComponent(installData);
+                getContainer().addComponent(InstallerFrame.class, frame);
+                getContainer().addComponent(Resources.class, resources);
+                getContainer().addComponent(GUIInstallData.class, installData);
             }
         };
         factory = new DefaultObjectFactory(container);
@@ -310,7 +315,7 @@ public class DefaultNavigatorTest
      */
     private IzPanels createPanels(int count)
     {
-        List<IzPanelView> views = new ArrayList<IzPanelView>();
+        List<IzPanelView> views = new ArrayList<>();
         for (int i = 0; i < count; ++i)
         {
             Panel panel = new Panel();

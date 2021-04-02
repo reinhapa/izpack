@@ -23,6 +23,7 @@ package com.izforge.izpack.installer.container.impl;
 
 
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.handler.AutomatedPrompt;
 import com.izforge.izpack.installer.automation.AutomatedInstaller;
 import com.izforge.izpack.installer.console.ConsolePanelAutomationHelper;
@@ -30,8 +31,6 @@ import com.izforge.izpack.installer.container.provider.AutomatedInstallDataProvi
 import com.izforge.izpack.installer.container.provider.AutomatedPanelsProvider;
 import com.izforge.izpack.installer.multiunpacker.MultiVolumeUnpackerAutomationHelper;
 import com.izforge.izpack.installer.unpacker.ConsolePackResources;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.injectors.ProviderAdapter;
 
 /**
  * Installer container for automated installation mode.
@@ -59,30 +58,24 @@ public class AutomatedInstallerContainer extends InstallerContainer
      * @param container the underlying container
      * @throws ContainerException if initialisation fails
      */
-    protected AutomatedInstallerContainer(MutablePicoContainer container)
+    protected AutomatedInstallerContainer(CdiInitializationContext container)
     {
         initialise(container);
     }
 
     /**
      * Registers components with the container.
-     *
-     * @param container the container
      */
     @Override
-    protected void registerComponents(MutablePicoContainer container)
+    protected void registerComponents()
     {
-        super.registerComponents(container);
-
-        container
-                .addAdapter(new ProviderAdapter(new AutomatedInstallDataProvider()))
-                .addAdapter(new ProviderAdapter(new AutomatedPanelsProvider()));
-
-        container
-                .addComponent(AutomatedPrompt.class)
-                .addComponent(AutomatedInstaller.class)
-                .addComponent(ConsolePanelAutomationHelper.class)
-                .addComponent(ConsolePackResources.class)
-                .addComponent(MultiVolumeUnpackerAutomationHelper.class);
+        super.registerComponents();
+        addComponent(AutomatedInstallDataProvider.class);
+        addComponent(AutomatedPanelsProvider.class);
+        addComponent(AutomatedPrompt.class);
+        addComponent(AutomatedInstaller.class);
+        addComponent(ConsolePanelAutomationHelper.class);
+        addComponent(ConsolePackResources.class);
+        addComponent(MultiVolumeUnpackerAutomationHelper.class);
     }
 }

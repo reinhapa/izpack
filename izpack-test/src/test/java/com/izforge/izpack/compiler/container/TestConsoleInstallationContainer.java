@@ -1,8 +1,8 @@
 package com.izforge.izpack.compiler.container;
 
 import org.junit.runners.model.FrameworkMethod;
-import org.picocontainer.MutablePicoContainer;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.impl.InstallerContainer;
 
 
@@ -21,7 +21,7 @@ public class TestConsoleInstallationContainer extends AbstractTestInstallationCo
 
 
     @Override
-    protected InstallerContainer fillInstallerContainer(MutablePicoContainer container)
+    protected InstallerContainer fillInstallerContainer(CdiInitializationContext container)
     {
         return new TestConsoleInstallerContainer(container);
     }

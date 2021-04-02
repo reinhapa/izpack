@@ -11,12 +11,15 @@ import com.izforge.izpack.installer.data.InstallData;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
+import jakarta.enterprise.inject.Produces;
+
 /**
  * Install data loader
  */
 public class AutomatedInstallDataProvider extends AbstractInstallDataProvider
 {
 
+    @Produces
     public AutomatedInstallData provide(Resources resources, Locales locales, DefaultVariables variables,
                                         Housekeeper housekeeper, PlatformModelMatcher matcher)
             throws IOException, ClassNotFoundException, InstallerException

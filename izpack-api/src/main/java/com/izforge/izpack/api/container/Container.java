@@ -45,11 +45,11 @@ public interface Container
     /**
      * Register a component.
      *
-     * @param componentKey   the component identifier. This must be unique within the container
+     * @param componentType the component type
      * @param implementation the component implementation
      * @throws ContainerException if registration fails
      */
-    void addComponent(Object componentKey, Object implementation);
+    <T> void addComponent(Class<T> componentType, Object implementation);
 
     /**
      * Retrieve a component by its component type.
@@ -61,17 +61,6 @@ public interface Container
      * @throws ContainerException if component creation fails
      */
     <T> T getComponent(Class<T> componentType);
-
-    /**
-     * Retrieve a component by its component key or type.
-     * <p/>
-     * If the component type is registered but an instance does not exist, then it will be created.
-     *
-     * @param componentKeyOrType the key or type of the component
-     * @return the corresponding object instance, or <tt>null</tt> if it does not exist
-     * @throws ContainerException if component creation fails
-     */
-    Object getComponent(Object componentKeyOrType);
 
     /**
      * Creates a child container.
@@ -92,9 +81,8 @@ public interface Container
      * Removes a child container.
      *
      * @param child the container to remove
-     * @return <tt>true</tt> if the container was removed
      */
-    boolean removeChildContainer(Container child);
+    void removeChildContainer(Container child);
 
     /**
      * Disposes of the container and all of its child containers.
@@ -111,4 +99,8 @@ public interface Container
      * @throws IzPackClassNotFoundException if the class cannot be found
      */
     <T> Class<T> getClass(String className, Class<T> superType);
+
+    void addPanel(String id, Object panel);
+
+    Object getPanel(String id);
 }

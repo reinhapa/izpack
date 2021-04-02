@@ -26,19 +26,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.picocontainer.injectors.Provider;
-
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.api.rules.Condition;
+import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
+
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Injection provider for rules.
@@ -46,7 +46,7 @@ import com.izforge.izpack.core.rules.RulesEngineImpl;
  * @author Anthonin Bonnefoy
  * @author Tim Anderson
  */
-public class RulesProvider implements Provider
+public class RulesProvider
 {
     private static final Logger logger = Logger.getLogger(RulesProvider.class.getName());
 
@@ -64,6 +64,7 @@ public class RulesProvider implements Provider
      * @param resources          the resources
      * @return a new rules engine
      */
+    @Produces
     public RulesEngine provide(AutomatedInstallData installData, DefaultVariables variables,
                                ConditionContainer conditionContainer, Resources resources)
     {

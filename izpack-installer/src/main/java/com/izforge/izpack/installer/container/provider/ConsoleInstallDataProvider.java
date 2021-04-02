@@ -24,9 +24,12 @@ import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
+import jakarta.enterprise.inject.Produces;
+
 public class ConsoleInstallDataProvider extends AbstractInstallDataProvider
 {
 
+    @Produces
     public ConsoleInstallData provide(Resources resources, Locales locales, DefaultVariables variables,
                                       Housekeeper housekeeper, PlatformModelMatcher matcher)
             throws Exception

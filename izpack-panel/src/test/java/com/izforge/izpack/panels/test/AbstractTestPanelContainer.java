@@ -28,20 +28,18 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.Properties;
 
-import com.izforge.izpack.test.util.TestHousekeeper;
 import org.mockito.Mockito;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
-import org.picocontainer.injectors.ProviderAdapter;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.LocaleDatabase;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
+import com.izforge.izpack.api.factory.ObjectFactory;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.container.PlatformProvider;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.factory.DefaultObjectFactory;
@@ -52,6 +50,7 @@ import com.izforge.izpack.installer.container.provider.RulesProvider;
 import com.izforge.izpack.installer.data.UninstallData;
 import com.izforge.izpack.installer.data.UninstallDataWriter;
 import com.izforge.izpack.installer.unpacker.IUnpacker;
+import com.izforge.izpack.test.util.TestHousekeeper;
 import com.izforge.izpack.util.PlatformModelMatcher;
 import com.izforge.izpack.util.Platforms;
 
@@ -69,7 +68,7 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
      * @return the underlying container
      */
     @Override
-    public MutablePicoContainer getContainer()
+    public CdiInitializationContext getContainer()
     {
         return super.getContainer();
     }
@@ -77,13 +76,12 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
     /**
      * Invoked by {@link #initialise} to fill the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
+        super.fillContainer();
         addComponent(Properties.class);
         addComponent(Variables.class, DefaultVariables.class);
         addComponent(ResourceManager.class);
@@ -92,7 +90,7 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
         addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
         addComponent(AutomatedInstaller.class);
 
-        container.addComponent(new DefaultObjectFactory(this));
+        addComponent(ObjectFactory.class, new DefaultObjectFactory(this)); //TODO:WELD: remove container reference if possible
         addComponent(IUnpacker.class, Mockito.mock(IUnpacker.class));
         addComponent(TestHousekeeper.class, Mockito.mock(TestHousekeeper.class));
         addComponent(Platforms.class);
@@ -114,9 +112,9 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
         {
             throw new ContainerException(exception);
         }
-        container.addComponent(locales);
+        addComponent(Locales.class, locales);
 
-        container.addAdapter(new ProviderAdapter(new RulesProvider()));
-        container.addAdapter(new ProviderAdapter(new PlatformProvider()));
+        addComponent(RulesProvider.class);
+        addComponent(PlatformProvider.class);
     }
 }

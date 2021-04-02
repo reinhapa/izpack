@@ -20,6 +20,13 @@
  */
 package com.izforge.izpack.util;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Properties;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.container.PlatformProvider;
@@ -33,14 +40,6 @@ import com.izforge.izpack.util.os.Shortcut;
 import com.izforge.izpack.util.os.Unix_Shortcut;
 import com.izforge.izpack.util.os.Win_RegistryHandler;
 import com.izforge.izpack.util.os.Win_Shortcut;
-import org.junit.Before;
-import org.junit.Test;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.injectors.ProviderAdapter;
-
-import java.util.Properties;
-
-import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -71,8 +70,9 @@ public class InstallerTargetPlatformFactoryTest
             }
 
             @Override
-            protected void fillContainer(MutablePicoContainer container)
+            protected void fillContainer()
             {
+                super.fillContainer();
                 addComponent(Properties.class);
                 addComponent(DefaultVariables.class);
                 addComponent(ResourceManager.class);
@@ -84,7 +84,7 @@ public class InstallerTargetPlatformFactoryTest
                 addComponent(DefaultTargetPlatformFactory.class);
                 addComponent(Platforms.class);
                 addComponent(Container.class, this);
-                container.addAdapter(new ProviderAdapter(new PlatformProvider()));
+                addComponent(PlatformProvider.class);
             }
         };
         factory = container.getComponent(TargetPlatformFactory.class);

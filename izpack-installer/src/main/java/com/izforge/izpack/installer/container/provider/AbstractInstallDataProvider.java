@@ -1,29 +1,48 @@
 package com.izforge.izpack.installer.container.provider;
 
-import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
-import com.izforge.izpack.api.data.*;
-import com.izforge.izpack.api.data.Info.TempDir;
-import com.izforge.izpack.api.exception.ResourceException;
-import com.izforge.izpack.api.exception.ResourceNotFoundException;
-import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.util.*;
-import org.apache.commons.io.IOUtils;
-import org.picocontainer.injectors.Provider;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.io.IOUtils;
+
+import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.DynamicInstallerRequirementValidator;
+import com.izforge.izpack.api.data.DynamicVariable;
+import com.izforge.izpack.api.data.Info;
+import com.izforge.izpack.api.data.Info.TempDir;
+import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.data.InstallerRequirement;
+import com.izforge.izpack.api.data.Pack;
+import com.izforge.izpack.api.data.PackInfo;
+import com.izforge.izpack.api.data.Panel;
+import com.izforge.izpack.api.data.ScriptParserConstant;
+import com.izforge.izpack.api.data.Value;
+import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.exception.ResourceException;
+import com.izforge.izpack.api.exception.ResourceNotFoundException;
+import com.izforge.izpack.api.resource.Locales;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.util.Housekeeper;
+import com.izforge.izpack.util.IoHelper;
+import com.izforge.izpack.util.OsVersion;
+import com.izforge.izpack.util.PlatformModelMatcher;
+import com.izforge.izpack.util.TemporaryDirectory;
 
 /**
  * Abstract base class for providers of {@link InstallData}.
  */
-public abstract class AbstractInstallDataProvider implements Provider
+public abstract class AbstractInstallDataProvider
 {
     /**
      * The logger.
@@ -99,8 +118,8 @@ public abstract class AbstractInstallDataProvider implements Provider
             IOUtils.closeQuietly(objIn);
         }
 
-        List<Pack> availablePacks = new ArrayList<Pack>();
-        List<Pack> allPacks = new ArrayList<Pack>();
+        List<Pack> availablePacks = new ArrayList<>();
+        List<Pack> allPacks = new ArrayList<>();
 
         for (PackInfo packInfo : packs)
         {

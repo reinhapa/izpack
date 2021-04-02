@@ -34,6 +34,8 @@ import com.izforge.izpack.installer.container.impl.InstallerContainer;
 import com.izforge.izpack.util.Console;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
+import jakarta.enterprise.inject.Produces;
+
 
 /**
  * Provider of {@link ConsolePanels}.
@@ -54,10 +56,11 @@ public class ConsolePanelsProvider extends PanelsProvider
      * @param matcher     the platform-model matcher
      * @throws IzPackException if a panel doesn't have unique identifier
      */
+    @Produces
     public ConsolePanels provide(ObjectFactory factory, InstallerContainer container, AutomatedInstallData installData, Console console,
                                  PlatformModelMatcher matcher)
     {
-        List<ConsolePanelView> panels = new ArrayList<ConsolePanelView>();
+        List<ConsolePanelView> panels = new ArrayList<>();
 
         for (Panel panel : prepare(installData, matcher))
         {

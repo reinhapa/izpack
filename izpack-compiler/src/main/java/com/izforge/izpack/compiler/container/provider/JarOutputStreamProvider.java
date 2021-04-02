@@ -19,25 +19,28 @@
 
 package com.izforge.izpack.compiler.container.provider;
 
-import com.izforge.izpack.compiler.data.CompilerData;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.picocontainer.injectors.Provider;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.jar.JarOutputStream;
 import java.util.zip.Deflater;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
+import com.izforge.izpack.compiler.data.CompilerData;
+
+import jakarta.enterprise.inject.Produces;
+
 /**
  * Provides the Jar output stream  for the final installer jar
  *
  * @author Anthonin Bonnefoy
  */
-public class JarOutputStreamProvider implements Provider
+public class JarOutputStreamProvider
 {
 
+    @Produces
     public JarOutputStream provide(CompilerData compilerData)
     {
         File file = new File(compilerData.getOutput());

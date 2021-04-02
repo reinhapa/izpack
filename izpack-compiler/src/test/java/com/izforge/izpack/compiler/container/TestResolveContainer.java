@@ -23,11 +23,9 @@ package com.izforge.izpack.compiler.container;
 
 import java.util.Properties;
 
-import org.picocontainer.PicoException;
-
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.compiler.util.CompilerClassLoader;
 import com.izforge.izpack.compiler.merge.CompilerPathResolver;
+import com.izforge.izpack.compiler.util.CompilerClassLoader;
 import com.izforge.izpack.compiler.util.DefaultClassNameMapper;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.merge.resolve.MergeableResolver;

@@ -25,6 +25,8 @@ package com.izforge.izpack.core.factory;
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.factory.ObjectFactory;
 
+import jakarta.inject.Inject;
+
 
 /**
  * Default implementation of {@link ObjectFactory}.
@@ -44,6 +46,7 @@ public class DefaultObjectFactory implements ObjectFactory
      *
      * @param container the container
      */
+    @Inject
     public DefaultObjectFactory(Container container)
     {
         this.container = container;
@@ -69,7 +72,7 @@ public class DefaultObjectFactory implements ObjectFactory
             child.addComponent(type);
             for (Object parameter : parameters)
             {
-                child.addComponent(parameter, parameter);
+                child.addComponent(parameter.getClass(), parameter);
             }
             result = child.getComponent(type);
         }

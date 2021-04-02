@@ -7,9 +7,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 
-//import jdk.internal.loader.URLClassPath;
-import sun.misc.URLClassPath;
-
 /**
  * jar Classloading manipulation class
  *
@@ -25,15 +22,15 @@ public class ClassUtils
             URLClassLoader systemClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
             Field ucpField = URLClassLoader.class.getDeclaredField("ucp");
             ucpField.setAccessible(true);
-            URLClassPath ucp = (URLClassPath) ucpField.get(systemClassLoader);
-            Field pathField = URLClassPath.class.getDeclaredField("path");
+            Object ucp = ucpField.get(systemClassLoader);
+            Class<? extends Object> ucpClass = ucp.getClass();
+            Field pathField = ucpClass.getDeclaredField("path");
             pathField.setAccessible(true);
             ArrayList<URL> path = (ArrayList<URL>) pathField.get(ucp);
             path.remove(path.size() - 1);
-
-            Field loaderField = URLClassPath.class.getDeclaredField("loaders");
+            Field loaderField = ucpClass.getDeclaredField("loaders");
             loaderField.setAccessible(true);
-            ArrayList loaders = (ArrayList) loaderField.get(ucp);
+            ArrayList<?> loaders = (ArrayList<?>) loaderField.get(ucp);
             loaders.remove(loaders.size() - 1);
         }
         catch (Exception e)

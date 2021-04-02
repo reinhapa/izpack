@@ -20,18 +20,19 @@
 package com.izforge.izpack.compiler.container.provider;
 
 import org.apache.commons.cli.ParseException;
-import org.picocontainer.injectors.Provider;
 
 import com.izforge.izpack.compiler.cli.CliAnalyzer;
 import com.izforge.izpack.compiler.container.CompilerContainer;
 import com.izforge.izpack.compiler.data.CompilerData;
+
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Provide CompileData coming from CliAnalyzer
  *
  * @author Anthonin Bonnefoy
  */
-public class CompilerDataProvider implements Provider
+public class CompilerDataProvider
 {
     private String[] args;
 
@@ -40,6 +41,7 @@ public class CompilerDataProvider implements Provider
         this.args = args;
     }
 
+    @Produces
     public CompilerData provide(CliAnalyzer cliAnalyzer, CompilerContainer compilerContainer) throws ParseException
     {
         CompilerData compilerData = cliAnalyzer.printAndParseArgs(args);

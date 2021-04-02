@@ -22,16 +22,15 @@
 package com.izforge.izpack.compiler.container;
 
 import com.izforge.izpack.api.data.ConsolePrefs;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.console.ConsoleInstaller;
 import com.izforge.izpack.installer.console.TestConsoleInstaller;
-import com.izforge.izpack.installer.container.impl.ConsoleInstallerContainer;
 import com.izforge.izpack.installer.console.TestConsolePrefsProvider;
+import com.izforge.izpack.installer.container.impl.ConsoleInstallerContainer;
 import com.izforge.izpack.test.util.TestConsole;
 import com.izforge.izpack.test.util.TestHousekeeper;
 import com.izforge.izpack.util.Console;
 import com.izforge.izpack.util.Housekeeper;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.injectors.ProviderAdapter;
 
 
 /**
@@ -53,27 +52,25 @@ public class TestConsoleInstallerContainer extends ConsoleInstallerContainer
     {
     }
 
-    public TestConsoleInstallerContainer(MutablePicoContainer container)
+    public TestConsoleInstallerContainer(CdiInitializationContext container)
     {
         super(container);
     }
 
     /**
      * Registers components with the container.
-     *
-     * @param container the container
      */
     @Override
-    protected void registerComponents(MutablePicoContainer container)
+    protected void registerComponents()
     {
-        super.registerComponents(container);
-        container.removeComponent(ConsoleInstaller.class);
-        container.addComponent(TestConsoleInstaller.class);
-        container.removeComponent(ConsolePrefs.class);
-        container.removeComponent(Console.class);
-        container.addAdapter(new ProviderAdapter(new TestConsolePrefsProvider())); // required by TestConsole
-        container.addComponent(TestConsole.class);
-        container.removeComponent(Housekeeper.class);
-        container.addComponent(TestHousekeeper.class);
+        super.registerComponents();
+        removeComponent(ConsoleInstaller.class);
+        addComponent(TestConsoleInstaller.class);
+        removeComponent(ConsolePrefs.class);
+        removeComponent(Console.class);
+        addComponent(TestConsolePrefsProvider.class); // required by TestConsole
+        addComponent(TestConsole.class);
+        removeComponent(Housekeeper.class);
+        addComponent(TestHousekeeper.class);
     }
 }

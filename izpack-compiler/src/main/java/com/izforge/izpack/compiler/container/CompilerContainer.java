@@ -19,6 +19,8 @@
 
 package com.izforge.izpack.compiler.container;
 
+import java.util.Properties;
+
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.factory.ObjectFactory;
 import com.izforge.izpack.api.rules.RulesEngine;
@@ -35,6 +37,7 @@ import com.izforge.izpack.compiler.helper.CompilerHelper;
 import com.izforge.izpack.compiler.listener.CmdlinePackagerListener;
 import com.izforge.izpack.compiler.resource.ResourceFinder;
 import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.container.PlatformProvider;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.factory.DefaultObjectFactory;
@@ -43,14 +46,8 @@ import com.izforge.izpack.core.rules.RulesEngineImpl;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorImpl;
 import com.izforge.izpack.merge.MergeManager;
 import com.izforge.izpack.merge.MergeManagerImpl;
-import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.PlatformModelMatcher;
 import com.izforge.izpack.util.Platforms;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.injectors.ProviderAdapter;
-import org.picocontainer.parameters.ComponentParameter;
-
-import java.util.Properties;
 
 /**
  * Container for compiler.
@@ -76,7 +73,7 @@ public class CompilerContainer extends AbstractContainer
      * @param container the underlying container. May be <tt>null</tt>
      * @throws ContainerException if initialisation fails
      */
-    protected CompilerContainer(MutablePicoContainer container)
+    protected CompilerContainer(CdiInitializationContext container)
     {
         super(container);
     }
@@ -84,12 +81,12 @@ public class CompilerContainer extends AbstractContainer
     /**
      * Fills the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
+        super.fillContainer();
         addComponent(Properties.class);
         addComponent(DefaultVariables.class);
         addComponent(CompilerContainer.class, this);
@@ -103,20 +100,16 @@ public class CompilerContainer extends AbstractContainer
         addComponent(PropertyManager.class);
         addComponent(VariableSubstitutor.class, VariableSubstitutorImpl.class);
         addComponent(CompilerHelper.class);
-        container.addComponent(RulesEngine.class, RulesEngineImpl.class,
-                               new ComponentParameter(ConditionContainer.class),
-                               new ComponentParameter(Platform.class));
+        addComponent(RulesEngine.class, RulesEngineImpl.class);
         addComponent(MergeManager.class, MergeManagerImpl.class);
-        container.addComponent(ObjectFactory.class, DefaultObjectFactory.class,
-                               new ComponentParameter(CompilerContainer.class));
-        container.addComponent(PlatformModelMatcher.class);
+        addComponent(ObjectFactory.class, DefaultObjectFactory.class);
+        addComponent(PlatformModelMatcher.class);
         addComponent(Platforms.class);
 
         new ResolverContainerFiller().fillContainer(this);
-        container.addAdapter(new ProviderAdapter(new XmlCompilerHelperProvider()))
-                .addAdapter(new ProviderAdapter(new JarOutputStreamProvider()))
-                .addAdapter(new ProviderAdapter(new PlatformProvider()));
-
+        addComponent(XmlCompilerHelperProvider.class);
+        addComponent(JarOutputStreamProvider.class);
+        addComponent(PlatformProvider.class);
     }
 
     /**
@@ -126,7 +119,7 @@ public class CompilerContainer extends AbstractContainer
      */
     public void processCompileDataFromArgs(String[] args)
     {
-        getContainer().addAdapter(new ProviderAdapter(new CompilerDataProvider(args)));
+        getContainer().addComponent(CompilerDataProvider.class, new CompilerDataProvider(args));
     }
 
 }

@@ -18,16 +18,13 @@
  */
 package com.izforge.izpack.installer.language;
 
-import com.izforge.izpack.api.GuiId;
-import com.izforge.izpack.api.exception.ResourceException;
-import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.gui.IconsDatabase;
-import com.izforge.izpack.installer.container.provider.AbstractInstallDataProvider;
-import com.izforge.izpack.installer.data.GUIInstallData;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -38,6 +35,29 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.GrayFilter;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import com.izforge.izpack.api.GuiId;
+import com.izforge.izpack.api.exception.ResourceException;
+import com.izforge.izpack.api.resource.Locales;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.gui.IconsDatabase;
+import com.izforge.izpack.installer.container.provider.AbstractInstallDataProvider;
+import com.izforge.izpack.installer.data.GUIInstallData;
+
+import jakarta.inject.Inject;
 
 /**
  * Used to prompt the user for the language. Languages can be displayed in iso3 or the native
@@ -70,7 +90,7 @@ public class LanguageDialog extends JDialog
     /**
      * Maps ISO3 codes to the corresponding language display values.
      */
-    private Map<String, String> displayNames = new HashMap<String, String>();
+    private Map<String, String> displayNames = new HashMap<>();
 
     /**
      * The combo box.
@@ -91,6 +111,7 @@ public class LanguageDialog extends JDialog
      * @param locales      the locales
      * @param installData  the installation data
      */
+    @Inject
     public LanguageDialog(Resources resources, Locales locales, GUIInstallData installData, IconsDatabase icons)
     {
         super();
@@ -367,12 +388,12 @@ public class LanguageDialog extends JDialog
         /**
          * Icons cache.
          */
-        private TreeMap<String, ImageIcon> icons = new TreeMap<String, ImageIcon>();
+        private TreeMap<String, ImageIcon> icons = new TreeMap<>();
 
         /**
          * Grayed icons cache.
          */
-        private TreeMap<String, ImageIcon> grayIcons = new TreeMap<String, ImageIcon>();
+        private TreeMap<String, ImageIcon> grayIcons = new TreeMap<>();
 
         /**
          * Default constructor.

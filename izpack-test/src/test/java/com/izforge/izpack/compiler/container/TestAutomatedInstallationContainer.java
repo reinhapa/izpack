@@ -1,8 +1,9 @@
 package com.izforge.izpack.compiler.container;
 
-import com.izforge.izpack.installer.container.impl.InstallerContainer;
 import org.junit.runners.model.FrameworkMethod;
-import org.picocontainer.MutablePicoContainer;
+
+import com.izforge.izpack.core.container.CdiInitializationContext;
+import com.izforge.izpack.installer.container.impl.InstallerContainer;
 
 
 /**
@@ -18,7 +19,7 @@ public class TestAutomatedInstallationContainer extends AbstractTestInstallation
 
 
     @Override
-    protected InstallerContainer fillInstallerContainer(MutablePicoContainer container)
+    protected InstallerContainer fillInstallerContainer(CdiInitializationContext container)
     {
         return new TestAutomatedInstallerContainer(container);
     }

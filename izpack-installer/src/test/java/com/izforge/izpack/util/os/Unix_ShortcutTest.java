@@ -30,8 +30,6 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.injectors.ProviderAdapter;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
@@ -83,8 +81,9 @@ public class Unix_ShortcutTest
             }
 
             @Override
-            protected void fillContainer(MutablePicoContainer container)
+            protected void fillContainer()
             {
+                super.fillContainer();
                 addComponent(Properties.class);
                 addComponent(DefaultVariables.class);
                 addComponent(ResourceManager.class);
@@ -96,7 +95,7 @@ public class Unix_ShortcutTest
                 addComponent(DefaultTargetPlatformFactory.class);
                 addComponent(Platforms.class);
                 addComponent(Container.class, this);
-                container.addAdapter(new ProviderAdapter(new PlatformProvider()));
+                addComponent(PlatformProvider.class);
             }
         };
         factory = container.getComponent(TargetPlatformFactory.class);

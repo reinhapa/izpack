@@ -41,4 +41,14 @@ public class ConditionContainer extends AbstractDelegatingContainer
         super(parent.createChildContainer());
     }
 
+    @Override
+    public void addPanel(String id, Object panel) {
+        throw new UnsupportedOperationException("addPanel");
+    }
+
+    @Override
+    public Object getPanel(String id) {
+      return null;
+    }
+
 }

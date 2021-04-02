@@ -2,18 +2,12 @@ package com.izforge.izpack.installer.container.impl;
 
 import java.util.Properties;
 
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoException;
-import org.picocontainer.injectors.ProviderAdapter;
-import org.picocontainer.parameters.ComponentParameter;
-
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.InstallerException;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.api.substitutor.VariableSubstitutor;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.container.PlatformProvider;
 import com.izforge.izpack.core.data.DefaultVariables;
@@ -69,30 +63,26 @@ public abstract class InstallerContainer extends AbstractContainer
     /**
      * Invoked by {@link #initialise} to fill the container.
      *
-     * @param container the underlying container
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer(MutablePicoContainer container)
+    protected void fillContainer()
     {
-        registerComponents(container);
-        resolveComponents(container);
+        super.fillContainer();
+        registerComponents();
+        resolveComponents();
     }
 
     /**
      * Registers components with the container.
      *
-     * @param pico the container
      * @throws ContainerException if registration fails
-     * @throws PicoException      for any PicoContainer error
      */
-    protected void registerComponents(MutablePicoContainer pico)
+    protected void registerComponents()
     {
-        pico.addAdapter(new ProviderAdapter(new RulesProvider()));
-        pico.addAdapter(new ProviderAdapter(new PlatformProvider()));
-        pico.addAdapter(new ProviderAdapter(new LocalesProvider()));
-
+        addComponent(RulesProvider.class);
+        addComponent(PlatformProvider.class);
+        addComponent(LocalesProvider.class);
         addComponent(InstallDataConfiguratorWithRules.class);
         addComponent(InstallerRequirementChecker.class);
         addComponent(JavaVersionChecker.class);
@@ -103,7 +93,6 @@ public abstract class InstallerContainer extends AbstractContainer
         addComponent(LockFileChecker.class);
         addComponent(MergeManagerImpl.class);
         addComponent(UninstallData.class);
-        addComponent(MutablePicoContainer.class, pico);
         addComponent(ConditionContainer.class);
         addComponent(Properties.class);
         addComponent(DefaultVariables.class);
@@ -124,24 +113,20 @@ public abstract class InstallerContainer extends AbstractContainer
         addComponent(MergeableResolver.class);
         addComponent(Platforms.class);
         addComponent(PlatformModelMatcher.class);
-
-        pico.addComponent(VariableSubstitutor.class, VariableSubstitutorImpl.class,
-                          new ComponentParameter(DefaultVariables.class));
+        addComponent(VariableSubstitutorImpl.class);
     }
 
     /**
      * Resolve components.
-     *
-     * @param pico the container
      */
-    protected void resolveComponents(MutablePicoContainer pico)
+    protected void resolveComponents()
     {
-        InstallData installData = pico.getComponent(InstallData.class);
+        InstallData installData = getComponent(InstallData.class);
         String className = installData.getInfo().getUnpackerClassName();
         Class<IUnpacker> unpackerClass = getClass(className, IUnpacker.class);
-        pico.addComponent(IUnpacker.class, unpackerClass);
+        addComponent(IUnpacker.class, unpackerClass);
 
-        CustomDataLoader customDataLoader = pico.getComponent(CustomDataLoader.class);
+        CustomDataLoader customDataLoader = getComponent(CustomDataLoader.class);
         try
         {
             customDataLoader.loadCustomData();
