@@ -34,9 +34,9 @@ import org.junit.Test;
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.core.container.PlatformProvider;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.factory.DefaultObjectFactory;
+import com.izforge.izpack.core.provider.PlatformProvider;
 import com.izforge.izpack.core.resource.ResourceManager;
 import com.izforge.izpack.test.util.TestLibrarian;
 import com.izforge.izpack.util.DefaultTargetPlatformFactory;
@@ -93,7 +93,6 @@ public class Unix_ShortcutTest
                 addComponent(TargetFactory.class);
                 addComponent(DefaultObjectFactory.class);
                 addComponent(DefaultTargetPlatformFactory.class);
-                addComponent(Platforms.class);
                 addComponent(Container.class, this);
                 addComponent(PlatformProvider.class);
             }

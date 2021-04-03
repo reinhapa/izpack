@@ -21,7 +21,10 @@
 
 package com.izforge.izpack.installer.container.provider;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.izforge.izpack.api.data.ConsolePrefs;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 
@@ -43,8 +46,10 @@ public class ConsolePrefsProvider
      * @return the console preferences
      */
     @Produces
-    public ConsolePrefs provide(ConsoleInstallData installData)
+    public ConsolePrefs provide(InstallData installData)
     {
-        return installData.consolePrefs;
+        AtomicReference<ConsolePrefs> result = new AtomicReference<>();
+        ConsoleInstallData.withData(installData, consoleData -> result.set(consoleData.consolePrefs));
+        return result.get();
     }
 }

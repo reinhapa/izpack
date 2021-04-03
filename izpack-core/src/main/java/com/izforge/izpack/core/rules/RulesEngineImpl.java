@@ -60,10 +60,9 @@ import com.izforge.izpack.core.rules.process.PackSelectionCondition;
 import com.izforge.izpack.core.rules.process.RefCondition;
 import com.izforge.izpack.core.rules.process.UserCondition;
 import com.izforge.izpack.core.rules.process.VariableCondition;
+import com.izforge.izpack.util.ClassUtil;
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.Platforms;
-
-import jakarta.inject.Inject;
 
 
 /**
@@ -114,7 +113,6 @@ public class RulesEngineImpl implements RulesEngine
         TYPE_CLASS_NAMES.put("variable", VariableCondition.class.getName());
     }
 
-    @Inject
     public RulesEngineImpl(ConditionContainer container, Platform platform)
     {
         this.installData = null;
@@ -170,7 +168,7 @@ public class RulesEngineImpl implements RulesEngine
             String className = getClassName(type);
             if (conditionClass == null)
             {
-                conditionClass = container.getClass(className, Condition.class);
+                conditionClass = ClassUtil.getClass(className, Condition.class);
             }
             try
             {
@@ -179,7 +177,7 @@ public class RulesEngineImpl implements RulesEngine
                     id = className + "-" + UUID.randomUUID().toString();
                     logger.fine("Random condition id " + id + " generated");
                 }
-                result = container.getComponent(conditionClass);
+                result = container.getCondition(this, conditionClass);
                 result.setId(id);
                 result.setInstallData(installData);
                 result.readFromXML(condition);

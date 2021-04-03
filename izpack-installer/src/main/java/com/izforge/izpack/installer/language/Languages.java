@@ -25,10 +25,12 @@ import java.awt.Font;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.installer.data.GUIInstallData;
 
 
@@ -56,7 +58,7 @@ class Languages
     /**
      * The language display names, keyed on their ISO3 codes.
      */
-    private final Map<String, String> displayNames = new LinkedHashMap<String, String>();
+    private final Map<String, String> displayNames = new LinkedHashMap<>();
 
     /**
      * The logger.
@@ -71,7 +73,7 @@ class Languages
      * @param installData the installation data
      * @param font        the font to verify that language display names can be displayed. May be {@code null}
      */
-    public Languages(Locales locales, GUIInstallData installData, Font font)
+    public Languages(Locales locales, InstallData installData, Font font)
     {
         displayType = getDisplayType(installData);
         if (displayType == DisplayType.NATIVE && font == null)
@@ -106,7 +108,7 @@ class Languages
      * @param installData the installation data
      * @param font        the font to verify that language display names can be displayed. May be {@code null}
      */
-    public Languages(Locales locales, ConsoleInstallData installData)
+    public Languages(Locales locales, AutomatedInstallData installData)
     {
         DisplayNameCollector collector = new DefaultDisplayNameCollector();
         for (String code : locales.getISOCodes())
@@ -140,23 +142,25 @@ class Languages
      *
      * @return the language display type
      */
-    private DisplayType getDisplayType(GUIInstallData installData)
+    private DisplayType getDisplayType(InstallData installData)
     {
-        DisplayType result = DisplayType.DEFAULT;
-        Map<String, String> modifier = installData.guiPrefs.modifier;
-        String langDisplayType = modifier.get("langDisplayType");
-        if (langDisplayType != null && langDisplayType.length() != 0)
-        {
-            try
-            {
-                result = DisplayType.valueOf(langDisplayType.toUpperCase());
-            }
-            catch (IllegalArgumentException exception)
-            {
-                logger.warning("Invalid langDisplayType: " + langDisplayType);
-            }
-        }
-        return result;
+        AtomicReference<DisplayType> result = new AtomicReference<>(DisplayType.DEFAULT);
+        GUIInstallData.withData(installData, guiData -> {
+          Map<String, String> modifier = guiData.guiPrefs.modifier;
+          String langDisplayType = modifier.get("langDisplayType");
+          if (langDisplayType != null && langDisplayType.length() != 0)
+          {
+              try
+              {
+                  result.set(DisplayType.valueOf(langDisplayType.toUpperCase()));
+              }
+              catch (IllegalArgumentException exception)
+              {
+                  logger.warning("Invalid langDisplayType: " + langDisplayType);
+              }
+          }
+        });
+        return result.get();
     }
 
     /**

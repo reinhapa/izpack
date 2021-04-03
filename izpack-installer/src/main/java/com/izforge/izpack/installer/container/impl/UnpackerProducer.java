@@ -4,6 +4,7 @@
  * http://izpack.org/
  * http://izpack.codehaus.org/
  *
+ * Copyright 2010 Anthonin Bonnefoy
  * Copyright 2012 Tim Anderson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,39 +20,21 @@
  * limitations under the License.
  */
 
-package com.izforge.izpack.core.container;
+package com.izforge.izpack.installer.container.impl;
 
+import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.installer.unpacker.IUnpacker;
+import com.izforge.izpack.util.ClassUtil;
 
-import java.util.logging.Logger;
-
-import com.izforge.izpack.util.Platform;
-import com.izforge.izpack.util.Platforms;
-
+import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
 
+public class UnpackerProducer {
 
-/**
- * Injection provider for the current {@link Platform}.
- *
- * @author Tim Anderson
- */
-public class PlatformProvider
-{
-
-    /**
-     * The logger.
-     */
-    private static final Logger logger = Logger.getLogger(PlatformProvider.class.getName());
-
-    /**
-     * Provides the current platform.
-     *
-     * @param platforms the platform factory
-     * @return the current platform
-     */
-    @Produces
-    public Platform provide(Platforms platforms)
-    {
-        return platforms.getCurrentPlatform();
-    }
+  @Produces
+  public IUnpacker unpacker(InstallData installData, Instance<IUnpacker> unpacker) {
+    String className = installData.getInfo().getUnpackerClassName();
+    Class<IUnpacker> unpackerClass = ClassUtil.getClass(className, IUnpacker.class);
+    return unpacker.select(unpackerClass).get();
+  }
 }

@@ -35,7 +35,6 @@ import com.izforge.izpack.compiler.CompilerConfig;
 import com.izforge.izpack.compiler.data.CompilerData;
 import com.izforge.izpack.compiler.logging.MavenStyleLogFormatter;
 import com.izforge.izpack.test.InstallFile;
-import com.izforge.izpack.test.provider.JarFileProvider;
 import com.izforge.izpack.util.FileUtil;
 
 /**
@@ -158,12 +157,13 @@ public class TestCompilationContainer extends CompilerContainer
         addConfig("installFile", file.getAbsolutePath());
         addComponent(CompilerData.class, data);
         addComponent(File.class, out);
-        addComponent(JarFileProvider.class);
 
         final ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.INFO);
         consoleHandler.setFormatter(new MavenStyleLogFormatter());
         addComponent(Handler.class, consoleHandler);
+
+//        addComponent(JarFileProvider.class);
     }
 
     /**

@@ -24,6 +24,7 @@ package com.izforge.izpack.core.factory;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.factory.ObjectFactory;
+import com.izforge.izpack.util.ClassUtil;
 
 import jakarta.inject.Inject;
 
@@ -72,7 +73,7 @@ public class DefaultObjectFactory implements ObjectFactory
             child.addComponent(type);
             for (Object parameter : parameters)
             {
-                child.addComponent(parameter.getClass(), parameter);
+                addParameter(container, parameter);
             }
             result = child.getComponent(type);
         }
@@ -82,6 +83,11 @@ public class DefaultObjectFactory implements ObjectFactory
             child.dispose();
         }
         return result;
+    }
+    
+    @SuppressWarnings("unchecked")
+    static <T> void addParameter(Container child, T parameter) {
+        child.addComponent((Class<T>)parameter.getClass(), parameter);
     }
 
     /**
@@ -101,7 +107,7 @@ public class DefaultObjectFactory implements ObjectFactory
     @Override
     public <T> T create(String className, Class<T> superType, Object... parameters)
     {
-        Class<? extends T> type = container.getClass(className, superType);
+        Class<? extends T> type = ClassUtil.getClass(className, superType);
         return create(type, parameters);
     }
 }

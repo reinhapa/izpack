@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.izforge.izpack.core.rules.process.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -55,6 +54,16 @@ import com.izforge.izpack.core.rules.logic.AndCondition;
 import com.izforge.izpack.core.rules.logic.NotCondition;
 import com.izforge.izpack.core.rules.logic.OrCondition;
 import com.izforge.izpack.core.rules.logic.XorCondition;
+import com.izforge.izpack.core.rules.process.CompareNumericsCondition;
+import com.izforge.izpack.core.rules.process.CompareVersionsCondition;
+import com.izforge.izpack.core.rules.process.CompareVersionsMajorCondition;
+import com.izforge.izpack.core.rules.process.EmptyCondition;
+import com.izforge.izpack.core.rules.process.ExistsCondition;
+import com.izforge.izpack.core.rules.process.JavaCondition;
+import com.izforge.izpack.core.rules.process.PackSelectionCondition;
+import com.izforge.izpack.core.rules.process.RefCondition;
+import com.izforge.izpack.core.rules.process.UserCondition;
+import com.izforge.izpack.core.rules.process.VariableCondition;
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.Platforms;
 
@@ -151,7 +160,7 @@ public class RulesEngineImplTest
         engine = new RulesEngineImpl(new AutomatedInstallData(variables, linux), null, linux);
         variables.setRules(engine);
 
-        Map<String, Condition> conditions = new HashMap<String, Condition>();
+        Map<String, Condition> conditions = new HashMap<>();
         Condition alwaysFalse = new JavaCondition();
         conditions.put("false", alwaysFalse);
 
@@ -724,7 +733,7 @@ public class RulesEngineImplTest
         {
             assertTrue("Expected " + condition + " to be true", rules.isConditionTrue(condition));
         }
-        List<String> falseConditions = new ArrayList<String>(Arrays.asList(INSTALL_CONDITIONS));
+        List<String> falseConditions = new ArrayList<>(Arrays.asList(INSTALL_CONDITIONS));
         falseConditions.removeAll(Arrays.asList(conditions));
         for (String falseCondition : falseConditions)
         {
@@ -743,7 +752,7 @@ public class RulesEngineImplTest
     @SuppressWarnings("unchecked")
     private Map<String, Condition> serializeConditions(RulesEngine rules) throws IOException, ClassNotFoundException
     {
-        Map<String, Condition> map = new HashMap<String, Condition>();
+        Map<String, Condition> map = new HashMap<>();
         for (String id : rules.getKnownConditionIds())
         {
             map.put(id, rules.getCondition(id));
@@ -770,8 +779,8 @@ public class RulesEngineImplTest
     private RulesEngine createRulesEngine(InstallData installData)
     {
         DefaultContainer parent = new DefaultContainer();
-        RulesEngine rules = new RulesEngineImpl(installData, new ConditionContainer(parent), installData.getPlatform());
-        parent.addComponent(RulesEngine.class, rules);
+        RulesEngine rules = new RulesEngineImpl(installData, new ConditionContainer(), installData.getPlatform());
+//        parent.addComponent(RulesEngine.class, rules);
         return rules;
     }
 

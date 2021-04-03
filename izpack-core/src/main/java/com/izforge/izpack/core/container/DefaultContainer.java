@@ -22,24 +22,52 @@
 package com.izforge.izpack.core.container;
 
 import com.izforge.izpack.api.container.Container;
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.util.Platform;
+
+import jakarta.enterprise.inject.Vetoed;
 
 /**
  * Default implementation of the {@link Container} interface.
  *
  * @author Tim Anderson
  */
+@Vetoed
 public class DefaultContainer extends AbstractContainer
 {
+    private final Class<?> classUnderTest;
 
     /**
      * Constructs a <tt>DefaultContainer</tt>.
      *
-     * @throws ContainerException if initialisation fails
+     * @throws ContainerException if initialization fails
      */
     public DefaultContainer()
     {
+        this(null);
+    }
+
+    public DefaultContainer(Class<?> classUnderTest)
+    {
+        this.classUnderTest = classUnderTest;
         initialise();
     }
 
+    @Override
+    protected void fillContainer()
+    {
+        super.fillContainer();
+        if (classUnderTest != null) {
+            addComponent(classUnderTest);
+        }
+    }
+
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    {
+        return new AutomatedInstallData(variables, platform);
+    }
 }

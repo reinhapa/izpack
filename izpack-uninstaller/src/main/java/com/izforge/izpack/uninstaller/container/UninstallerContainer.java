@@ -21,29 +21,9 @@
 
 package com.izforge.izpack.uninstaller.container;
 
-import java.util.Properties;
-
-import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.api.factory.ObjectFactory;
-import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.core.container.PlatformProvider;
-import com.izforge.izpack.core.factory.DefaultObjectFactory;
-import com.izforge.izpack.core.os.RegistryDefaultHandler;
-import com.izforge.izpack.core.resource.DefaultLocales;
-import com.izforge.izpack.core.resource.DefaultResources;
-import com.izforge.izpack.core.resource.ResourceManager;
-import com.izforge.izpack.uninstaller.Destroyer;
-import com.izforge.izpack.uninstaller.resource.Executables;
-import com.izforge.izpack.uninstaller.resource.InstallLog;
-import com.izforge.izpack.uninstaller.resource.RootScripts;
-import com.izforge.izpack.util.DefaultTargetPlatformFactory;
-import com.izforge.izpack.util.Housekeeper;
-import com.izforge.izpack.util.Librarian;
-import com.izforge.izpack.util.PlatformModelMatcher;
 import com.izforge.izpack.util.Platforms;
-import com.izforge.izpack.util.TargetFactory;
 
 
 /**
@@ -64,26 +44,24 @@ public abstract class UninstallerContainer extends AbstractContainer
     protected void fillContainer()
     {
         super.fillContainer();
-        addComponent(Resources.class, DefaultResources.class);
-        addComponent(Housekeeper.class);
-        addComponent(Librarian.class);
-        addComponent(TargetFactory.class);
-        addComponent(DefaultObjectFactory.class);
-        addComponent(DefaultTargetPlatformFactory.class);
-        addComponent(RegistryDefaultHandler.class);
-        addComponent(Container.class, this);
-        addComponent(Properties.class);
-        addComponent(ResourceManager.class);
-        addComponent(DefaultLocales.class);
-        addComponent(Platforms.class);
-        addComponent(ObjectFactory.class, DefaultObjectFactory.class);
-        addComponent(InstallLog.class);
-        addComponent(Executables.class);
-        addComponent(RootScripts.class);
-        addComponent(PlatformModelMatcher.class);
-        addComponent(Destroyer.class);
-        addComponent(PlatformProvider.class);
-        addComponent(UninstallerListenersProvider.class);
-        addComponent(MessagesProvider.class);
+//        addComponent(DefaultResources.class);
+//        addComponent(Housekeeper.class);
+//        addComponent(Librarian.class);
+//        addComponent(TargetFactory.class);
+//        addComponent(DefaultObjectFactory.class);
+//        addComponent(DefaultTargetPlatformFactory.class);
+//        addComponent(RegistryDefaultHandler.class);
+//        addComponent(Properties.class);
+//        addComponent(ResourceManager.class);
+//        addComponent(DefaultLocales.class);
+//        addComponent(DefaultObjectFactory.class);
+//        addComponent(InstallLog.class);
+//        addComponent(Executables.class);
+//        addComponent(RootScripts.class);
+//        addComponent(PlatformModelMatcher.class);
+//        addComponent(Destroyer.class);
+//        addComponent(PlatformProvider.class);
+//        addComponent(UninstallerListenersProvider.class);
+//        addComponent(MessagesProvider.class);
     }
 }

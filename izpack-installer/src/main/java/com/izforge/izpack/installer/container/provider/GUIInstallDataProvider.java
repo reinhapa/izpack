@@ -11,30 +11,28 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalTheme;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.GUIPrefs.LookAndFeel;
 import com.izforge.izpack.api.data.LookAndFeels;
-import com.izforge.izpack.api.resource.Locales;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.gui.ButtonFactory;
 import com.izforge.izpack.gui.IzPackKMetalTheme;
 import com.izforge.izpack.gui.LabelFactory;
 import com.izforge.izpack.installer.data.GUIInstallData;
-import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.OsVersion;
-import com.izforge.izpack.util.PlatformModelMatcher;
-
-import jakarta.enterprise.inject.Produces;
+import com.izforge.izpack.util.Platform;
 
 /**
  * Provide installData for GUI :
  * Load install data with l&f and GUIPrefs
  */
-public class GUIInstallDataProvider extends AbstractInstallDataProvider
+public class GUIInstallDataProvider
 {
     private static final Logger logger = Logger.getLogger(GUIInstallDataProvider.class.getName());
 
@@ -81,38 +79,28 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
     }
 
 
-    @Produces
-    public GUIInstallData provide(Resources resources, Locales locales, DefaultVariables variables,
-                                  Housekeeper housekeeper, PlatformModelMatcher matcher)
-            throws Exception
+    public static AutomatedInstallData provide(Resources resources, Variables variables, Platform platform)
     {
-        final GUIInstallData guiInstallData = new GUIInstallData(variables, matcher.getCurrentPlatform());
+        final GUIInstallData installData = new GUIInstallData(variables, platform);
         // Loads the installation data
-        loadInstallData(guiInstallData, resources, matcher, housekeeper);
-        loadGUIInstallData(guiInstallData, resources);
-        loadInstallerRequirements(guiInstallData, resources);
-        loadDynamicVariables(variables, guiInstallData, resources);
-        loadDynamicConditions(guiInstallData, resources);
-        loadDefaultLocale(guiInstallData, locales);
-        // Load custom langpack if exist.
-        AbstractInstallDataProvider.addCustomLangpack(guiInstallData, locales);
-        loadLookAndFeel(guiInstallData);
+        loadGUIInstallData(installData, resources);
+        try
+        {
+          loadLookAndFeel(installData);
+        } catch (Exception e) {
+          logger.log(Level.SEVERE, "Failed to load look & feel", e);
+        }
         if (UIManager.getColor("Button.background") != null)
         {
-            guiInstallData.buttonsHColor = UIManager.getColor("Button.background");
+            installData.buttonsHColor = UIManager.getColor("Button.background");
         }
         // ENTER always presses button in focus
         UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
-        return guiInstallData;
+        return installData;
     }
 
-    /**
-     * Loads the suitable L&F.
-     *
-     * @param installData the installation data
-     * @throws Exception Description of the Exception
-     */
-    protected void loadLookAndFeel(final GUIInstallData installData) throws Exception
+    @SuppressWarnings("deprecation")
+    private static void loadLookAndFeel(final GUIInstallData installData) throws ReflectiveOperationException, UnsupportedLookAndFeelException
     {
         // Do we have any preference for this OS ?
         String syskey = "unix";
@@ -187,14 +175,13 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
             ButtonFactory.useButtonIcons(useButtonIcons);
             installData.buttonsHColor = new Color(255, 255, 255);
             @SuppressWarnings("unchecked")
-			Class<javax.swing.LookAndFeel> lafClass = (Class<javax.swing.LookAndFeel>) Class.forName(
+            Class<javax.swing.LookAndFeel> lafClass = (Class<javax.swing.LookAndFeel>) Class.forName(
                     "com.incors.plaf.kunststoff.KunststoffLookAndFeel");
             @SuppressWarnings("unchecked")
-			Class<MetalTheme> mtheme = (Class<MetalTheme>) Class.forName("javax.swing.plaf.metal.MetalTheme");
-            Class[] params = {mtheme};
+            Class<MetalTheme> mtheme = (Class<MetalTheme>) Class.forName("javax.swing.plaf.metal.MetalTheme");
             @SuppressWarnings("unchecked")
-			Class<IzPackKMetalTheme> theme = (Class<IzPackKMetalTheme>) Class.forName("com.izforge.izpack.gui.IzPackKMetalTheme");
-            Method setCurrentThemeMethod = lafClass.getMethod("setCurrentTheme", params);
+            Class<IzPackKMetalTheme> theme = (Class<IzPackKMetalTheme>) Class.forName("com.izforge.izpack.gui.IzPackKMetalTheme");
+            Method setCurrentThemeMethod = lafClass.getMethod("setCurrentTheme", new Class[] {mtheme});
 
             // We invoke and place Kunststoff as our L&F
             javax.swing.LookAndFeel kunststoff = lafClass.newInstance();
@@ -257,29 +244,26 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
             }
 
             logger.info("Using laf " + variant);
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                  try {
-                      UIManager.setLookAndFeel(variant);
-                      UIManager.getLookAndFeelDefaults().put("ClassLoader", JPanel.class.getClassLoader());
-                      checkSubstanceLafLoaded();
-                  } catch (Exception e) {
-                      logger.log(Level.SEVERE, "Error loading Substance look and feel: " + e.getMessage(), e);
-                    System.out.println("Substance Graphite failed to initialize");
-                  }
-                }
-              });
+            SwingUtilities.invokeLater(() -> {
+              try {
+                  UIManager.setLookAndFeel(variant);
+                  UIManager.getLookAndFeelDefaults().put("ClassLoader", JPanel.class.getClassLoader());
+                  checkSubstanceLafLoaded();
+              } catch (Exception e) {
+                  logger.log(Level.SEVERE, "Error loading Substance look and feel: " + e.getMessage(), e);
+                System.out.println("Substance Graphite failed to initialize");
+              }
+            });
         }
     }
 
-    private void checkSubstanceLafLoaded() throws ClassNotFoundException
+    private static void checkSubstanceLafLoaded() throws ClassNotFoundException
     {
         UIDefaults defaults = UIManager.getDefaults();
         String uiClassName = (String) defaults.get("PanelUI");
         ClassLoader cl = (ClassLoader) defaults.get("ClassLoader");
         ClassLoader classLoader = (cl != null) ? cl : JPanel.class.getClassLoader();
-        Class aClass = (Class) defaults.get(uiClassName);
+        Class<?> aClass = (Class<?>) defaults.get(uiClassName);
 
         logger.fine("PanelUI: " + uiClassName);
         logger.fine("ClassLoader: " + classLoader);
@@ -317,7 +301,7 @@ public class GUIInstallDataProvider extends AbstractInstallDataProvider
      * @param installData the GUI installation data
      * @throws Exception
      */
-    private void loadGUIInstallData(GUIInstallData installData, Resources resources) throws Exception
+    private static void loadGUIInstallData(GUIInstallData installData, Resources resources)
     {
         installData.guiPrefs = (GUIPrefs) resources.getObject("GUIPrefs");
     }

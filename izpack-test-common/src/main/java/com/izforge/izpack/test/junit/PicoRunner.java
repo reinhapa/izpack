@@ -18,9 +18,10 @@
  */
 package com.izforge.izpack.test.junit;
 
+import static java.util.logging.Level.SEVERE;
+
 import java.lang.reflect.Constructor;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
@@ -31,6 +32,9 @@ import org.junit.runners.model.Statement;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.IzPackException;
+
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * Custom runner for getting dependencies injected in test with PicoContainer
@@ -43,7 +47,8 @@ public class PicoRunner extends PlatformRunner
     private final Class<? extends Container> containerClass;
 
     private FrameworkMethod method;
-    private Object currentTestInstance;
+    private Instance<Object> currentTestInstance;
+    private Object currentTest;
     private Container containerInstance;
 
     /**
@@ -86,13 +91,20 @@ public class PicoRunner extends PlatformRunner
             finally
             {
                 Thread.currentThread().setContextClassLoader(savedContextClassLoader);
-                try
+                if (containerInstance != null)
                 {
-                    containerInstance.dispose();
-                }
-                finally
-                {
-                    containerInstance = null;
+                    try
+                    {
+                      if (currentTest != null)
+                      {
+                          currentTestInstance.destroy(currentTest);
+                      }
+                      containerInstance.dispose();
+                    }
+                    finally
+                    {
+                      containerInstance = null;
+                    }
                 }
             }
           }
@@ -118,39 +130,37 @@ public class PicoRunner extends PlatformRunner
     @Override
     protected Object createTest() throws Exception
     {
-        final Class<?> javaClass = getTestClass().getJavaClass();
-
         // create container outside of EDT which matches behaviour in InstallerGui
         containerInstance = createContainer(containerClass);
-        containerInstance.addComponent(javaClass);
 
         SwingUtilities.invokeAndWait(new Runnable()
         {
+            @SuppressWarnings("unchecked")
             @Override
             public void run()
             {
                 try
                 {
-                    currentTestInstance = containerInstance.getComponent(javaClass);
+                    currentTestInstance = (Instance<Object>) CDI.current().select(getTestClass().getJavaClass());
+                    currentTest = currentTestInstance.get();
                 }
                 catch (Exception e)
                 {
-                    logger.log(Level.SEVERE, e.getMessage(), e);
+                    logger.log(SEVERE, e.getMessage(), e);
                     throw new IzPackException(e);
                 }
             }
         });
 
-        return currentTestInstance;
+        return currentTest;
     }
 
     /**
      * Tries to create an instance from the given {@code containerClass}.
      * <p>
-     *     There are a total of three constructor signatures which are recognized
+     *     There are a total of two constructor signatures which are recognized
      *     by this method:
      *     <ul>
-     *         <li>Container(Class&lt;?&gt;, FrameworkMethod)</li>
      *         <li>Container(Class&lt;?&gt;)</li>
      *         <li>Container()</li>
      *     </ul>
@@ -164,29 +174,25 @@ public class PicoRunner extends PlatformRunner
             throws Exception
     {
         final Class<?> javaClass = getTestClass().getJavaClass();
-        Constructor<? extends Container> constructor;
-        Container result;
-
         try
         {
-            constructor = containerClass.getConstructor(javaClass.getClass(), method.getClass());
-            result = constructor.newInstance(javaClass, method);
+            Constructor<? extends Container> constructor = containerClass.getConstructor(javaClass.getClass(), method.getClass());
+            return constructor.newInstance(javaClass, method);
         }
-        catch (NoSuchMethodException exception)
+        catch (NoSuchMethodException nsme1)
         {
             try
             {
-                constructor = containerClass.getConstructor(javaClass.getClass());
-                result = constructor.newInstance(javaClass);
+                Constructor<? extends Container> constructor = containerClass.getConstructor(javaClass.getClass());
+                return constructor.newInstance(javaClass);
             }
-            catch (NoSuchMethodException nested)
+            catch (NoSuchMethodException nsme2)
             {
-                constructor = containerClass.getConstructor();
-                result = constructor.newInstance();
+              logger.severe("Test container [" + containerClass.getName() + "] has no constructor taking a test class");
+              Constructor<? extends Container>  constructor = containerClass.getConstructor();
+              return constructor.newInstance();
             }
         }
-
-        return result;
     }
 
 }

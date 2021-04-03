@@ -12,20 +12,16 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.izforge.izpack.api.container.Container;
-import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.resource.DefaultLocales;
 import com.izforge.izpack.core.resource.ResourceManager;
 import com.izforge.izpack.installer.automation.AutomatedInstaller;
-import com.izforge.izpack.installer.container.provider.IconsProvider;
 import com.izforge.izpack.installer.data.UninstallData;
 import com.izforge.izpack.installer.data.UninstallDataWriter;
 import com.izforge.izpack.merge.resolve.PathResolver;
-import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
 
 /**
  * Container for test language
@@ -81,7 +77,6 @@ public class TestLanguageContainer extends AbstractContainer
                 .thenThrow(new IzPackException("Not available"));
 
         DefaultLocales locales = new DefaultLocales(resourceManager);
-        addComponent(Variables.class, DefaultVariables.class);
         addComponent(ResourceManager.class, resourceManager);
         addComponent(UninstallData.class, Mockito.mock(UninstallData.class));
         addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
@@ -89,8 +84,10 @@ public class TestLanguageContainer extends AbstractContainer
         addComponent(PathResolver.class, Mockito.mock(PathResolver.class));
         addComponent(DefaultLocales.class, locales);
         addComponent(Container.class, this);
-        addComponent(GUIInstallDataMockProvider.class);
-        addComponent(IconsProvider.class);
+
+//        addComponent(DefaultVariables.class);
+//        addComponent(GUIInstallDataMockProvider.class);
+//        addComponent(IconsProvider.class);
     }
 
 }

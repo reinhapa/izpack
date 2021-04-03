@@ -58,7 +58,7 @@ public abstract class AbstractTestInstallationContainer extends AbstractContaine
         addComponent(CompilerData.class, data);
         addComponent(JarFile.class, installer);
 
-        fillInstallerContainer(getContainer());
+        fillInstallerContainer(getContext());
     }
 
     protected abstract InstallerContainer fillInstallerContainer(CdiInitializationContext picoContainer);

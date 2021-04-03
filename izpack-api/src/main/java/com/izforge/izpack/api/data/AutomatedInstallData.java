@@ -19,12 +19,19 @@
 
 package com.izforge.izpack.api.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import com.izforge.izpack.api.adaptator.IXMLElement;
+import com.izforge.izpack.api.installer.ISummarisable;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.util.Platform;
 
-import java.util.*;
+import jakarta.enterprise.inject.Vetoed;
 
 /**
  * Encloses information about the install process. This implementation is not thread safe.
@@ -32,6 +39,7 @@ import java.util.*;
  * @author Julien Ponge <julien@izforge.com>
  * @author Johannes Lehtinen <johannes.lehtinen@iki.fi>
  */
+@Vetoed
 public class AutomatedInstallData implements InstallData
 {
     /**
@@ -498,7 +506,7 @@ public class AutomatedInstallData implements InstallData
 
     public void setInstallationRecord(IXMLElement xmlData)
     {
-        panelRootXml = new HashMap<String, IXMLElement>();
+        panelRootXml = new HashMap<>();
         List<IXMLElement> panelRoots = xmlData.getChildren();
         for (IXMLElement panelRoot : panelRoots)
         {
@@ -518,6 +526,7 @@ public class AutomatedInstallData implements InstallData
         this.attributes = attributes;
     }
 
+    @Override
     public List<DynamicInstallerRequirementValidator> getDynamicInstallerRequirements()
     {
         return this.dynamicinstallerrequirements;
@@ -537,5 +546,8 @@ public class AutomatedInstallData implements InstallData
     public List<InstallerRequirement> getInstallerRequirements()
     {
         return installerrequirements;
+    }
+
+    public void addPanel(ISummarisable view) {
     }
 }

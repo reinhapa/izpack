@@ -19,24 +19,40 @@
  * limitations under the License.
  */
 
-package com.izforge.izpack.core.resource;
+package com.izforge.izpack.core.provider;
 
-import jakarta.enterprise.inject.Vetoed;
+
+import com.izforge.izpack.util.Platform;
+import com.izforge.izpack.util.Platforms;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+
 
 /**
- * Default {@link} Resources} implementation.
+ * Injection provider for the current {@link Platform}.
  *
  * @author Tim Anderson
  */
-@Vetoed
-public class DefaultResources extends AbstractResources
+public class PlatformProvider
 {
-
     /**
-     * Constructs a <tt>DefaultResources</tt>.
+     * Provides the current platform.
+     *
+     * @param platforms the platform factory
+     * @return the current platform
      */
-    public DefaultResources()
+    @Produces
+    @ApplicationScoped
+    public Platform provide(Platforms platforms)
     {
+        return platforms.getCurrentPlatform();
     }
 
+    @Produces
+    @ApplicationScoped
+    public Platforms platforms()
+    {
+        return new Platforms();
+    }
 }

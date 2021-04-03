@@ -24,11 +24,18 @@ package com.izforge.izpack.core.container;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.izforge.izpack.api.container.Container;
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.api.exception.IzPackClassNotFoundException;
 import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.core.container.cdi.CdiInitializationContextImpl;
+import com.izforge.izpack.util.Platform;
 
 
 /**
@@ -40,6 +47,7 @@ import com.izforge.izpack.api.exception.IzPackException;
 public abstract class AbstractContainer implements Container
 {
     private final Map<String, Object> panels;
+    private final AtomicReference<State> init = new AtomicReference<>(State.NEW);
 
     /**
      * The underlying container.
@@ -95,7 +103,7 @@ public abstract class AbstractContainer implements Container
      * @throws ContainerException if registration fails
      */
     @Override
-    public <T> void addComponent(Class<T> componentType, Object implementation)
+    public <T, I extends T> void addComponent(Class<T> componentType, I implementation)
     {
         container.addComponent(componentType, implementation);
     }
@@ -151,8 +159,7 @@ public abstract class AbstractContainer implements Container
     public Container createChildContainer()
     {
         // TODO - dispose() won't be invoked on the Container, just the MutablePicoContainer.
-        // not an issue for now
-        return new ChildContainer(container);
+        return this;
     }
 
     /**
@@ -164,59 +171,15 @@ public abstract class AbstractContainer implements Container
     @Override
     public void removeChildContainer(Container child)
     {
-        if (child instanceof AbstractContainer)
-        {
-            container.removeChildContext(((AbstractContainer) child).container);
-        }
     }
 
     /**
      * Disposes of the container and all of its child containers.
      */
     @Override
-    public void dispose()
+    public final void dispose()
     {
-        container.dispose();
-    }
-
-    /**
-     * Returns a class given its name.
-     *
-     * @param className the class name
-     * @param superType the super type
-     * @return the corresponding class
-     * @throws ClassCastException           if <tt>className</tt> does not implement or extend <tt>superType</tt>
-     * @throws IzPackClassNotFoundException if the class cannot be found
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> Class<T> getClass(String className, Class<T> superType)
-    {
-        @SuppressWarnings("rawtypes")
-		Class type;
-        try
-        {
-            // Using the superclass class loader to load the child to avoid multiple copies of the superclass being
-            // loaded in separate class loaders. This is typically an issue during testing where
-            // the same classes may be loaded twice - once by maven, and once by the installer.
-            ClassLoader classLoader = superType.getClassLoader();
-            if (classLoader == null)
-            {
-                // may be null for bootstrap class loader
-                classLoader = getClass().getClassLoader();
-            }
-            type = classLoader.loadClass(className);
-            if (!superType.isAssignableFrom(type))
-            {
-                throw new ClassCastException("Class '" + type.getName() + "' does not implement "
-                                                     + superType.getName());
-            }
-        }
-        catch (ClassNotFoundException exception)
-        {
-            throw new IzPackClassNotFoundException(className, exception);
-        }
-        return type;
+        container.close();
     }
 
     @Override
@@ -231,6 +194,12 @@ public abstract class AbstractContainer implements Container
     @Override
     public final Object getPanel(String id) {
         return panels.get(id);
+    }
+
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    {
+        return new AutomatedInstallData(variables, platform);
     }
 
     protected final <T> void removeComponent(Class<T> componnentType) {
@@ -254,19 +223,21 @@ public abstract class AbstractContainer implements Container
      * <p/>
      * This must only be invoked once.
      *
-     * @param container the container
+     * @param context the CDI initialization context
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
-    protected void initialise(CdiInitializationContext container)
+    protected final void initialise(CdiInitializationContext context)
     {
-        if (this.container != null)
+        Objects.requireNonNull(context, "context must not be null");
+        if (!init.compareAndSet(State.NEW, State.INITIALIZING))
         {
             throw new ContainerException("Container already initialised");
         }
-        this.container = container;
+        this.container = context;
         try
         {
-            fillContainer(container);
+            fillContainer(context);
+            context.start();
         }
         catch (ContainerException exception)
         {
@@ -276,6 +247,7 @@ public abstract class AbstractContainer implements Container
         {
             throw new ContainerException(exception);
         }
+        init.set(State.INITIALIZED);
     }
 
     /**
@@ -285,10 +257,10 @@ public abstract class AbstractContainer implements Container
      * <p/>
      * This implementation delegates to {@link #fillContainer()}.
      *
-     * @param container the underlying container
+     * @param context the CDI initialization context
      * @throws ContainerException if initialisation fails
      */
-    protected final void fillContainer(CdiInitializationContext container)
+    protected final void fillContainer(CdiInitializationContext context)
     {
         fillContainer();
     }
@@ -303,6 +275,8 @@ public abstract class AbstractContainer implements Container
      */
     protected void fillContainer()
     {
+        addComponent(Container.class, this);
+        addComponent(AutomatedInstallDataSupplier.class, this);
     }
 
     /**
@@ -310,7 +284,7 @@ public abstract class AbstractContainer implements Container
      *
      * @return the underlying container, or <tt>null</tt> if {@link #initialise} hasn't been invoked
      */
-    protected CdiInitializationContext getContainer()
+    protected final CdiInitializationContext getContext()
     {
         return container;
     }
@@ -325,21 +299,8 @@ public abstract class AbstractContainer implements Container
         return new CdiInitializationContextImpl();
     }
 
-    /**
-     * Concrete container used by {@link #createChildContainer()}.
-     */
-    private static class ChildContainer extends AbstractContainer
+    private enum State
     {
-
-        /**
-         * Constructs a ChildContainer.
-         *
-         * @param parent the parent container
-         */
-        public ChildContainer(CdiInitializationContext parent)
-        {
-            super(parent.makeChildContainer());
-        }
+        NEW, INITIALIZING, INITIALIZED;
     }
-
 }

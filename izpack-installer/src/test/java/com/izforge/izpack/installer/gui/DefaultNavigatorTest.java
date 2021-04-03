@@ -99,10 +99,13 @@ public class DefaultNavigatorTest
 
         container = new DefaultContainer()
         {
+            @Override
+            protected void fillContainer()
             {
-                getContainer().addComponent(InstallerFrame.class, frame);
-                getContainer().addComponent(Resources.class, resources);
-                getContainer().addComponent(GUIInstallData.class, installData);
+                super.fillContainer();
+                addComponent(InstallerFrame.class, frame);
+                addComponent(Resources.class, resources);
+                addComponent(GUIInstallData.class, installData);
             }
         };
         factory = new DefaultObjectFactory(container);

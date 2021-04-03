@@ -1,5 +1,5 @@
 /*
- * IzPack - Copyright 2001-20212 Julien Ponge, All Rights Reserved.
+ * IzPack - Copyright 2001-2012 Julien Ponge, All Rights Reserved.
  *
  * http://izpack.org/
  * http://izpack.codehaus.org/
@@ -20,29 +20,26 @@
  * limitations under the License.
  */
 
-package com.izforge.izpack.core.container;
+package com.izforge.izpack.api.data;
 
-import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.util.Platform;
 
 /**
- * Defines collects all CDI relevant bean informations for the izPack environment, where we do
- * not enable automatic bean discovery.
- *
+ * The implementer is responsible to create a {@link AutomatedInstallData} instance.
+ * 
  * @author Patrick Reinhart
  */
-public interface CdiInitializationContext {
+public interface AutomatedInstallDataSupplier {
 
-  <T> void addComponent(Class<T> componentType);
+  /**
+   * Returns a new {@link AutomatedInstallData} instance.
+   * 
+   * @param resources the resource manager to obtain optional resources
+   * @param variables the supported variables
+   * @param platform the actual platform
+   * @return a newly created automated installation data instance
+   */
+  AutomatedInstallData get(Resources resources, Variables variables, Platform platform);
 
-  <T, I extends T> void addComponent(Class<T> componentType, I implementation);
-
-  <T> T getComponent(Class<T> componentType);
-
-  void addConfig(String name, Object value) throws IzPackException;
-
-  <T> void removeComponent(Class<T> componnentType);
-
-  void start();
-
-  void close();
 }

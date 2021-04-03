@@ -2,8 +2,13 @@ package com.izforge.izpack.compiler.container;
 
 import org.junit.runners.model.FrameworkMethod;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.impl.InstallerContainer;
+import com.izforge.izpack.installer.data.InstallData;
+import com.izforge.izpack.util.Platform;
 
 
 /**
@@ -24,4 +29,9 @@ public class TestAutomatedInstallationContainer extends AbstractTestInstallation
         return new TestAutomatedInstallerContainer(container);
     }
 
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    {
+        return new InstallData(variables, platform);
+    }
 }

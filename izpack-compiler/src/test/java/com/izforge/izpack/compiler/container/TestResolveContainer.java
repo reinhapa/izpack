@@ -24,11 +24,7 @@ package com.izforge.izpack.compiler.container;
 import java.util.Properties;
 
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.compiler.merge.CompilerPathResolver;
-import com.izforge.izpack.compiler.util.CompilerClassLoader;
-import com.izforge.izpack.compiler.util.DefaultClassNameMapper;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.merge.resolve.MergeableResolver;
 
 /**
  * Container for com.izforge.izpack.resolve package tests.
@@ -57,11 +53,11 @@ public class TestResolveContainer extends AbstractContainer
     @Override
     protected void fillContainer()
     {
-        addComponent(Properties.class);
-        addComponent(CompilerPathResolver.class);
-        addComponent(CompilerClassLoader.class);
-        addComponent(DefaultClassNameMapper.class);
-        addComponent(MergeableResolver.class);
+//        addComponent(Properties.class);
+//        addComponent(CompilerPathResolver.class);
+//        addComponent(CompilerClassLoader.class);
+//        addComponent(DefaultClassNameMapper.class);
+//        addComponent(MergeableResolver.class);
 
         Properties properties = getComponent(Properties.class);
         properties.put("HelloPanelTestWithDependenciesClass", "com.izforge.izpack.panels.depend");

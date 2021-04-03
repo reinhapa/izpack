@@ -23,14 +23,17 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.swing.UIManager;
 
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.installer.ISummarisable;
 import com.izforge.izpack.api.resource.Messages;
-import com.izforge.izpack.installer.gui.IzPanel;
 import com.izforge.izpack.util.Platform;
+
+import jakarta.enterprise.inject.Vetoed;
 
 /**
  * Encloses information about the install process.
@@ -38,6 +41,7 @@ import com.izforge.izpack.util.Platform;
  * @author Julien Ponge <julien@izforge.com>
  * @author Johannes Lehtinen <johannes.lehtinen@iki.fi>
  */
+@Vetoed
 public class GUIInstallData extends InstallData implements Serializable
 {
 
@@ -56,12 +60,22 @@ public class GUIInstallData extends InstallData implements Serializable
     /**
      * The panels list.
      */
-    private List<IzPanel> panels = new ArrayList<IzPanel>();
+    private List<ISummarisable> panels = new ArrayList<>();
 
 
     public GUIInstallData(Variables variables, Platform platform)
     {
         super(variables, platform);
+    }
+
+    public static void withData(com.izforge.izpack.api.data.InstallData installData,  Consumer<GUIInstallData> action)
+    {
+        if (installData instanceof GUIInstallData)
+        {
+            action.accept((GUIInstallData)installData);
+        } else {
+            throw new IllegalArgumentException("Unsupported install data reference");
+        }
     }
 
     public void configureGuiButtons()
@@ -77,12 +91,18 @@ public class GUIInstallData extends InstallData implements Serializable
         UIManager.put("OptionPane.sendReportButtonText", messages.get("installer.sendReport"));
     }
 
+    @Override
+    public void addPanel(ISummarisable view)
+    {
+        panels.add(view);
+    }
+
     /**
      * Returns the panels.
      *
      * @return the panels
      */
-    public List<IzPanel> getPanels()
+    public List<ISummarisable> getPanels()
     {
         return panels;
     }

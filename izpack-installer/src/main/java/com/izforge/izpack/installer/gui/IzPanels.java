@@ -24,7 +24,7 @@ package com.izforge.izpack.installer.gui;
 import java.util.List;
 
 import com.izforge.izpack.api.container.Container;
-import com.izforge.izpack.installer.data.GUIInstallData;
+import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.installer.panel.AbstractPanels;
 
 
@@ -38,7 +38,7 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
     /**
      * The installation data.
      */
-    private final GUIInstallData installData;
+    private final AutomatedInstallData installData;
 
     /**
      * The container to add {@link IzPanel}s to.
@@ -62,7 +62,7 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
      * @param container   the container to register {@link IzPanel}s with
      * @param installData the installation data
      */
-    public IzPanels(List<IzPanelView> panels, Container container, GUIInstallData installData)
+    public IzPanels(List<IzPanelView> panels, Container container, AutomatedInstallData installData)
     {
         super(panels, installData);
         this.container = container;
@@ -78,7 +78,7 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
         {
             // need to defer creation of the IzPanel until after the InstallerFrame is constructed
             IzPanel view = panel.getView();
-            installData.getPanels().add(view);
+            installData.addPanel(view);
             String panelId = panel.getPanelId();
             if (panelId == null)
             {

@@ -21,9 +21,13 @@
 
 package com.izforge.izpack.uninstaller.gui;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.gui.GUIPrompt;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.installer.container.provider.GUIInstallDataProvider;
 import com.izforge.izpack.uninstaller.container.UninstallerContainer;
+import com.izforge.izpack.util.Platform;
 
 /**
  * GUI uninstaller container.
@@ -51,7 +55,13 @@ public class GUIUninstallerContainer extends UninstallerContainer
     protected void fillContainer()
     {
         super.fillContainer();
-        addComponent(UninstallerFrame.class);
-        addComponent(GUIPrompt.class);
+//        addComponent(UninstallerFrame.class);
+//        addComponent(GUIPrompt.class);
+    }
+
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    {
+        return GUIInstallDataProvider.provide(resources, variables, platform);
     }
 }

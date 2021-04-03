@@ -273,7 +273,7 @@ public class AbstractPanelTest
         }
         InstallerFrame frame = handle[0];
         frameFixture = new FrameFixture(frame);
-        container.getContainer().addComponent(InstallerFrame.class, frame);
+        container.addComponent(InstallerFrame.class, frame);
         InstallDataConfiguratorWithRules configuratorWithRules = new InstallDataConfiguratorWithRules(
                 installData, rules, Platforms.UNIX);
         InstallerController controller = new InstallerController(configuratorWithRules, frame);

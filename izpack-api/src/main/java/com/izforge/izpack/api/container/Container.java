@@ -22,8 +22,8 @@
 
 package com.izforge.izpack.api.container;
 
+import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.api.exception.IzPackClassNotFoundException;
 
 
 /**
@@ -31,8 +31,9 @@ import com.izforge.izpack.api.exception.IzPackClassNotFoundException;
  *
  * @author Anthonin Bonnefoy
  * @author Tim Anderson
+ * @author Patrick Reinhart
  */
-public interface Container
+public interface Container extends AutomatedInstallDataSupplier
 {
     /**
      * Register a component type.
@@ -49,7 +50,7 @@ public interface Container
      * @param implementation the component implementation
      * @throws ContainerException if registration fails
      */
-    <T> void addComponent(Class<T> componentType, Object implementation);
+    <T, I extends T> void addComponent(Class<T> componentType, I implementation);
 
     /**
      * Retrieve a component by its component type.
@@ -59,7 +60,10 @@ public interface Container
      * @param componentType the type of the component
      * @return the corresponding object instance, or <tt>null</tt> if it does not exist
      * @throws ContainerException if component creation fails
+     * 
+     * @deprecated use {@code CDI.current()} if needed
      */
+    @Deprecated
     <T> T getComponent(Class<T> componentType);
 
     /**
@@ -88,17 +92,6 @@ public interface Container
      * Disposes of the container and all of its child containers.
      */
     void dispose();
-
-    /**
-     * Returns a class given its name.
-     *
-     * @param className the class name
-     * @param superType the super type
-     * @return the corresponding class
-     * @throws ClassCastException           if <tt>className</tt> does not implement or extend <tt>superType</tt>
-     * @throws IzPackClassNotFoundException if the class cannot be found
-     */
-    <T> Class<T> getClass(String className, Class<T> superType);
 
     void addPanel(String id, Object panel);
 

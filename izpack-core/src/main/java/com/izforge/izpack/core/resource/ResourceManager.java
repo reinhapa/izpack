@@ -22,14 +22,14 @@
 
 package com.izforge.izpack.core.resource;
 
-import com.izforge.izpack.api.exception.ResourceException;
-import com.izforge.izpack.api.exception.ResourceNotFoundException;
-import com.izforge.izpack.api.resource.Locales;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+
+import com.izforge.izpack.api.exception.ResourceException;
+import com.izforge.izpack.api.exception.ResourceNotFoundException;
+import com.izforge.izpack.api.resource.Locales;
 
 /**
  * With this ResourceManager you are able to get resources from the jar file.

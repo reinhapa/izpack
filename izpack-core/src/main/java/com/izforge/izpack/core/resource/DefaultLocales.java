@@ -71,17 +71,17 @@ public class DefaultLocales implements Locales
     /**
      * The supported locales, keyed on 2 and 3 letter language codes and 3 letter country codes.
      */
-    private Map<String, Locale> isoLocales = new LinkedHashMap<String, Locale>();
+    private Map<String, Locale> isoLocales = new LinkedHashMap<>();
 
     /**
      * The locales.
      */
-    private List<Locale> locales = new ArrayList<Locale>();
+    private List<Locale> locales = new ArrayList<>();
 
     /**
      * The ISO codes as they were specified by <em>langpacks.info</em>.
      */
-    private List<String> isoCodes = new ArrayList<String>();
+    private List<String> isoCodes = new ArrayList<>();
 
     /**
      * The logger.
@@ -98,7 +98,6 @@ public class DefaultLocales implements Locales
      * @param resources the resources
      * @throws ResourceException if the locales can't be determined
      */
-    @SuppressWarnings("unchecked")
     public DefaultLocales(Resources resources)
     {
         this(resources, Locale.getDefault());
@@ -162,6 +161,7 @@ public class DefaultLocales implements Locales
      *
      * @return the current locale. May be {@code null}
      */
+    @Override
     public Locale getLocale()
     {
         return locale;
@@ -285,7 +285,7 @@ public class DefaultLocales implements Locales
      */
     private Map<String, Locale> getAvailableLocales(Locale defaultLocale)
     {
-        Map<String, Locale> available = new HashMap<String, Locale>();
+        Map<String, Locale> available = new HashMap<>();
         addLocale(available, defaultLocale);
         for (Locale locale : Locale.getAvailableLocales())
         {

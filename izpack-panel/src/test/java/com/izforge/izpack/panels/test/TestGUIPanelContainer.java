@@ -22,12 +22,13 @@ package com.izforge.izpack.panels.test;
 
 import org.mockito.Mockito;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.gui.GUIPrompt;
+import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.log.Log;
-import com.izforge.izpack.installer.base.InstallDataConfiguratorWithRules;
-import com.izforge.izpack.installer.container.provider.IconsProvider;
-import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
+import com.izforge.izpack.installer.container.provider.GUIInstallDataProvider;
+import com.izforge.izpack.util.Platform;
 
 
 /**
@@ -57,10 +58,16 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
     protected void fillContainer()
     {
         super.fillContainer();
-        addComponent(InstallDataConfiguratorWithRules.class);
         addComponent(Log.class, Mockito.mock(Log.class));
-        addComponent(GUIPrompt.class);
-        addComponent(GUIInstallDataMockProvider.class);
-        addComponent(IconsProvider.class);
+//        addComponent(InstallDataConfiguratorWithRules.class);
+//        addComponent(GUIPrompt.class);
+//        addComponent(GUIInstallDataMockProvider.class);
+//        addComponent(IconsProvider.class);
+    }
+
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    {
+        return GUIInstallDataProvider.provide(resources, variables, platform);
     }
 }

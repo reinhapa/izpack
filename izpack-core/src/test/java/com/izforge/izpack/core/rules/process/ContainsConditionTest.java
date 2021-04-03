@@ -18,9 +18,9 @@
  */
 package com.izforge.izpack.core.rules.process;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +60,7 @@ public class ContainsConditionTest
     @Test
     public void testInFile()
     {
-        Map<String,Boolean> additional = new HashMap<String, Boolean>();
+        Map<String,Boolean> additional = new HashMap<>();
         additional.put("regex_multiple_lines_dotall", true);
         additional.put("regex_multiple_lines", false);
         doTests("contains_in_file.xml", additional);
@@ -155,7 +155,7 @@ public class ContainsConditionTest
     {
         DefaultContainer parent = new DefaultContainer();
         RulesEngine rules = new RulesEngineImpl(installData, new ConditionContainer(parent), installData.getPlatform());
-        parent.addComponent(RulesEngine.class, rules);
+//        parent.addComponent(RulesEngine.class, rules);
         return rules;
     }
 

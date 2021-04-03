@@ -23,11 +23,12 @@ package com.izforge.izpack.uninstaller.console;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.ConsolePrefs;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.core.data.DefaultVariables;
-import com.izforge.izpack.core.handler.ConsolePrompt;
+import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.installer.container.provider.ConsoleInstallDataProvider;
 import com.izforge.izpack.uninstaller.container.UninstallerContainer;
-import com.izforge.izpack.util.Console;
+import com.izforge.izpack.util.Platform;
 
 
 /**
@@ -59,11 +60,18 @@ public class ConsoleUninstallerContainer extends UninstallerContainer
         ConsolePrefs consolePrefs = new ConsolePrefs();
         consolePrefs.enableConsoleReader = false;
         addComponent(ConsolePrefs.class, consolePrefs);
-        addComponent(DefaultVariables.class);
-        addComponent(AutomatedInstallData.class);
-        addComponent(Console.class);
-        addComponent(ConsolePrompt.class);
-        addComponent(ConsoleDestroyerListener.class);
-        addComponent(ConsoleUninstaller.class);
+
+//        addComponent(DefaultVariables.class);
+//        addComponent(AutomatedInstallData.class);
+//        addComponent(Console.class);
+//        addComponent(ConsolePrompt.class);
+//        addComponent(ConsoleDestroyerListener.class);
+//        addComponent(ConsoleUninstaller.class);
+    }
+
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    {
+        return ConsoleInstallDataProvider.provide(resources, variables, platform);
     }
 }

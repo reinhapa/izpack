@@ -22,20 +22,12 @@ package com.izforge.izpack.util;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Properties;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.core.container.PlatformProvider;
-import com.izforge.izpack.core.data.DefaultVariables;
-import com.izforge.izpack.core.factory.DefaultObjectFactory;
 import com.izforge.izpack.core.os.RegistryHandler;
-import com.izforge.izpack.core.resource.ResourceManager;
-import com.izforge.izpack.installer.data.InstallData;
-import com.izforge.izpack.test.util.TestLibrarian;
 import com.izforge.izpack.util.os.Shortcut;
 import com.izforge.izpack.util.os.Unix_Shortcut;
 import com.izforge.izpack.util.os.Win_RegistryHandler;
@@ -73,18 +65,16 @@ public class InstallerTargetPlatformFactoryTest
             protected void fillContainer()
             {
                 super.fillContainer();
-                addComponent(Properties.class);
-                addComponent(DefaultVariables.class);
-                addComponent(ResourceManager.class);
-                addComponent(InstallData.class);
-                addComponent(TestLibrarian.class);
-                addComponent(Housekeeper.class);
-                addComponent(TargetFactory.class);
-                addComponent(DefaultObjectFactory.class);
-                addComponent(DefaultTargetPlatformFactory.class);
-                addComponent(Platforms.class);
-                addComponent(Container.class, this);
-                addComponent(PlatformProvider.class);
+//                addComponent(Properties.class);
+//                addComponent(DefaultVariables.class);
+//                addComponent(ResourceManager.class);
+//                addComponent(InstallData.class);
+//                addComponent(TestLibrarian.class);
+//                addComponent(Housekeeper.class);
+//                addComponent(TargetFactory.class);
+//                addComponent(DefaultObjectFactory.class);
+//                addComponent(DefaultTargetPlatformFactory.class);
+//                addComponent(PlatformProvider.class);
             }
         };
         factory = container.getComponent(TargetPlatformFactory.class);

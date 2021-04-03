@@ -16,12 +16,16 @@
 
 package com.izforge.izpack.installer.data;
 
+import java.io.Serializable;
+import java.util.function.Consumer;
+
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.util.Platform;
 
-import java.io.Serializable;
+import jakarta.enterprise.inject.Vetoed;
 
+@Vetoed
 public class ConsoleInstallData extends InstallData implements Serializable
 {
     private static final long serialVersionUID = -4272255846202671405L;
@@ -35,4 +39,15 @@ public class ConsoleInstallData extends InstallData implements Serializable
     {
         super(variables, platform);
     }
+
+    public static void withData(com.izforge.izpack.api.data.InstallData installData,  Consumer<ConsoleInstallData> action)
+    {
+        if (installData instanceof ConsoleInstallData)
+        {
+            action.accept((ConsoleInstallData)installData);
+        } else {
+            throw new IllegalArgumentException("Unsupported install data reference");
+        }
+    }
+
 }

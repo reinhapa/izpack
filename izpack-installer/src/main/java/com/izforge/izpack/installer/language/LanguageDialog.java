@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,11 +51,12 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import com.izforge.izpack.api.GuiId;
+import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.IconsDatabase;
-import com.izforge.izpack.installer.container.provider.AbstractInstallDataProvider;
+import com.izforge.izpack.installer.container.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.installer.data.GUIInstallData;
 
 import jakarta.inject.Inject;
@@ -75,7 +77,7 @@ public class LanguageDialog extends JDialog
     /**
      * The installation data.
      */
-    private final GUIInstallData installData;
+    private final AutomatedInstallData installData;
 
     /**
      * The resources.
@@ -112,7 +114,7 @@ public class LanguageDialog extends JDialog
      * @param installData  the installation data
      */
     @Inject
-    public LanguageDialog(Resources resources, Locales locales, GUIInstallData installData, IconsDatabase icons)
+    public LanguageDialog(Resources resources, Locales locales, AutomatedInstallData installData, IconsDatabase icons)
     {
         super();
         ImageIcon imageIcon = icons.get("JFrameIcon");
@@ -300,12 +302,15 @@ public class LanguageDialog extends JDialog
      */
     private boolean useFlags()
     {
-        if (installData.guiPrefs.modifier.containsKey("useFlags")
-                && "no".equalsIgnoreCase(installData.guiPrefs.modifier.get("useFlags")))
-        {
-            return (false);
-        }
-        return (true);
+        AtomicBoolean result = new AtomicBoolean(true);
+        GUIInstallData.withData(installData, guiData -> {
+          Map<String, String> modifier = guiData.guiPrefs.modifier;
+          if (modifier.containsKey("useFlags") && "no".equalsIgnoreCase(modifier.get("useFlags")))
+          {
+            result.set(false);
+          }
+        });
+        return result.get();
     }
 
 
@@ -328,10 +333,10 @@ public class LanguageDialog extends JDialog
             installData.setLocale(locales.getLocale(), locales.getISOCode());
             installData.setMessages(locales.getMessages());
 
-            AbstractInstallDataProvider.addCustomLangpack(installData, locales);
+            AutomatedInstallDataProvider.addCustomLangpack(installData, locales);
 
             // Configure buttons after locale has been loaded
-            installData.configureGuiButtons();
+            GUIInstallData.withData(installData, GUIInstallData::configureGuiButtons);
         }
         catch (Exception exception)
         {
