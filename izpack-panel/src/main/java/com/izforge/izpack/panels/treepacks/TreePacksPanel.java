@@ -413,7 +413,7 @@ public class TreePacksPanel extends IzPanel
         Enumeration<?> e = rootNode.children();
         while (e.hasMoreElements())
         {
-            CheckBoxNode node = (CheckBoxNode)e.nextElement();
+            CheckBoxNode node = (CheckBoxNode) e.nextElement();
             String nodeText = node.getId();
             Object nodePack = namesToPacks.get(nodeText);
 
