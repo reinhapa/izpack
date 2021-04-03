@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.IXMLParser;
@@ -39,11 +40,19 @@ import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
+import com.izforge.izpack.test.Container;
+import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platforms;
 
+import jakarta.inject.Inject;
 
+
+@RunWith(PicoRunner.class)
+@Container(DefaultContainer.class)
 public class ContainsConditionTest
 {
+    @Inject
+    ConditionContainer conditionContainer;
 
     /**
      * Checks conditions for strings read from the test <em>contains_in_string.xml</em> file.
@@ -153,10 +162,7 @@ public class ContainsConditionTest
      */
     private RulesEngine createRulesEngine(InstallData installData)
     {
-        DefaultContainer parent = new DefaultContainer();
-        RulesEngine rules = new RulesEngineImpl(installData, new ConditionContainer(parent), installData.getPlatform());
-//        parent.addComponent(RulesEngine.class, rules);
-        return rules;
+        return new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
     }
 
 }

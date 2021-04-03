@@ -22,7 +22,6 @@
 package com.izforge.izpack.test.util;
 
 
-import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.util.Console;
 
@@ -72,9 +71,9 @@ public class TestConsole extends Console
     /**
      * Constructs a <tt>TestConsole</tt>.
      */
-    public TestConsole(InstallData installData, ConsolePrefs prefs)
+    public TestConsole(InstallData installData)
     {
-        super(installData, prefs);
+        super(installData);
     }
 
     /**

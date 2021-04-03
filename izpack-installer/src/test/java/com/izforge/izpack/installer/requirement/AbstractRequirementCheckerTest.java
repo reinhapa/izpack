@@ -78,7 +78,7 @@ public abstract class AbstractRequirementCheckerTest
         assertNotNull(langPack);
         installData.setMessages(new LocaleDatabase(langPack, Mockito.mock(Locales.class)));
 
-        console = new TestConsole(installData, prefs);
+        console = new TestConsole(installData);
         prompt = new ConsolePrompt(console, installData);
     }
 }

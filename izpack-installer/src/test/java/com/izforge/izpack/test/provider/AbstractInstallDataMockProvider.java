@@ -27,7 +27,7 @@ import com.izforge.izpack.api.data.Info;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.installer.container.provider.AutomatedInstallDataProvider;
+import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.util.Platforms;
 
 /**

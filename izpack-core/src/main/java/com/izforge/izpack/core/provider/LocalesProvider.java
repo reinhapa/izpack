@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-package com.izforge.izpack.installer.container.provider;
+package com.izforge.izpack.core.provider;
 
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.core.resource.DefaultLocales;

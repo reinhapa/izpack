@@ -1,4 +1,4 @@
-package com.izforge.izpack.installer.container.provider;
+package com.izforge.izpack.core.provider;
 
 import java.io.File;
 import java.io.IOException;

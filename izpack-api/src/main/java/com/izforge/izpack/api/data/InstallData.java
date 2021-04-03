@@ -313,5 +313,11 @@ public interface InstallData
      */
     Object getAttribute(String name);
 
+    /**
+     * Returns if the console reader should be enabled or not.
+     * 
+     * @return {@code true} to enable console reader, {@code false} otherwise.
+     */
+    boolean isEnableConsoleReader();
 }
 

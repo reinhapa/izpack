@@ -52,6 +52,7 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.data.DefaultVariables;
+import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.core.resource.DefaultLocales;
 import com.izforge.izpack.core.resource.ResourceManager;
 import com.izforge.izpack.util.Housekeeper;

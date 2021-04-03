@@ -50,6 +50,8 @@ import com.izforge.izpack.merge.resolve.ResolveUtils;
 import com.izforge.izpack.test.Container;
 import com.izforge.izpack.test.junit.PicoRunner;
 
+import jakarta.inject.Inject;
+
 /**
  * Test for merge jar
  *
@@ -59,14 +61,10 @@ import com.izforge.izpack.test.junit.PicoRunner;
 @Container(TestMergeContainer.class)
 public class JarMergeTest
 {
+    @Inject
     private PathResolver pathResolver;
+    @Inject
     private MergeableResolver mergeableResolver;
-
-    public JarMergeTest(PathResolver pathResolver, MergeableResolver mergeableResolver)
-    {
-        this.pathResolver = pathResolver;
-        this.mergeableResolver = mergeableResolver;
-    }
 
     @Test
     public void testAddJarContent() throws Exception
@@ -120,6 +118,7 @@ public class JarMergeTest
         Mergeable jarMerge = mergeableResolver.getMergeableFromURL(resource);
         File file = jarMerge.find(new FileFilter()
         {
+            @Override
             public boolean accept(File pathname)
             {
                 return pathname.isDirectory() ||
@@ -140,6 +139,7 @@ public class JarMergeTest
         Mergeable jarMerge = mergeableResolver.getMergeableFromURL(loader.getResource("jar/izforge"));
         File file = jarMerge.find(new FileFilter()
         {
+            @Override
             public boolean accept(File pathname)
             {
                 return pathname.getName().matches(".*HelloPanel\\.class") || pathname.isDirectory();

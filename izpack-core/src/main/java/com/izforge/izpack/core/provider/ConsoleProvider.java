@@ -21,7 +21,6 @@
 
 package com.izforge.izpack.core.provider;
 
-import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.util.Console;
 
@@ -31,8 +30,8 @@ import jakarta.enterprise.inject.Produces;
 public class ConsoleProvider {
   @Produces
   @ApplicationScoped
-  public Console console(InstallData installData, ConsolePrefs prefs)
+  public Console console(InstallData installData)
   {
-      return new Console(installData, prefs);
+      return new Console(installData);
   }
 }

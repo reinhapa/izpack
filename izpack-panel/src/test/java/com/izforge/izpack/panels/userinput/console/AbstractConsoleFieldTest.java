@@ -59,7 +59,7 @@ public abstract class AbstractConsoleFieldTest
       installData = new ConsoleInstallData(new DefaultVariables(), usedPlatform());
       ConsolePrefs prefs = new ConsolePrefs();
       prefs.enableConsoleReader = false;
-      console = new TestConsole(installData, prefs);
+      console = new TestConsole(installData);
       installData.consolePrefs = prefs;
       prompt = Mockito.mock(Prompt.class);
     }

@@ -55,8 +55,8 @@ import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.gui.IconsDatabase;
-import com.izforge.izpack.installer.container.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.installer.data.GUIInstallData;
 
 import jakarta.inject.Inject;

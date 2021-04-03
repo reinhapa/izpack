@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import com.izforge.izpack.api.exception.UserInterruptException;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.installer.container.provider.AutomatedInstallDataProvider;
+import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Console;
 import com.izforge.izpack.util.Housekeeper;

@@ -90,7 +90,7 @@ public class JDKCheckerTest extends AbstractRequirementCheckerTest
         prefs.enableConsoleReader = false;
         installData.consolePrefs = prefs;
 
-        TestConsole console = new TestConsole(installData, prefs);
+        TestConsole console = new TestConsole(installData);
         ConsolePrompt prompt = new ConsolePrompt(console, installData);
         JDKChecker checker = new JDKChecker(installData, prompt);
         assertEquals(exists, checker.check());

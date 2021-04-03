@@ -16,23 +16,28 @@
 
 package com.izforge.izpack.util;
 
-import com.izforge.izpack.api.data.ConsolePrefs;
-import com.izforge.izpack.api.data.InstallData;
-import com.izforge.izpack.api.exception.UserInterruptException;
-import jline.Terminal;
-import jline.UnsupportedTerminal;
-import jline.console.ConsoleReader;
-import jline.console.completer.FileNameCompleter;
-import jline.internal.Log;
-
 import java.awt.event.KeyEvent;
-import java.io.*;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.exception.UserInterruptException;
+
+import jline.Terminal;
+import jline.UnsupportedTerminal;
+import jline.console.ConsoleReader;
+import jline.console.completer.FileNameCompleter;
+import jline.internal.Log;
 
 /**
  * I/O streams to support prompting and keyboard input from the console.
@@ -63,7 +68,7 @@ public class Console
     /**
      * Constructs a <tt>Console</tt> with <tt>System.in</tt> and <tt>System.out</tt> as the I/O streams.
      */
-    public Console(InstallData installData, ConsolePrefs prefs)
+    public Console(InstallData installData)
     {
         this.installData = installData;
 
@@ -74,7 +79,7 @@ public class Console
             }
         }));
 
-        if (prefs.enableConsoleReader)
+        if (installData.isEnableConsoleReader())
         {
             initConsoleReader();
         }
@@ -174,7 +179,7 @@ public class Console
 
     private List<CharSequence> getLines(String text)
     {
-        List<CharSequence> lines = new LinkedList<CharSequence>();
+        List<CharSequence> lines = new LinkedList<>();
         StringTokenizer line = new StringTokenizer(text, "\n");
         while (line.hasMoreTokens())
         {

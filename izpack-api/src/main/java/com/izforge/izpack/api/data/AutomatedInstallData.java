@@ -550,4 +550,10 @@ public class AutomatedInstallData implements InstallData
 
     public void addPanel(ISummarisable view) {
     }
+
+    @Override
+    public boolean isEnableConsoleReader()
+    {
+        return false;
+    }
 }

@@ -505,7 +505,9 @@
           <reuseForks>false</reuseForks>
           <skipTests>${skipUnitTests}</skipTests>
           <systemPropertyVariables>
+<!-- 
             <org.jboss.weld.development>true</org.jboss.weld.development>
+ -->
           </systemPropertyVariables>
         </configuration>
       </plugin>
