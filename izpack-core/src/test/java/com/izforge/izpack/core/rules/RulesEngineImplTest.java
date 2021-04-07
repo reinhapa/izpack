@@ -40,6 +40,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.IXMLParser;
@@ -64,10 +65,14 @@ import com.izforge.izpack.core.rules.process.PackSelectionCondition;
 import com.izforge.izpack.core.rules.process.RefCondition;
 import com.izforge.izpack.core.rules.process.UserCondition;
 import com.izforge.izpack.core.rules.process.VariableCondition;
+import com.izforge.izpack.test.Container;
+import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.Platforms;
 
 
+@RunWith(PicoRunner.class)
+@Container(DefaultContainer.class)
 public class RulesEngineImplTest
 {
     private RulesEngine engine = null;
@@ -726,9 +731,8 @@ public class RulesEngineImplTest
      */
     private void checkPlatformCondition(Platform platform, String... conditions)
     {
-        DefaultContainer parent = new DefaultContainer();
         RulesEngine rules = new RulesEngineImpl(new AutomatedInstallData(new DefaultVariables(), platform),
-                                                new ConditionContainer(parent), platform);
+                                                new ConditionContainer(), platform);
         for (String condition : conditions)
         {
             assertTrue("Expected " + condition + " to be true", rules.isConditionTrue(condition));
@@ -778,12 +782,8 @@ public class RulesEngineImplTest
      */
     private RulesEngine createRulesEngine(InstallData installData)
     {
-        DefaultContainer parent = new DefaultContainer();
-        RulesEngine rules = new RulesEngineImpl(installData, new ConditionContainer(), installData.getPlatform());
-//        parent.addComponent(RulesEngine.class, rules);
-        return rules;
+        return new RulesEngineImpl(installData, new ConditionContainer(), installData.getPlatform());
     }
 
 }
-
 

@@ -1,17 +1,20 @@
 /*
  * IzPack - Copyright 2001-2012 Julien Ponge, All Rights Reserved.
  *
- * http://izpack.org/ http://izpack.codehaus.org/
+ * http://izpack.org/
+ * http://izpack.codehaus.org/
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.izforge.izpack.core.rules;
@@ -19,7 +22,6 @@ package com.izforge.izpack.core.rules;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.api.rules.RulesEngine;
@@ -27,7 +29,6 @@ import com.izforge.izpack.api.rules.RulesEngine;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
-import jakarta.enterprise.inject.spi.CDI;
 
 
 /**
@@ -39,18 +40,6 @@ import jakarta.enterprise.inject.spi.CDI;
 public class ConditionContainer
 {
   private final Map<Condition, Instance<Condition>> instances;
-  
-  /**
-   * Constructs a <tt>ConditionContainer</tt>.
-   *
-   * @param container the parent container
-   * @deprecated
-   */
-  @Deprecated
-  public ConditionContainer(Container container)
-  {
-      this();
-  }
 
   /**
    * Constructs a <tt>ConditionContainer</tt>.
@@ -72,13 +61,23 @@ public class ConditionContainer
    * @return the corresponding object instance, or <tt>null</tt> if it does not exist
    * @throws ContainerException if condition creation fails
    */
-  @SuppressWarnings("unchecked")
   public <T extends Condition> T getCondition(RulesEngine rules, Class<T> conditionType)
   {
-      Instance<T> conditionInstance = CDI.current().select(conditionType);
-      T condition = conditionInstance.get();
-      instances.put(condition, (Instance<Condition>) conditionInstance);
-      return condition;
+      try
+      {
+        return conditionType.getConstructor(RulesEngine.class).newInstance(rules);
+      }
+      catch (ReflectiveOperationException e1)
+      {
+          try
+          {
+          return conditionType.getConstructor().newInstance();
+          }
+          catch (ReflectiveOperationException e2)
+          {
+              throw new ContainerException("Failed to initialize condition type " + conditionType, e2);
+          }
+      } 
   }
 
   @PreDestroy

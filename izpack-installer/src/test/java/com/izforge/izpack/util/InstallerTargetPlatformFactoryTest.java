@@ -24,14 +24,17 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import com.izforge.izpack.api.container.Container;
-import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.os.RegistryHandler;
+import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.os.Shortcut;
 import com.izforge.izpack.util.os.Unix_Shortcut;
 import com.izforge.izpack.util.os.Win_RegistryHandler;
 import com.izforge.izpack.util.os.Win_Shortcut;
+
+import jakarta.inject.Inject;
 
 
 /**
@@ -39,11 +42,14 @@ import com.izforge.izpack.util.os.Win_Shortcut;
  *
  * @author Tim Anderson
  */
+@RunWith(PicoRunner.class)
+@com.izforge.izpack.test.Container(DefaultContainer.class)
 public class InstallerTargetPlatformFactoryTest
 {
     /**
      * The factory.
      */
+    @Inject
     private TargetPlatformFactory factory;
 
 
@@ -55,16 +61,16 @@ public class InstallerTargetPlatformFactoryTest
     @Before
     public void setUp() throws Exception
     {
-        Container container = new AbstractContainer()
-        {
-            {
-                initialise();
-            }
-
-            @Override
-            protected void fillContainer()
-            {
-                super.fillContainer();
+//        Container container = new AbstractContainer()
+//        {
+//            {
+//                initialise();
+//            }
+//
+//            @Override
+//            protected void fillContainer()
+//            {
+//                super.fillContainer();
 //                addComponent(Properties.class);
 //                addComponent(DefaultVariables.class);
 //                addComponent(ResourceManager.class);
@@ -75,9 +81,9 @@ public class InstallerTargetPlatformFactoryTest
 //                addComponent(DefaultObjectFactory.class);
 //                addComponent(DefaultTargetPlatformFactory.class);
 //                addComponent(PlatformProvider.class);
-            }
-        };
-        factory = container.getComponent(TargetPlatformFactory.class);
+//            }
+//        };
+//        factory = container.getComponent(TargetPlatformFactory.class);
     }
 
     /**

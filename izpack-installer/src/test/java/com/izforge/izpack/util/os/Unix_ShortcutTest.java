@@ -25,7 +25,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -34,16 +33,7 @@ import org.junit.Test;
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.core.data.DefaultVariables;
-import com.izforge.izpack.core.factory.DefaultObjectFactory;
-import com.izforge.izpack.core.provider.PlatformProvider;
-import com.izforge.izpack.core.resource.ResourceManager;
-import com.izforge.izpack.test.util.TestLibrarian;
-import com.izforge.izpack.util.DefaultTargetPlatformFactory;
-import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.Platform;
-import com.izforge.izpack.util.Platforms;
-import com.izforge.izpack.util.TargetFactory;
 import com.izforge.izpack.util.TargetPlatformFactory;
 
 
@@ -84,17 +74,17 @@ public class Unix_ShortcutTest
             protected void fillContainer()
             {
                 super.fillContainer();
-                addComponent(Properties.class);
-                addComponent(DefaultVariables.class);
-                addComponent(ResourceManager.class);
-                addComponent(com.izforge.izpack.installer.data.InstallData.class);
-                addComponent(TestLibrarian.class);
-                addComponent(Housekeeper.class);
-                addComponent(TargetFactory.class);
-                addComponent(DefaultObjectFactory.class);
-                addComponent(DefaultTargetPlatformFactory.class);
-                addComponent(Container.class, this);
-                addComponent(PlatformProvider.class);
+//                addComponent(Properties.class);
+//                addComponent(DefaultVariables.class);
+//                addComponent(ResourceManager.class);
+//                addComponent(com.izforge.izpack.installer.data.InstallData.class);
+//                addComponent(TestLibrarian.class);
+//                addComponent(Housekeeper.class);
+//                addComponent(TargetFactory.class);
+//                addComponent(DefaultObjectFactory.class);
+//                addComponent(DefaultTargetPlatformFactory.class);
+//                addComponent(Container.class, this);
+//                addComponent(PlatformProvider.class);
             }
         };
         factory = container.getComponent(TargetPlatformFactory.class);

@@ -66,28 +66,22 @@ public class DefaultObjectFactory implements ObjectFactory
     @Override
     public <T> T create(Class<T> type, Object... parameters)
     {
-        T result;
-        Container child = container.createChildContainer();
-        try
+        if (parameters.length == 0)
         {
-            child.addComponent(type);
-            for (Object parameter : parameters)
+            try
             {
-                addParameter(container, parameter);
+              return type.getConstructor().newInstance();
+            } 
+            catch (ReflectiveOperationException e)
+            {
+                throw new UnsupportedOperationException("create object failed", e);
             }
-            result = child.getComponent(type);
         }
-        finally
+        else
         {
-            container.removeChildContainer(child);
-            child.dispose();
+            throw new UnsupportedOperationException("create with arguments");
         }
-        return result;
-    }
-    
-    @SuppressWarnings("unchecked")
-    static <T> void addParameter(Container child, T parameter) {
-        child.addComponent((Class<T>)parameter.getClass(), parameter);
+        
     }
 
     /**

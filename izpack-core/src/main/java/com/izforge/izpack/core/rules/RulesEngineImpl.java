@@ -177,7 +177,7 @@ public class RulesEngineImpl implements RulesEngine
                     id = className + "-" + UUID.randomUUID().toString();
                     logger.fine("Random condition id " + id + " generated");
                 }
-                result = container.getCondition(this, conditionClass);
+                result = container.getCondition(this,  conditionClass);
                 result.setId(id);
                 result.setInstallData(installData);
                 result.readFromXML(condition);

@@ -33,6 +33,8 @@ import java.util.logging.Logger;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.exception.UserInterruptException;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jline.Terminal;
 import jline.UnsupportedTerminal;
 import jline.console.ConsoleReader;
@@ -44,6 +46,7 @@ import jline.internal.Log;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class Console
 {
     private static final Logger logger = Logger.getLogger(Console.class.getName());
@@ -68,6 +71,7 @@ public class Console
     /**
      * Constructs a <tt>Console</tt> with <tt>System.in</tt> and <tt>System.out</tt> as the I/O streams.
      */
+    @Inject
     public Console(InstallData installData)
     {
         this.installData = installData;

@@ -27,8 +27,6 @@ import com.izforge.izpack.api.rules.ConditionWithMultipleOperands;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.core.rules.process.RefCondition;
 
-import jakarta.inject.Inject;
-
 /**
  * @author Dennis Reil, <izpack@reil-online.de>
  */
@@ -38,7 +36,6 @@ public class OrCondition extends ConditionWithMultipleOperands
 
     protected transient RulesEngine rules;
 
-    @Inject
     public OrCondition(RulesEngine rules)
     {
         this.rules = rules;

@@ -30,6 +30,8 @@ import java.util.logging.Logger;
 
 import com.izforge.izpack.api.factory.ObjectFactory;
 
+import jakarta.inject.Inject;
+
 /**
  * Factory for constructing platform specific implementation implementations of interfaces or classes.
  * <p/>
@@ -88,7 +90,7 @@ public class DefaultTargetPlatformFactory implements TargetPlatformFactory
     /**
      * Map of interfaces to their corresponding platform implementations.
      */
-    private Map<String, Implementations> implementations = new HashMap<String, Implementations>();
+    private Map<String, Implementations> implementations = new HashMap<>();
 
     /**
      * The logger.
@@ -109,6 +111,7 @@ public class DefaultTargetPlatformFactory implements TargetPlatformFactory
      * @param platform  the current platform
      * @param platforms the platform factory
      */
+    @Inject
     public DefaultTargetPlatformFactory(ObjectFactory factory, Platform platform, Platforms platforms)
     {
         this.factory = factory;
@@ -218,7 +221,7 @@ public class DefaultTargetPlatformFactory implements TargetPlatformFactory
         {
             throw new IllegalStateException(impl.getName() + " does not extend " + type.getName());
         }
-        return (Class<T>) impl;
+        return impl;
     }
 
     /**
@@ -442,7 +445,7 @@ public class DefaultTargetPlatformFactory implements TargetPlatformFactory
         /**
          * The implementation class names, keyed on platform.
          */
-        private Map<Platform, String> implementations = new HashMap<Platform, String>();
+        private Map<Platform, String> implementations = new HashMap<>();
 
         /**
          * Sets the default implementation class.

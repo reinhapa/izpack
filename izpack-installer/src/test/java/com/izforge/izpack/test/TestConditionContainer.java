@@ -7,7 +7,6 @@ import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.installer.container.provider.GUIInstallDataProvider;
 import com.izforge.izpack.util.Platform;
-import com.izforge.izpack.util.Platforms;
 
 /**
  * Container for condition tests.
@@ -16,14 +15,16 @@ import com.izforge.izpack.util.Platforms;
  */
 public class TestConditionContainer extends AbstractContainer
 {
+    private Class<?> classUnderTest;
 
     /**
-     * Constructs a <tt>TestConditionContainer</tt>.
+     * Constructs a <tt>TestMergeContainer</tt>.
      *
      * @throws ContainerException if initialisation fails
      */
-    public TestConditionContainer()
+    public TestConditionContainer(Class<?> classUnderTest)
     {
+        this.classUnderTest = classUnderTest;
         initialise();
     }
 
@@ -36,8 +37,9 @@ public class TestConditionContainer extends AbstractContainer
     protected void fillContainer()
     {
         super.fillContainer();
-        addComponent(AbstractContainer.class, this);
-        addComponent(Platform.class, Platforms.HP_UX);
+        addComponent(classUnderTest);
+//        addComponent(Platform.class, Platforms.HP_UX);
+
 //        addComponent(GUIInstallData.class);
 //        addComponent(RulesEngineImpl.class);
 //        addComponent(VariableSubstitutorImpl.class);

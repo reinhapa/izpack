@@ -143,37 +143,6 @@ public abstract class AbstractContainer implements Container
     }
 
     /**
-     * Creates a child container.
-     * <p/>
-     * A child container:
-     * <ul>
-     * <li>may have different objects keyed on the same identifiers as its parent.</li>
-     * <li>will query its parent for dependencies if they aren't available</li>
-     * <li>is disposed when its parent is disposed</li>
-     * </ul>
-     *
-     * @return a new container
-     * @throws ContainerException if creation fails
-     */
-    @Override
-    public Container createChildContainer()
-    {
-        // TODO - dispose() won't be invoked on the Container, just the MutablePicoContainer.
-        return this;
-    }
-
-    /**
-     * Removes a child container.
-     *
-     * @param child the container to remove
-     * @return <tt>true</tt> if the container was removed
-     */
-    @Override
-    public void removeChildContainer(Container child)
-    {
-    }
-
-    /**
      * Disposes of the container and all of its child containers.
      */
     @Override

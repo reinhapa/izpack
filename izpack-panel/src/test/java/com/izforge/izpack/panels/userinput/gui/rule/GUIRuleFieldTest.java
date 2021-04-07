@@ -29,7 +29,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.izforge.izpack.api.rules.RulesEngine;
-import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
@@ -62,8 +61,7 @@ public class GUIRuleFieldTest
     public GUIRuleFieldTest()
     {
         installData = new GUIInstallData(new DefaultVariables(), Platforms.HP_UX);
-        RulesEngine rules = new RulesEngineImpl(new ConditionContainer(new DefaultContainer()),
-                                                installData.getPlatform());
+        RulesEngine rules = new RulesEngineImpl(new ConditionContainer(), installData.getPlatform());
         installData.setRules(rules);
     }
 
