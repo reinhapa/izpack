@@ -38,6 +38,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.DynamicVariable;
@@ -46,6 +47,7 @@ import com.izforge.izpack.api.data.Panel;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.InstallerException;
 import com.izforge.izpack.api.rules.Condition;
+import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
 import com.izforge.izpack.core.rules.process.ExistsCondition;
@@ -53,7 +55,11 @@ import com.izforge.izpack.core.rules.process.VariableCondition;
 import com.izforge.izpack.core.variable.ConfigFileValue;
 import com.izforge.izpack.core.variable.PlainConfigFileValue;
 import com.izforge.izpack.core.variable.PlainValue;
+import com.izforge.izpack.test.Container;
+import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platforms;
+
+import jakarta.inject.Inject;
 
 
 /**
@@ -61,6 +67,8 @@ import com.izforge.izpack.util.Platforms;
  *
  * @author Tim Anderson
  */
+@RunWith(PicoRunner.class)
+@Container(DefaultContainer.class)
 public class DefaultVariablesTest
 {
     @Rule
@@ -72,7 +80,10 @@ public class DefaultVariablesTest
      */
     private final DefaultVariables variables = new DefaultVariables();
 
+    @Inject
+    ConditionContainer conditionContainer;
 
+    
     /**
      * Tests the {@link Variables#set(String, String)}, {@link Variables#get(String)} and
      * {@link Variables#get(String, String)} methods.
@@ -234,7 +245,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.FREEBSD);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, new ConditionContainer(),
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
                 installData.getPlatform());
         rules.readConditionMap(conditions);
         variables.setRules(rules);
@@ -267,7 +278,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, new ConditionContainer(),
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
                 installData.getPlatform());
         rules.readConditionMap(conditions);
         variables.setRules(rules);
@@ -310,7 +321,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, new ConditionContainer(),
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
                 installData.getPlatform());
         rules.readConditionMap(conditions);
         variables.setRules(rules);
@@ -426,7 +437,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, new ConditionContainer(),
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
                 installData.getPlatform());
         rules.readConditionMap(conditions);
         variables.setRules(rules);
@@ -613,7 +624,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, new ConditionContainer(),
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
                 installData.getPlatform());
         rules.readConditionMap(conditions);
         variables.setRules(rules);

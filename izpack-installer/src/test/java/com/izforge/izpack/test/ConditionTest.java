@@ -50,7 +50,6 @@ import jakarta.inject.Inject;
 @Container(TestConditionContainer.class)
 public class ConditionTest
 {
-
     private static final Matcher<? super Boolean> IS_TRUE = Is.is(true);
     private static final Matcher<? super Boolean> IS_FALSE = Is.is(false);
     private static final Matcher<Object> IS_NULL = IsNull.nullValue();

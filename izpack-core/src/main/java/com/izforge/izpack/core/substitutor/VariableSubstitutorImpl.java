@@ -33,6 +33,7 @@ import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.substitutor.SubstitutionType;
 import com.izforge.izpack.api.substitutor.VariableSubstitutor;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
@@ -47,6 +48,7 @@ import jakarta.inject.Inject;
  * <p/>
  * This is a abstract base type for all kinds of variables
  */
+@ApplicationScoped
 public class VariableSubstitutorImpl implements VariableSubstitutor, Serializable
 {
     private static final long serialVersionUID = 3907213762447685687L;

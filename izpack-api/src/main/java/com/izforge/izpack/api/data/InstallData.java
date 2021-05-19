@@ -23,6 +23,7 @@ package com.izforge.izpack.api.data;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.resource.Messages;
@@ -319,5 +320,17 @@ public interface InstallData
      * @return {@code true} to enable console reader, {@code false} otherwise.
      */
     boolean isEnableConsoleReader();
+    
+
+    /**
+     * Returns a optional implementation of the given {@code type} class.
+     * 
+     * @param <T> the type of the extension
+     * @param type the extension type
+     * @return an optional implementation for the given type
+     */
+    default <T> Optional<T> getExtension(Class<T> type) {
+        return Optional.empty();
+    }
 }
 

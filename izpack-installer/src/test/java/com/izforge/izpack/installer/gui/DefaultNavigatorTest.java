@@ -34,9 +34,12 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.container.Container;
+import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.LocaleDatabase;
 import com.izforge.izpack.api.data.Panel;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.factory.ObjectFactory;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.api.rules.RulesEngine;
@@ -49,6 +52,7 @@ import com.izforge.izpack.core.rules.RulesEngineImpl;
 import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.installer.panel.Panels;
+import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.Platforms;
 
 /**
@@ -105,7 +109,12 @@ public class DefaultNavigatorTest
                 super.fillContainer();
                 addComponent(InstallerFrame.class, frame);
                 addComponent(Resources.class, resources);
-                addComponent(GUIInstallData.class, installData);
+            }
+
+            @Override
+            public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+            {
+                return installData;
             }
         };
         factory = new DefaultObjectFactory(container);

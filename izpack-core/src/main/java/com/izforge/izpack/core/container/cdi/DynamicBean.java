@@ -26,6 +26,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -36,90 +37,105 @@ import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.enterprise.inject.spi.PassivationCapable;
 
-final class DynamicBean<T> implements Bean<T>, PassivationCapable
-{
+final class DynamicBean<T> implements Bean<T>, PassivationCapable {
   private final Class<T> type;
   private final Supplier<T> producer;
   private final Set<Type> types;
   private final Set<Annotation> qualifiers;
 
-  DynamicBean(Class<T> type, Supplier<T> producer)
-  {
+  DynamicBean(Class<T> type, Supplier<T> producer) {
     this.type = type;
     this.producer = producer;
     qualifiers = new HashSet<>(Arrays.asList(Default.Literal.INSTANCE, Any.Literal.INSTANCE));
-    types = new HashSet<>(Arrays.asList(type, Object.class));
+    types = collectTypes(type);
   }
 
-  public DynamicBean<T> addQualifier(Annotation annotation)
-  {
+  static Set<Type> collectTypes(Class<?> type) {
+    Set<Type> result = new HashSet<>();
+    collectTypes(type, result::add);
+    return result;
+  }
+
+  static void collectTypes(Class<?> type, Consumer<Class<?>> action) {
+    if (type.isInterface()) {
+      collectInterfaceTypes(type, action);
+    } else {
+      action.accept(type);
+      if (Object.class.equals(type)) {
+        return;
+      }
+      for (Class<?> interfaceClass : type.getInterfaces()) {
+        collectInterfaceTypes(interfaceClass, action);
+      }
+      collectTypes(type.getSuperclass(), action);
+    }
+  }
+
+  static void collectInterfaceTypes(Class<?> type, Consumer<Class<?>> action) {
+    if (type == null) {
+      return;
+    }
+    action.accept(type);
+    collectInterfaceTypes(type.getSuperclass(), action);
+  }
+
+  public DynamicBean<T> addQualifier(Annotation annotation) {
     qualifiers.add(annotation);
     return this;
   }
 
   @Override
-  public final Set<Type> getTypes()
-  {
+  public final Set<Type> getTypes() {
     return unmodifiableSet(types);
   }
 
   @Override
-  public final T create(CreationalContext<T> creationalContext)
-  {
+  public final T create(CreationalContext<T> creationalContext) {
     return producer.get();
   }
 
   @Override
-  public final void destroy(T instance, CreationalContext<T> creationalContext)
-  {
+  public final void destroy(T instance, CreationalContext<T> creationalContext) {
     creationalContext.release();
   }
 
   @Override
-  public final Set<Annotation> getQualifiers()
-  {
+  public final Set<Annotation> getQualifiers() {
     return unmodifiableSet(qualifiers);
   }
 
   @Override
-  public final Class<? extends Annotation> getScope()
-  {
+  public final Class<? extends Annotation> getScope() {
     return ApplicationScoped.class;
   }
 
   @Override
-  public final Set<Class<? extends Annotation>> getStereotypes()
-  {
+  public final Set<Class<? extends Annotation>> getStereotypes() {
     return emptySet();
   }
 
   @Override
-  public final Set<InjectionPoint> getInjectionPoints()
-  {
+  public final Set<InjectionPoint> getInjectionPoints() {
     return emptySet();
   }
 
   @Override
-  public String getName()
-  {
+  public String getName() {
     return null;
   }
 
   @Override
-  public boolean isNullable()
-  {
+  public boolean isNullable() {
     return false;
   }
 
   @Override
-  public Class<?> getBeanClass()
-  {
+  public Class<?> getBeanClass() {
     return type;
   }
 
   @Override
-  public boolean isAlternative()
-  {
+  public boolean isAlternative() {
     return false;
   }
 

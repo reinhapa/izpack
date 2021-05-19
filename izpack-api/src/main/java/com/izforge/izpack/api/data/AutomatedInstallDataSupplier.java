@@ -22,6 +22,7 @@
 
 package com.izforge.izpack.api.data;
 
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.util.Platform;
 
@@ -38,8 +39,9 @@ public interface AutomatedInstallDataSupplier {
    * @param resources the resource manager to obtain optional resources
    * @param variables the supported variables
    * @param platform the actual platform
+   * @param locales the locale information
    * @return a newly created automated installation data instance
    */
-  AutomatedInstallData get(Resources resources, Variables variables, Platform platform);
+  AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales);
 
 }

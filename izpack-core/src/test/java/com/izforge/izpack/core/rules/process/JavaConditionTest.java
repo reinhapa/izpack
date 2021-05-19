@@ -38,11 +38,16 @@ import com.izforge.izpack.test.Container;
 import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platforms;
 
+import jakarta.inject.Inject;
+
 @RunWith(PicoRunner.class)
 @Container(DefaultContainer.class)
 public class JavaConditionTest {
     public static final boolean CONSTANT_VALUE = true;
     public static final Boolean CONSTANT_OBJECT_VALUE = Boolean.TRUE;
+
+    @Inject
+    private ConditionContainer conditionContainer;
 
     public static void conditionMethodWithArgument(String someArgument) {
     }
@@ -91,6 +96,6 @@ public class JavaConditionTest {
      */
     private RulesEngine createRulesEngine(InstallData installData)
     {
-        return new RulesEngineImpl(installData, new ConditionContainer(), installData.getPlatform());
+        return new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
     }
 }

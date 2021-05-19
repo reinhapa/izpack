@@ -25,13 +25,12 @@ import java.awt.Font;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.installer.data.GUIInstallData;
+import com.izforge.izpack.installer.data.GuiExtension;
 
 
 /**
@@ -144,23 +143,22 @@ class Languages
      */
     private DisplayType getDisplayType(InstallData installData)
     {
-        AtomicReference<DisplayType> result = new AtomicReference<>(DisplayType.DEFAULT);
-        GUIInstallData.withData(installData, guiData -> {
-          Map<String, String> modifier = guiData.guiPrefs.modifier;
-          String langDisplayType = modifier.get("langDisplayType");
-          if (langDisplayType != null && langDisplayType.length() != 0)
-          {
-              try
-              {
-                  result.set(DisplayType.valueOf(langDisplayType.toUpperCase()));
-              }
-              catch (IllegalArgumentException exception)
-              {
-                  logger.warning("Invalid langDisplayType: " + langDisplayType);
-              }
-          }
-        });
-        return result.get();
+        GuiExtension guiExtension = installData.getExtension(GuiExtension.class)
+            .orElseThrow(() -> new IllegalArgumentException("Unsupported install data reference"));
+        Map<String, String> modifier = guiExtension.modifiers();
+        String langDisplayType = modifier.get("langDisplayType");
+        if (langDisplayType != null && !langDisplayType.isEmpty())
+        {
+            try
+            {
+                return DisplayType.valueOf(langDisplayType.toUpperCase());
+            }
+            catch (IllegalArgumentException exception)
+            {
+                logger.warning("Invalid langDisplayType: " + langDisplayType);
+            }
+        }
+        return DisplayType.DEFAULT;
     }
 
     /**

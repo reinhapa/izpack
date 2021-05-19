@@ -20,8 +20,6 @@
  */
 package com.izforge.izpack.test.provider;
 
-import java.io.IOException;
-
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.Info;
 import com.izforge.izpack.api.data.InstallData;
@@ -43,9 +41,8 @@ public abstract class AbstractInstallDataMockProvider
      *
      * @param installData the installation data to populate
      * @param locales     the locales
-     * @throws IOException if the default messages cannot be found
      */
-    protected void populate(AutomatedInstallData installData, Locales locales) throws IOException
+    protected void populate(AutomatedInstallData installData, Locales locales)
     {
         Info info = new Info();
         installData.setInfo(info);

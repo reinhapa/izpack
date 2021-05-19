@@ -1,9 +1,29 @@
+/*
+ * IzPack - Copyright 2001-2012 Julien Ponge, All Rights Reserved.
+ *
+ * http://izpack.org/
+ * http://izpack.codehaus.org/
+ *
+ * Copyright 2002 Marcus Stursberg
+ * Copyright 2012 Tim Anderson
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.izforge.izpack.core.provider;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +32,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.io.IOUtils;
 
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.data.AutomatedInstallData;
@@ -59,7 +77,7 @@ public class AutomatedInstallDataProvider
         Variables variables, Housekeeper housekeeper, PlatformModelMatcher matcher)
         throws IOException, ClassNotFoundException
     {
-        AutomatedInstallData installData = installDataSupplier.get(resources, variables, matcher.getCurrentPlatform());
+        AutomatedInstallData installData = installDataSupplier.get(resources, variables, matcher.getCurrentPlatform(), locales);
         loadInstallData(installData, resources, matcher, housekeeper);
         loadDynamicVariables(variables, installData, resources);
         loadDynamicConditions(installData, resources);
@@ -125,17 +143,7 @@ public class AutomatedInstallDataProvider
         List<Panel> panelsOrder = (List<Panel>) resources.getObject("panelsOrder");
 
         // We read the packs data
-        InputStream in = resources.getInputStream("packs.info");
-        ObjectInputStream objIn = new ObjectInputStream(in);
-        List<PackInfo> packs;
-        try
-        {
-            packs = (List<PackInfo>) objIn.readObject();
-        }
-        finally
-        {
-            IOUtils.closeQuietly(objIn);
-        }
+        List<PackInfo> packs = (List<PackInfo>)resources.getObject("packs.info");
 
         List<Pack> availablePacks = new ArrayList<>();
         List<Pack> allPacks = new ArrayList<>();

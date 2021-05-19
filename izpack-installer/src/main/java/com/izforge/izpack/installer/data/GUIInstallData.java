@@ -22,8 +22,10 @@ package com.izforge.izpack.installer.data;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.UIManager;
 
@@ -42,7 +44,7 @@ import jakarta.enterprise.inject.Vetoed;
  * @author Johannes Lehtinen <johannes.lehtinen@iki.fi>
  */
 @Vetoed
-public class GUIInstallData extends InstallData implements Serializable
+public class GUIInstallData extends InstallData implements Serializable, GuiExtension
 {
 
     private static final long serialVersionUID = 4048793450990024505L;
@@ -68,16 +70,7 @@ public class GUIInstallData extends InstallData implements Serializable
         super(variables, platform);
     }
 
-    public static void withData(com.izforge.izpack.api.data.InstallData installData,  Consumer<GUIInstallData> action)
-    {
-        if (installData instanceof GUIInstallData)
-        {
-            action.accept((GUIInstallData)installData);
-        } else {
-            throw new IllegalArgumentException("Unsupported install data reference");
-        }
-    }
-
+    @Override
     public void configureGuiButtons()
     {
         Messages messages = getMessages();
@@ -89,6 +82,12 @@ public class GUIInstallData extends InstallData implements Serializable
         UIManager.put("OptionPane.hideDetailsButtonText", messages.get("installer.hideDetails"));
         UIManager.put("OptionPane.copyButtonText", messages.get("installer.copy"));
         UIManager.put("OptionPane.sendReportButtonText", messages.get("installer.sendReport"));
+    }
+
+    @Override
+    public Map<String, String> modifiers()
+    {
+        return guiPrefs == null ? Collections.emptyMap() : guiPrefs.modifier;
     }
 
     @Override
@@ -105,5 +104,13 @@ public class GUIInstallData extends InstallData implements Serializable
     public List<ISummarisable> getPanels()
     {
         return panels;
+    }
+
+    @Override
+    public <T> Optional<T> getExtension(Class<T> type) {
+        if (GuiExtension.class.equals(type)) {
+            return Optional.of(type.cast(this));
+        }
+        return super.getExtension(type);
     }
 }

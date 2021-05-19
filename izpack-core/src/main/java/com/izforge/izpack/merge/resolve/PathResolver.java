@@ -30,6 +30,7 @@ import java.util.Set;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.merge.Mergeable;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
@@ -37,6 +38,7 @@ import jakarta.inject.Inject;
  *
  * @author Anthonin Bonnefoy
  */
+@ApplicationScoped
 public class PathResolver
 {
     /**

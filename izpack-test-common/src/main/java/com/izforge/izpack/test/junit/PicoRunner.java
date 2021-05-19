@@ -173,24 +173,23 @@ public class PicoRunner extends PlatformRunner
     private Container createContainer(Class<? extends Container> containerClass)
             throws Exception
     {
-        final Class<?> javaClass = getTestClass().getJavaClass();
+        final Class<?> javaTestClass = getTestClass().getJavaClass();
         try
         {
-            Constructor<? extends Container> constructor = containerClass.getConstructor(javaClass.getClass(), method.getClass());
-            return constructor.newInstance(javaClass, method);
+            Constructor<? extends Container> constructor = containerClass.getConstructor(javaTestClass.getClass(), method.getClass());
+            return constructor.newInstance(javaTestClass, method);
         }
         catch (NoSuchMethodException nsme1)
         {
             try
             {
-                Constructor<? extends Container> constructor = containerClass.getConstructor(javaClass.getClass());
-                return constructor.newInstance(javaClass);
+                Constructor<? extends Container> constructor = containerClass.getConstructor(javaTestClass.getClass());
+                return constructor.newInstance(javaTestClass);
             }
             catch (NoSuchMethodException nsme2)
             {
               logger.severe("Test container [" + containerClass.getName() + "] has no constructor taking a test class");
-              Constructor<? extends Container>  constructor = containerClass.getConstructor();
-              return constructor.newInstance();
+              return containerClass.getConstructor().newInstance();
             }
         }
     }

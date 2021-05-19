@@ -25,6 +25,7 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.core.resource.DefaultLocales;
 import com.izforge.izpack.core.resource.ResourceManager;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 /**
@@ -36,6 +37,7 @@ public class LocalesProvider
 {
 
    @Produces
+   @ApplicationScoped
    public Locales provide(ResourceManager resources)
     {
         Locales locales = new DefaultLocales(resources);

@@ -25,6 +25,7 @@ package com.izforge.izpack.installer.container.impl;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.data.InstallData;
@@ -78,7 +79,7 @@ public class AutomatedInstallerContainer extends InstallerContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return new InstallData(variables, platform);
     }

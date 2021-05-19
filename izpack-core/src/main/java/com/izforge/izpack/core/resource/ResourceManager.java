@@ -31,6 +31,8 @@ import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.api.resource.Locales;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 /**
  * With this ResourceManager you are able to get resources from the jar file.
  * <p/>
@@ -46,6 +48,7 @@ import com.izforge.izpack.api.resource.Locales;
  * @author Marcus Stursberg
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class ResourceManager extends AbstractResources
 {
     /**

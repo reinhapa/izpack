@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,8 +56,9 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.gui.IconsDatabase;
-import com.izforge.izpack.installer.data.GUIInstallData;
+import com.izforge.izpack.installer.data.GuiExtension;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
@@ -70,6 +70,7 @@ import jakarta.inject.Inject;
  * @author Christian Murphy
  * @author Klaus Bartz
  */
+@ApplicationScoped
 public class LanguageDialog extends JDialog
 {
     private static final long serialVersionUID = 3256443616359887667L;
@@ -302,15 +303,15 @@ public class LanguageDialog extends JDialog
      */
     private boolean useFlags()
     {
-        AtomicBoolean result = new AtomicBoolean(true);
-        GUIInstallData.withData(installData, guiData -> {
-          Map<String, String> modifier = guiData.guiPrefs.modifier;
-          if (modifier.containsKey("useFlags") && "no".equalsIgnoreCase(modifier.get("useFlags")))
-          {
-            result.set(false);
-          }
-        });
-        return result.get();
+        GuiExtension guiExtension = installData.getExtension(GuiExtension.class)
+            .orElseThrow(() -> new IllegalArgumentException("Unsupported install data reference"));
+        Map<String, String> modifier = guiExtension.modifiers();
+        if (modifier.containsKey("useFlags") && "no".equalsIgnoreCase(modifier.get("useFlags")))
+        {
+          return false;
+        }
+        
+        return true;
     }
 
 
@@ -336,7 +337,9 @@ public class LanguageDialog extends JDialog
             AutomatedInstallDataProvider.addCustomLangpack(installData, locales);
 
             // Configure buttons after locale has been loaded
-            GUIInstallData.withData(installData, GUIInstallData::configureGuiButtons);
+            GuiExtension guiExtension = installData.getExtension(GuiExtension.class)
+                .orElseThrow(() -> new IllegalArgumentException("Unsupported install data reference"));
+            guiExtension.configureGuiButtons();
         }
         catch (Exception exception)
         {

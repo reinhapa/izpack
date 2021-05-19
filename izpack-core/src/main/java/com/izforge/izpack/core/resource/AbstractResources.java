@@ -176,24 +176,14 @@ public abstract class AbstractResources implements Resources
     @Override
     public Object getObject(String name) throws ResourceException, ResourceNotFoundException
     {
-        Object result;
-        InputStream in = getInputStream(name);
-        ObjectInputStream objectIn = null;
-        try
+        try (InputStream in = getInputStream(name); ObjectInputStream objectIn = new ObjectInputStream(in))
         {
-            objectIn = new ObjectInputStream(in);
-            result = objectIn.readObject();
+            return objectIn.readObject();
         }
         catch (Exception exception)
         {
             throw new ResourceException("Failed to read resource: " + name, exception);
         }
-        finally
-        {
-            IOUtils.closeQuietly(objectIn);
-            IOUtils.closeQuietly(in);
-        }
-        return result;
     }
 
     /**
@@ -233,8 +223,8 @@ public abstract class AbstractResources implements Resources
 
         // must use ImageIO to support BMP files
         try {
-			Image image = ImageIO.read(result);
-			return new ImageIcon(image);
+            Image image = ImageIO.read(result);
+            return new ImageIcon(image);
         }
         catch (IOException ex) {
             StringBuilder message = new StringBuilder("Image icon resource not available from url: ");
@@ -293,17 +283,10 @@ public abstract class AbstractResources implements Resources
      */
     protected String readString(String name, String encoding) throws IOException
     {
-        String result;
-        InputStream in = getInputStream(name);
-        try
+        try (InputStream in = getInputStream(name))
         {
-            result = IOUtils.toString(in, Charsets.toCharset(encoding));
+            return IOUtils.toString(in, Charsets.toCharset(encoding));
         }
-        finally
-        {
-            IOUtils.closeQuietly(in);
-        }
-        return result;
     }
 
 }

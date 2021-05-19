@@ -20,6 +20,7 @@
  */
 package com.izforge.izpack.installer.container.provider;
 
+import static com.izforge.izpack.util.Platforms.MANDRAKE_LINUX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -55,9 +56,9 @@ import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.core.resource.DefaultLocales;
 import com.izforge.izpack.core.resource.ResourceManager;
+import com.izforge.izpack.installer.data.InstallData;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.PlatformModelMatcher;
-import com.izforge.izpack.util.Platforms;
 
 /**
  * Tests the {@link AutomatedInstallDataProvider} class.
@@ -114,14 +115,14 @@ public class AutomatedInstallDataProviderTest
         Locales locales = new DefaultLocales(resources, Locale.ENGLISH);
         resources.setLocales(locales);
 
-        AutomatedInstallDataProvider provider = new AutomatedInstallDataProvider();
-
         DefaultVariables variables = new DefaultVariables();
         Housekeeper housekeeper = Mockito.mock(Housekeeper.class);
         PlatformModelMatcher matcher = Mockito.mock(PlatformModelMatcher.class);
-        when(matcher.getCurrentPlatform()).thenReturn(Platforms.MANDRAKE_LINUX);
+        when(matcher.getCurrentPlatform()).thenReturn(MANDRAKE_LINUX);
+        when(automatedInstallDataSupplier.get(resources, variables, MANDRAKE_LINUX, locales)).thenReturn(new InstallData(variables, MANDRAKE_LINUX));
 
         // populate the installation data
+        AutomatedInstallDataProvider provider = new AutomatedInstallDataProvider();
         AutomatedInstallData installData = provider.provide(automatedInstallDataSupplier, resources,
             locales, variables, housekeeper, matcher);
 

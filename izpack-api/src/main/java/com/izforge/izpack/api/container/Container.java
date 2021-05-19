@@ -22,6 +22,8 @@
 
 package com.izforge.izpack.api.container;
 
+import java.lang.annotation.Annotation;
+
 import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
 import com.izforge.izpack.api.exception.ContainerException;
 
@@ -48,9 +50,10 @@ public interface Container extends AutomatedInstallDataSupplier
      *
      * @param componentType the component type
      * @param implementation the component implementation
+     * @param annotations optional qualifier annotations
      * @throws ContainerException if registration fails
      */
-    <T, I extends T> void addComponent(Class<T> componentType, I implementation);
+    <T, I extends T> void addComponent(Class<T> componentType, I implementation, Annotation...annotations);
 
     /**
      * Retrieve a component by its component type.

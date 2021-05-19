@@ -26,6 +26,7 @@ import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.factory.ObjectFactory;
 import com.izforge.izpack.util.ClassUtil;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 
@@ -34,6 +35,7 @@ import jakarta.inject.Inject;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class DefaultObjectFactory implements ObjectFactory
 {
     /**
@@ -68,14 +70,7 @@ public class DefaultObjectFactory implements ObjectFactory
     {
         if (parameters.length == 0)
         {
-            try
-            {
-              return type.getConstructor().newInstance();
-            } 
-            catch (ReflectiveOperationException e)
-            {
-                throw new UnsupportedOperationException("create object failed", e);
-            }
+            return container.getComponent(type);
         }
         else
         {

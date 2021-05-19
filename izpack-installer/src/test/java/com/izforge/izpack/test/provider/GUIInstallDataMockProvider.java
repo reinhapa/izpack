@@ -44,7 +44,7 @@ public class GUIInstallDataMockProvider extends AbstractInstallDataMockProvider
      * @throws IOException if the default messages cannot be found
      */
     @Produces
-    public GUIInstallData provide(Variables variables, Locales locales) throws IOException
+    public GUIInstallData provide(Variables variables, Locales locales)
     {
         GUIInstallData result = createInstallData(variables);
         populate(result, locales);

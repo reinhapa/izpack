@@ -61,6 +61,8 @@ public class RuleFieldValidatorTest
 {
     @Inject
     com.izforge.izpack.api.container.Container container;
+    @Inject
+    private ConditionContainer conditionContainer;
 
     /**
      * The install data.
@@ -77,7 +79,7 @@ public class RuleFieldValidatorTest
     public void prepare()
     {
         installData = new AutomatedInstallData(new DefaultVariables(), Platforms.LINUX);
-        RulesEngine rules = new RulesEngineImpl(new ConditionContainer(),
+        RulesEngine rules = new RulesEngineImpl(conditionContainer,
                                                 installData.getPlatform());
         installData.setRules(rules);
         factory = new DefaultObjectFactory(container);

@@ -11,17 +11,21 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.izforge.izpack.api.container.Container;
+import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
-import com.izforge.izpack.core.resource.DefaultLocales;
 import com.izforge.izpack.core.resource.ResourceManager;
 import com.izforge.izpack.installer.automation.AutomatedInstaller;
 import com.izforge.izpack.installer.data.UninstallData;
 import com.izforge.izpack.installer.data.UninstallDataWriter;
 import com.izforge.izpack.merge.resolve.PathResolver;
+import com.izforge.izpack.test.TestAutomatedInstallDataProvider;
+import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
+import com.izforge.izpack.util.Platform;
 
 /**
  * Container for test language
@@ -30,12 +34,14 @@ import com.izforge.izpack.merge.resolve.PathResolver;
  */
 public class TestLanguageContainer extends AbstractContainer
 {
+    private Class<?> classUnderTest;
 
     /**
      * Constructs a <tt>TestLanguageContainer</tt>.
      */
-    public TestLanguageContainer()
+    public TestLanguageContainer(Class<?> classUnderTest)
     {
+        this.classUnderTest = classUnderTest;
         initialise();
     }
 
@@ -48,13 +54,15 @@ public class TestLanguageContainer extends AbstractContainer
     protected void fillContainer()
     {
         super.fillContainer();
+        addComponent(classUnderTest);
+
         addComponent(Properties.class,  System.getProperties());
 
         ResourceManager resourceManager = Mockito.mock(ResourceManager.class);
         when(resourceManager.getObject("langpacks.info")).thenReturn(Arrays.asList("eng", "fra"));
         ImageIcon engFlag = new ImageIcon(getClass().getResource("/com/izforge/izpack/bin/langpacks/flags/eng.gif"));
-        ImageIcon frFlag = new ImageIcon(getClass().getResource("/com/izforge/izpack/bin/langpacks/flags/fra.gif"));
         when(resourceManager.getImageIcon("flag.eng")).thenReturn(engFlag);
+        ImageIcon frFlag = new ImageIcon(getClass().getResource("/com/izforge/izpack/bin/langpacks/flags/fra.gif"));
         when(resourceManager.getImageIcon("flag.fra")).thenReturn(frFlag);
         when(resourceManager.getInputStream("langpacks/eng.xml")).thenAnswer(new Answer<Object>()
         {
@@ -76,18 +84,23 @@ public class TestLanguageContainer extends AbstractContainer
         when(resourceManager.getInputStream(Resources.CUSTOM_ICONS_RESOURCE_NAME))
                 .thenThrow(new IzPackException("Not available"));
 
-        DefaultLocales locales = new DefaultLocales(resourceManager);
         addComponent(ResourceManager.class, resourceManager);
         addComponent(UninstallData.class, Mockito.mock(UninstallData.class));
         addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
         addComponent(AutomatedInstaller.class, Mockito.mock(AutomatedInstaller.class));
         addComponent(PathResolver.class, Mockito.mock(PathResolver.class));
-        addComponent(DefaultLocales.class, locales);
-        addComponent(Container.class, this);
+        addComponent(TestAutomatedInstallDataProvider.class);
 
+//        addComponent(DefaultLocales.class, new DefaultLocales(resourceManager));
+//        addComponent(Container.class, this);
 //        addComponent(DefaultVariables.class);
 //        addComponent(GUIInstallDataMockProvider.class);
 //        addComponent(IconsProvider.class);
     }
 
+    @Override
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales) {
+        GUIInstallDataMockProvider provider = new GUIInstallDataMockProvider();
+        return provider.provide(variables, locales);
+    }
 }

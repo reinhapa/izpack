@@ -22,27 +22,15 @@
 
 package com.izforge.izpack.core.container;
 
-import java.lang.annotation.Annotation;
-
-import com.izforge.izpack.api.exception.IzPackException;
-
 /**
- * Defines collects all CDI relevant bean informations for the izPack environment, where we do
- * not enable automatic bean discovery.
+ * Initializer to be called prior starting the CDI environment.
  *
  * @author Patrick Reinhart
  */
-public interface CdiInitializationContext {
-
-  <T> void addComponent(Class<T> componentType);
-
-  <T, I extends T> void addComponent(Class<T> componentType, I implementation, Annotation...annotations);
-
-  void addConfig(String name, Object value) throws IzPackException;
-
-  <T> void removeComponent(Class<T> componnentType);
-
-  void start();
-
-  void close();
+public interface CdiInitializer {
+    /**
+     * Called to initialize the context before the CDI environment is being started
+     * @param context the initialization context
+     */
+    void initialize(CdiInitializationContext context);
 }

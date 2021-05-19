@@ -22,6 +22,9 @@
 
 package com.izforge.izpack.util.os;
 
+import java.util.List;
+import java.util.Properties;
+
 import com.coi.tools.os.izpack.Registry;
 import com.coi.tools.os.win.RegDataContainer;
 import com.izforge.izpack.api.exception.NativeLibException;
@@ -31,14 +34,16 @@ import com.izforge.izpack.core.os.RegistryHandler;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorImpl;
 import com.izforge.izpack.util.Librarian;
 
-import java.util.List;
-import java.util.Properties;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * This is the Microsoft Windows specific implementation of <code>RegistryHandler</code>.
  *
  * @author bartzkau
  */
+@OsName("windows")
+@ApplicationScoped
 public class Win_RegistryHandler extends RegistryHandler
 {
 
@@ -58,6 +63,7 @@ public class Win_RegistryHandler extends RegistryHandler
      *
      * @param librarian the librarian
      */
+    @Inject
     public Win_RegistryHandler(Librarian librarian)
     {
         this.librarian = librarian;
@@ -73,6 +79,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param contents the contents for the value
      * @throws NativeLibException
      */
+    @Override
     public void setValue(String key, String value, String contents) throws NativeLibException
     {
         if (contents.contains("OLD_KEY_VALUE") && getRegistry().valueExist(key, value))
@@ -106,6 +113,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param contents the contents for the value
      * @throws NativeLibException
      */
+    @Override
     public void setValue(String key, String value, String[] contents) throws NativeLibException
     {
         getRegistry().setValue(key, value, contents);
@@ -121,6 +129,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param contents the contents for the value
      * @throws NativeLibException
      */
+    @Override
     public void setValue(String key, String value, byte[] contents) throws NativeLibException
     {
         getRegistry().setValue(key, value, contents);
@@ -136,6 +145,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param contents the contents for the value
      * @throws NativeLibException
      */
+    @Override
     public void setValue(String key, String value, long contents) throws NativeLibException
     {
         getRegistry().setValue(key, value, contents);
@@ -150,6 +160,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return requested value if exist, else the default value
      * @throws NativeLibException
      */
+    @Override
     public RegDataContainer getValue(String key, String value, RegDataContainer defaultVal) throws NativeLibException
     {
         if (valueExist(key, value))
@@ -166,6 +177,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return whether a key exist or not
      * @throws NativeLibException
      */
+    @Override
     public boolean keyExist(String key) throws NativeLibException
     {
         return (getRegistry().keyExist(key));
@@ -179,6 +191,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return whether a the given value under the given key exist or not
      * @throws NativeLibException
      */
+    @Override
     public boolean valueExist(String key, String value) throws NativeLibException
     {
         return (getRegistry().valueExist(key, value));
@@ -191,6 +204,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return all keys which are defined under the given key
      * @throws NativeLibException
      */
+    @Override
     public String[] getSubkeys(String key) throws NativeLibException
     {
         return (getRegistry().getSubkeys(key));
@@ -203,6 +217,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return all value names which are defined under the given key
      * @throws NativeLibException
      */
+    @Override
     public String[] getValueNames(String key) throws NativeLibException
     {
         return (getRegistry().getValueNames(key));
@@ -216,6 +231,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return requested value if exist, else an exception
      * @throws NativeLibException
      */
+    @Override
     public RegDataContainer getValue(String key, String value) throws NativeLibException
     {
         return (getRegistry().getValue(key, value));
@@ -227,6 +243,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param key key to be created
      * @throws NativeLibException
      */
+    @Override
     public void createKey(String key) throws NativeLibException
     {
         getRegistry().createKey(key);
@@ -238,6 +255,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param key key to be deleted
      * @throws NativeLibException
      */
+    @Override
     public void deleteKey(String key) throws NativeLibException
     {
         getRegistry().deleteKey(key);
@@ -249,6 +267,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param key key to be deleted
      * @throws NativeLibException
      */
+    @Override
     public void deleteKeyIfEmpty(String key) throws NativeLibException
     {
         getRegistry().deleteKeyIfEmpty(key);
@@ -262,6 +281,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @throws com.izforge.izpack.api.exception.NativeLibException
      *
      */
+    @Override
     public void deleteValue(String key, String value) throws NativeLibException
     {
         getRegistry().deleteValue(key, value);
@@ -273,6 +293,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param i an integer which refers to a HKEY
      * @throws NativeLibException
      */
+    @Override
     public void setRoot(int i) throws NativeLibException
     {
         getRegistry().setRoot(i);
@@ -284,6 +305,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return the root as integer
      * @throws NativeLibException
      */
+    @Override
     public int getRoot() throws NativeLibException
     {
         return (getRegistry().getRoot());
@@ -300,6 +322,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @param flagVal true to have the previous contents of registry
      *                values logged by the 'setValue()' method.
      */
+    @Override
     public void setLogPrevSetValueFlag(boolean flagVal) throws NativeLibException
     {
         getRegistry().setLogPrevSetValueFlag(flagVal);
@@ -312,6 +335,7 @@ public class Win_RegistryHandler extends RegistryHandler
      * @return true if the previous contents of registry values will be
      *         logged by the 'setValue()' method.
      */
+    @Override
     public boolean getLogPrevSetValueFlag() throws NativeLibException
     {
         return (getRegistry().getLogPrevSetValueFlag());
@@ -322,6 +346,7 @@ public class Win_RegistryHandler extends RegistryHandler
      *
      * @throws NativeLibException
      */
+    @Override
     public void activateLogging() throws NativeLibException
     {
         getRegistry().activateLogging();
@@ -332,6 +357,7 @@ public class Win_RegistryHandler extends RegistryHandler
      *
      * @throws NativeLibException
      */
+    @Override
     public void suspendLogging() throws NativeLibException
     {
         getRegistry().suspendLogging();
@@ -342,26 +368,31 @@ public class Win_RegistryHandler extends RegistryHandler
      *
      * @throws NativeLibException
      */
+    @Override
     public void resetLogging() throws NativeLibException
     {
         getRegistry().resetLogging();
     }
 
+    @Override
     public List<Object> getLoggingInfo() throws NativeLibException
     {
         return (getRegistry().getLoggingInfo());
     }
 
+    @Override
     public void setLoggingInfo(List info) throws NativeLibException
     {
         getRegistry().setLoggingInfo(info);
     }
 
+    @Override
     public void addLoggingInfo(List info) throws NativeLibException
     {
         getRegistry().addLoggingInfo(info);
     }
 
+    @Override
     public void rewind() throws NativeLibException
     {
         getRegistry().rewind();

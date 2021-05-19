@@ -18,13 +18,16 @@
 
 package com.izforge.izpack.core.container.cdi;
 
+import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 
+import jakarta.enterprise.inject.Decorated;
 import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 
@@ -34,8 +37,9 @@ import jakarta.enterprise.inject.se.SeContainerInitializer;
  * @author Patrick Reinhart
  */
 public final class CdiInitializationContextImpl implements CdiInitializationContext {
-  private final AtomicReference<State> init = new AtomicReference<>(State.NEW);
+  private static final Logger logger = Logger.getLogger(CdiInitializationContextImpl.class.getName());
 
+  private final AtomicReference<State> init = new AtomicReference<>(State.NEW);
   private final HashMap<Class<?>, BeanImplementation> components;
   private final HashMap<String, Object> configurations;
 
@@ -59,12 +63,21 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   }
 
   @Override
-  public <T, I extends T> void addComponent(Class<T> type, I implementation) {
+  public <T, I extends T> void addComponent(Class<T> type, I implementation,
+      Annotation... annotations) {
     checkNew();
-    BeanImplementation existing =
-        components.putIfAbsent(type, new BeanImplementation(implementation));
-    if (existing != null) {
-      throw new IllegalStateException("Entry for given type [" + type + "] allready registered");
+    BeanImplementation beanImplementation = new BeanImplementation(type, implementation, annotations);
+    DynamicBean.collectTypes(type, key -> registerImplementation(key, beanImplementation));
+    logger.info(() -> "registered " + beanImplementation);
+  }
+
+  private void registerImplementation(Class<?> type, BeanImplementation beanImplementation) {
+    if (Object.class.equals(type)) {
+      return;
+    }
+    BeanImplementation existing = components.putIfAbsent(type, beanImplementation);
+    if (existing != null && !existing.equals(beanImplementation)) {
+      throw new IllegalStateException("Entry for given type [" + type + "] allready registered: " + existing);
     }
   }
 
@@ -81,21 +94,15 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   }
 
   @Override
-  public <T> T getComponent(Class<T> componentType) {
-    if (!State.RUNNING.equals(init.get())) {
-      throw new IllegalStateException("Unable to get component when not yet running");
-    }
-    return seContainer.select(componentType).get();
-  }
-
-  @Override
   public void start() {
     if (init.compareAndSet(State.NEW, State.INITIALIZING)) {
       SeContainerInitializer initializer = SeContainerInitializer.newInstance();
       ManualBeanDefinitions beanDefinitions = new ManualBeanDefinitions();
-      initializer.addProperty("javax.enterprise.inject.scan.implicit", Boolean.TRUE); // scan also .jar files without beans.xml
+      // scan also .jar files without beans.xml
+      initializer.addProperty("javax.enterprise.inject.scan.implicit", Boolean.TRUE);
       initializer.addExtensions(beanDefinitions);
-      components.forEach((type, implementation) -> implementation.register(initializer, type, beanDefinitions));
+      components.values().stream().distinct()
+          .forEach(implementation -> implementation.register(initializer, beanDefinitions));
       seContainer = initializer.initialize();
       init.set(State.RUNNING);
     }
@@ -115,25 +122,44 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   }
 
   private static final class BeanImplementation {
+    private final Class<?> type;
     private final Object implementation;
+    private final Annotation[] annotations;
 
-    BeanImplementation(Object implementation) {
+    BeanImplementation(Class<?> type, Object implementation, Annotation[] annotations) {
+      this.type = type;
       this.implementation = implementation;
+      this.annotations = annotations;
     }
 
-    void register(SeContainerInitializer initializer, Class<?> beanType, Consumer<DynamicBean<?>> implementationConsumer) {
-      if (implementation==null)
-      {
-        initializer.addBeanClasses(beanType);
+    void register(SeContainerInitializer initializer, 
+        Consumer<DynamicBean<?>> implementationConsumer) {
+      if (type.isAnnotationPresent(Decorated.class)) {
+        initializer.enableDecorators(type);
       }
-      else
-      {
-        implementationConsumer.accept(dynamicBean(beanType, implementation));
+      if (implementation == null) {
+        initializer.addBeanClasses(type);
+      } else {
+        implementationConsumer.accept(dynamicBean(type, implementation, annotations));
       }
     }
 
-    static <T> DynamicBean<T> dynamicBean(Class<T> type, Object instance) {
-      return new DynamicBean<>(type, () -> type.cast(instance));
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder(type.getName());
+      if (implementation != null) {
+        sb.append('[').append(implementation.getClass().getName()).append(']');
+      }
+      return sb.toString();
+    }
+
+    static <T> DynamicBean<T> dynamicBean(Class<T> type, Object instance,
+        Annotation[] annotations) {
+      DynamicBean<T> bean = new DynamicBean<>(type, () -> type.cast(instance));
+      for (Annotation annotation : annotations) {
+        bean.addQualifier(annotation);
+      }
+      return bean;
     }
   }
 }

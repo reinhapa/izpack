@@ -27,8 +27,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.izforge.izpack.api.rules.RulesEngine;
+import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
@@ -38,7 +40,12 @@ import com.izforge.izpack.panels.userinput.field.rule.RuleField;
 import com.izforge.izpack.panels.userinput.field.rule.RuleFormat;
 import com.izforge.izpack.panels.userinput.field.rule.TestRuleFieldConfig;
 import com.izforge.izpack.panels.userinput.processor.Processor;
+import com.izforge.izpack.test.Container;
+import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platforms;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 
 
 /**
@@ -46,8 +53,12 @@ import com.izforge.izpack.util.Platforms;
  *
  * @author Tim Anderson
  */
+@RunWith(PicoRunner.class)
+@Container(DefaultContainer.class)
 public class GUIRuleFieldTest
 {
+    @Inject
+    private ConditionContainer conditionContainer;
 
     /**
      * The install data.
@@ -58,10 +69,11 @@ public class GUIRuleFieldTest
     /**
      * Default constructor.
      */
-    public GUIRuleFieldTest()
+    @PostConstruct
+    public void postConstruct()
     {
         installData = new GUIInstallData(new DefaultVariables(), Platforms.HP_UX);
-        RulesEngine rules = new RulesEngineImpl(new ConditionContainer(), installData.getPlatform());
+        RulesEngine rules = new RulesEngineImpl(conditionContainer, installData.getPlatform());
         installData.setRules(rules);
     }
 

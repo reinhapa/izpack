@@ -4,6 +4,7 @@ import org.junit.runners.model.FrameworkMethod;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.impl.InstallerContainer;
@@ -32,7 +33,7 @@ public class TestConsoleInstallationContainer extends AbstractTestInstallationCo
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return ConsoleInstallDataProvider.provide(resources, variables, platform);
     }

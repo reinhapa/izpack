@@ -70,11 +70,16 @@ import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.Platforms;
 
+import jakarta.inject.Inject;
+
 
 @RunWith(PicoRunner.class)
 @Container(DefaultContainer.class)
 public class RulesEngineImplTest
 {
+    @Inject
+    private ConditionContainer conditionContainer;
+
     private RulesEngine engine = null;
 
     /**
@@ -732,7 +737,7 @@ public class RulesEngineImplTest
     private void checkPlatformCondition(Platform platform, String... conditions)
     {
         RulesEngine rules = new RulesEngineImpl(new AutomatedInstallData(new DefaultVariables(), platform),
-                                                new ConditionContainer(), platform);
+                                                conditionContainer, platform);
         for (String condition : conditions)
         {
             assertTrue("Expected " + condition + " to be true", rules.isConditionTrue(condition));
@@ -782,7 +787,7 @@ public class RulesEngineImplTest
      */
     private RulesEngine createRulesEngine(InstallData installData)
     {
-        return new RulesEngineImpl(installData, new ConditionContainer(), installData.getPlatform());
+        return new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
     }
 
 }

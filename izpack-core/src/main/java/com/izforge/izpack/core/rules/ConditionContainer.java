@@ -19,8 +19,8 @@
 
 package com.izforge.izpack.core.rules;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.rules.Condition;
@@ -29,6 +29,7 @@ import com.izforge.izpack.api.rules.RulesEngine;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 
 /**
@@ -39,16 +40,19 @@ import jakarta.enterprise.inject.Instance;
 @ApplicationScoped
 public class ConditionContainer
 {
-  private final Map<Condition, Instance<Condition>> instances;
+  private final Instance<Condition> instance;
+  private final List<Condition> instances;
 
   /**
    * Constructs a <tt>ConditionContainer</tt>.
    *
    * @param container the parent container
    */
-  public ConditionContainer()
+  @Inject
+  public ConditionContainer(Instance<Condition> instance)
   {
-      instances = new ConcurrentHashMap<>();
+      this.instance = instance;
+      instances = new ArrayList<>();
   }
 
   /**
@@ -63,29 +67,34 @@ public class ConditionContainer
    */
   public <T extends Condition> T getCondition(RulesEngine rules, Class<T> conditionType)
   {
-      try
-      {
-        return conditionType.getConstructor(RulesEngine.class).newInstance(rules);
-      }
-      catch (ReflectiveOperationException e1)
-      {
-          try
-          {
-          return conditionType.getConstructor().newInstance();
-          }
-          catch (ReflectiveOperationException e2)
-          {
-              throw new ContainerException("Failed to initialize condition type " + conditionType, e2);
-          }
-      } 
+        T condition = instance.select(conditionType).get();
+        instances.add(condition);
+        return condition;
+//      try
+//      {
+//        return conditionType.getConstructor(RulesEngine.class).newInstance(rules);
+//      }
+//      catch (ReflectiveOperationException e1)
+//      {
+//          try
+//          {
+//              return conditionType.getConstructor().newInstance();
+//          }
+//          catch (ReflectiveOperationException e2)
+//          {
+//              throw new ContainerException("Failed to initialize condition type " + conditionType, e2);
+//          }
+//      } 
   }
 
   @PreDestroy
-  public void dispose() {
-      instances.forEach(ConditionContainer::disposeCondition);
+  public void dispose()
+  {
+      instances.forEach(this::disposeCondition);
   }
   
-  private static <T extends Condition> void disposeCondition(T condition, Instance<T> conditionInstance)  {
-      conditionInstance.destroy(condition);
+  private  <T extends Condition> void disposeCondition(T condition)
+  {
+      instance.destroy(condition);
   }
 }

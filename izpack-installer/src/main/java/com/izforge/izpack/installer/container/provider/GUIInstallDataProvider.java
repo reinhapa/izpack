@@ -15,7 +15,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalTheme;
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.GUIPrefs.LookAndFeel;
 import com.izforge.izpack.api.data.LookAndFeels;
@@ -79,7 +78,7 @@ public class GUIInstallDataProvider
     }
 
 
-    public static AutomatedInstallData provide(Resources resources, Variables variables, Platform platform)
+    public static GUIInstallData provide(Resources resources, Variables variables, Platform platform)
     {
         final GUIInstallData installData = new GUIInstallData(variables, platform);
         // Loads the installation data

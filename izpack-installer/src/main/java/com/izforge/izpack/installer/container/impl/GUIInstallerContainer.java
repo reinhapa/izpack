@@ -6,6 +6,7 @@ import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.provider.GUIInstallDataProvider;
@@ -91,7 +92,7 @@ public class GUIInstallerContainer extends InstallerContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform)
+    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return GUIInstallDataProvider.provide(resources, variables, platform);
     }

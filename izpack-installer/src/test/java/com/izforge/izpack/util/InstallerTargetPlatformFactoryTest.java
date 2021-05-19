@@ -20,14 +20,15 @@
  */
 package com.izforge.izpack.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.os.RegistryHandler;
+import com.izforge.izpack.test.Container;
 import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.os.Shortcut;
 import com.izforge.izpack.util.os.Unix_Shortcut;
@@ -43,7 +44,7 @@ import jakarta.inject.Inject;
  * @author Tim Anderson
  */
 @RunWith(PicoRunner.class)
-@com.izforge.izpack.test.Container(DefaultContainer.class)
+@Container(DefaultContainer.class)
 public class InstallerTargetPlatformFactoryTest
 {
     /**
@@ -51,40 +52,6 @@ public class InstallerTargetPlatformFactoryTest
      */
     @Inject
     private TargetPlatformFactory factory;
-
-
-    /**
-     * Sets up the test case.
-     *
-     * @throws Exception for any error
-     */
-    @Before
-    public void setUp() throws Exception
-    {
-//        Container container = new AbstractContainer()
-//        {
-//            {
-//                initialise();
-//            }
-//
-//            @Override
-//            protected void fillContainer()
-//            {
-//                super.fillContainer();
-//                addComponent(Properties.class);
-//                addComponent(DefaultVariables.class);
-//                addComponent(ResourceManager.class);
-//                addComponent(InstallData.class);
-//                addComponent(TestLibrarian.class);
-//                addComponent(Housekeeper.class);
-//                addComponent(TargetFactory.class);
-//                addComponent(DefaultObjectFactory.class);
-//                addComponent(DefaultTargetPlatformFactory.class);
-//                addComponent(PlatformProvider.class);
-//            }
-//        };
-//        factory = container.getComponent(TargetPlatformFactory.class);
-    }
 
     /**
      * Verifies that the correct {@link Shortcut} is created for a platform.
@@ -152,7 +119,8 @@ public class InstallerTargetPlatformFactoryTest
     private <T> void checkCreate(Class<T> clazz, Platform platform, Class<? extends T> impl) throws Exception
     {
         T object = factory.create(clazz, platform);
-        assertEquals(impl, object.getClass());
+        assertNotNull(object);
+        assertTrue(object.getClass().getName().startsWith(impl.getName()));
     }
 
 }

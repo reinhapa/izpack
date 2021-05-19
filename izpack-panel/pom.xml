@@ -97,4 +97,37 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>com.izforge.izpack.panels.userinput.field.rule.RuleFieldValidatorTest</exclude>
+						<exclude>com.izforge.izpack.panels.defaulttarget.DefaultTargetConsolePanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.process.ProcessConsolePanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.process.ProcessPanelAutomationTest</exclude>
+						<exclude>com.izforge.izpack.panels.target.TargetConsolePanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.target.TargetPanelAutomationTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.UserInputConsolePanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.console.combo.ConsoleComboFieldTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.console.file.ConsoleDirFieldTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.console.file.ConsoleFileFieldTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.console.passwordConsolePasswordGroupFieldTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.console.radio.ConsoleRadioFieldTest</exclude>
+						<exclude>com.izforge.izpack.panels.PanelDisplayTest</exclude>
+						<exclude>com.izforge.izpack.panels.defaulttarget.DefaultTargetPanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.pdflicence.PDFLicencePanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.process.ProcessPanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.target.TargetPanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.test.AbstractPanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.UserInputPanelTest</exclude>
+						<exclude>com.izforge.izpack.panels.userinput.console.password.ConsolePasswordGroupFieldTest</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

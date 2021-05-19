@@ -26,15 +26,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
-import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.installer.container.TestLanguageContainer;
+import com.izforge.izpack.test.Container;
+import com.izforge.izpack.test.junit.PicoRunner;
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.TargetPlatformFactory;
+
+import jakarta.inject.Inject;
 
 
 /**
@@ -43,53 +46,17 @@ import com.izforge.izpack.util.TargetPlatformFactory;
  * @author Anthonin Bonnefoy
  * @author Bill Root
  */
+@RunWith(PicoRunner.class)
+@Container(TestLanguageContainer.class)
 public class Unix_ShortcutTest
 {
     private final String NOT_FOUND = "!!!NOT FOUND!!!";
 
-
     /**
      * The factory.
      */
+    @Inject
     private TargetPlatformFactory factory;
-
-    private Container container;
-
-
-    /**
-     * Sets up the test case.
-     *
-     * @throws Exception for any error
-     */
-    @Before
-    public void setUp() throws Exception
-    {
-        container = new AbstractContainer()
-        {
-            {
-                initialise();
-            }
-
-            @Override
-            protected void fillContainer()
-            {
-                super.fillContainer();
-//                addComponent(Properties.class);
-//                addComponent(DefaultVariables.class);
-//                addComponent(ResourceManager.class);
-//                addComponent(com.izforge.izpack.installer.data.InstallData.class);
-//                addComponent(TestLibrarian.class);
-//                addComponent(Housekeeper.class);
-//                addComponent(TargetFactory.class);
-//                addComponent(DefaultObjectFactory.class);
-//                addComponent(DefaultTargetPlatformFactory.class);
-//                addComponent(Container.class, this);
-//                addComponent(PlatformProvider.class);
-            }
-        };
-        factory = container.getComponent(TargetPlatformFactory.class);
-    }
-
 
     @Test
     @Ignore

@@ -28,6 +28,7 @@ import java.util.zip.ZipOutputStream;
 import com.izforge.izpack.api.merge.Mergeable;
 import com.izforge.izpack.merge.resolve.PathResolver;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
@@ -36,6 +37,7 @@ import jakarta.inject.Inject;
  *
  * @author Anthonin Bonnefoy
  */
+@ApplicationScoped
 public class MergeManagerImpl implements MergeManager
 {
     private final List<Mergeable> mergeableList;

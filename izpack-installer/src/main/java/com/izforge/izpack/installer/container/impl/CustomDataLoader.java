@@ -34,6 +34,7 @@ import com.izforge.izpack.installer.event.InstallerListeners;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
@@ -42,6 +43,7 @@ import jakarta.inject.Inject;
  * @author Anthonin Bonnefoy
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class CustomDataLoader
 {
 
