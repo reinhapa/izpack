@@ -84,6 +84,7 @@ public class AutomatedInstallDataProvider
         loadDefaultLocale(installData, locales);
         loadInstallerRequirements(installData, resources);
         addCustomLangpack(installData, locales);
+        addUserInputLangpack(installData, locales);
         return installData;
     }
 

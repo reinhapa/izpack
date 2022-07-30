@@ -462,7 +462,7 @@ public class MultiVolumeUnpackerTest
         	}
         	else {
 	            pack.addFile(baseDir, file, "$INSTALL_PATH/" + file.getName(), null, OverrideType.OVERRIDE_FALSE, null,
-	                         Blockable.BLOCKABLE_NONE, null, null, null);
+	                         Blockable.BLOCKABLE_NONE, null, null);
         	}
         }
     }

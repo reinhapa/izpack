@@ -125,11 +125,6 @@ final class DynamicBean<T> implements Bean<T>, PassivationCapable {
   }
 
   @Override
-  public boolean isNullable() {
-    return false;
-  }
-
-  @Override
   public Class<?> getBeanClass() {
     return type;
   }

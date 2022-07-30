@@ -130,8 +130,6 @@ public class Packager extends PackagerBase
         // Map to remember pack number and bytes offsets of back references
         Map<File, PackFile> storedFiles = new HashMap<File, PackFile>();
 
-        List<PackFile> pack200Files = new ArrayList<PackFile>();
-
         // Force UTF-8 encoding in order to have proper ZipEntry names.
         JarOutputStream installerJar = getInstallerJar();
 
@@ -266,6 +264,9 @@ public class Packager extends PackagerBase
                     }
 
                     storedFiles.put(file, packFile);
+
+                    // even if not written, it counts towards pack size
+                    pack.addFileSize(packFile.length());
                 }
 
                 if (pack.getFileSize() > pack.getSize())

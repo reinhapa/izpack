@@ -108,7 +108,7 @@ public class PackagerTest extends AbstractPackagerTest
         {
             packInfo.addFile(file.getParentFile(), file, "$INSTALL_DIR/" + file.getName(), null,
                     OverrideType.OVERRIDE_TRUE, "", Blockable.BLOCKABLE_NONE, Collections.emptyMap(),
-                    "", null);
+                    "");
         }
         return packInfo;
     }

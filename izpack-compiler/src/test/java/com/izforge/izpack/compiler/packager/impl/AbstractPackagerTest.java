@@ -152,7 +152,7 @@ public abstract class AbstractPackagerTest
         for (File file : files)
         {
             packInfo.addFile(file.getParentFile(), file, "$INSTALL_PATH/" + file.getName(), null,
-                             OverrideType.OVERRIDE_TRUE, null, Blockable.BLOCKABLE_NONE, null, null, null);
+                             OverrideType.OVERRIDE_TRUE, null, Blockable.BLOCKABLE_NONE, null, null);
             fileSize += file.length();
         }
         packager.addPack(packInfo);
