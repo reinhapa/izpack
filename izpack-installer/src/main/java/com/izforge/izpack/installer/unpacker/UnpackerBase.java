@@ -41,6 +41,7 @@ import com.izforge.izpack.core.resource.ResourceManager;
 import com.izforge.izpack.installer.bootstrap.Installer;
 import com.izforge.izpack.installer.data.UninstallData;
 import com.izforge.izpack.installer.event.InstallerListeners;
+import com.izforge.izpack.installer.util.InstallPathHelper;
 import com.izforge.izpack.installer.util.PackHelper;
 import com.izforge.izpack.util.*;
 import com.izforge.izpack.util.file.DirectoryScanner;
@@ -51,6 +52,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -445,6 +447,16 @@ public abstract class UnpackerBase implements IUnpacker
     protected void preUnpack(List<Pack> packs) throws InstallerException
     {
         logger.fine("Unpacker starting");
+        String installPath = installData.getInstallPath();
+        if (installPath == null)
+        {
+            installPath = InstallPathHelper.getPath(installData);
+            if (installPath == null)
+            {
+                throw new InstallerException("No install path specified, can't proceed.");
+            }
+            installData.setInstallPath(installPath);
+        }
         listener.startAction("Unpacking", packs.size());
         listeners.beforePacks(packs, listener);
     }
@@ -615,7 +627,7 @@ public abstract class UnpackerBase implements IUnpacker
         // if this file exists and should not be overwritten, check what to do
         if (target.exists() && (packFile.override() != OverrideType.OVERRIDE_TRUE) && !isOverwriteFile(packFile, target))
         {
-            if (!packFile.isBackReference() && !pack.isLoose() && !packFile.isPack200Jar())
+            if (!packFile.isBackReference() && !pack.isLoose())
             {
                 long size = packFile.size();
                 logger.fine("|- No overwrite - skipping pack stream by " + size + " bytes");
@@ -652,18 +664,13 @@ public abstract class UnpackerBase implements IUnpacker
             {
                 PackFile linkedPackFile = packFile.getLinkedPackFile();
                 packStream = resources.getInputStream(ResourceManager.RESOURCE_BASEPATH_DEFAULT + linkedPackFile.getStreamResourceName());
-                if (!packFile.isPack200Jar())
-                {
-                    // Non-Pack200 files are saved in main pack stream
-                    // Offset is always 0 for Pack200 resources, because each file has its own stream resource
-                    long size = linkedPackFile.getStreamOffset();
-                    logger.fine("|- Backreference to pack stream (offset: " + size + " bytes");
-                    skip(packStream, size);
-                }
-            } else if (packFile.isPack200Jar())
-            {
-                packStream = resources.getInputStream(ResourceManager.RESOURCE_BASEPATH_DEFAULT + packFile.getStreamResourceName());
-            } else
+                // Non-Pack200 files are saved in main pack stream
+                // Offset is always 0 for Pack200 resources, because each file has its own stream resource
+                long size = linkedPackFile.getStreamOffset();
+                logger.fine("|- Backreference to pack stream (offset: " + size + " bytes");
+                skip(packStream, size);
+            }
+            else
             {
                 packStream = new NoCloseInputStream(packInputStream);
             }
@@ -697,7 +704,7 @@ public abstract class UnpackerBase implements IUnpacker
      */
     protected void skip(PackFile packFile, Pack pack, InputStream packInputStream) throws IOException
     {
-        if (!pack.isLoose() && !packFile.isBackReference() && !packFile.isPack200Jar())
+        if (!pack.isLoose() && !packFile.isBackReference())
         {
             long size = packFile.size();
             logger.fine("|- Condition not fulfilled - skipping pack stream " + packFile.getTargetPath() + " by " + size + " bytes ");
@@ -723,13 +730,12 @@ public abstract class UnpackerBase implements IUnpacker
         if (pack.isLoose())
         {
             unpacker = new LooseFileUnpacker(cancellable, queue, prompt);
-        } else if (file.isPack200Jar())
-        {
-            unpacker = new Pack200FileUnpacker(cancellable, resources, queue);
-        } else if (compressionFormat != PackCompression.DEFAULT)
+        }
+        else if (compressionFormat != PackCompression.DEFAULT)
         {
             unpacker = new CompressedFileUnpacker(cancellable, queue, compressionFormat);
-        } else
+        }
+        else
         {
             unpacker = new DefaultFileUnpacker(cancellable, queue);
         }
@@ -1336,8 +1342,12 @@ public abstract class UnpackerBase implements IUnpacker
             if (!parsableFile.hasCondition() || isConditionTrue(parsableFile.getCondition()))
             {
                 String path = IoHelper.translatePath(parsableFile.getPath(), variables);
-                parsableFile.setPath(path);
-                parsables.add(parsableFile);
+                File file = new File(path);
+                if (file.exists() && file.isFile())
+                {
+                    parsableFile.setPath(path);
+                    parsables.add(parsableFile);
+                }
             }
         }
     }

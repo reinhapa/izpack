@@ -82,7 +82,7 @@ public class Uninstaller
         boolean console = false;
         for (String arg : args)
         {
-            if (arg.equals("-c"))
+            if (arg.equals("-c") || arg.equals("-console"))
             {
                 console = true;
             }
@@ -129,7 +129,7 @@ public class Uninstaller
             boolean force = false;
             for (String arg : args)
             {
-                if (arg.equals("-f"))
+                if (arg.equals("-f") || arg.equals("-force"))
                 {
                     force = true;
                 }
@@ -151,16 +151,16 @@ public class Uninstaller
                 UninstallerContainer container = new GUIUninstallerContainer();
                 try
                 {
-                    boolean displayForceOption = true;
+                    boolean displayForceOption =  this.getClass().getResource("/hide-force-option") == null;
                     boolean forceOptionState = false;
 
                     for (String arg : args)
                     {
-                        if (arg.equals("-f"))
+                        if (arg.equals("-f") || arg.equals("-force"))
                         {
                             forceOptionState = true;
                         }
-                        else if (arg.equals("-x"))
+                        else if (arg.equals("-x") || arg.equals("-hide-force-option"))
                         {
                             displayForceOption = false;
                         }

@@ -97,7 +97,6 @@ import java.io.*;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.*;
-import java.util.jar.Pack200;
 import java.util.logging.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -189,6 +188,7 @@ public class CompilerConfig extends Thread
      */
     private Set<String> userInputPanelIds;
 
+    private boolean optionalPacks = false;
     private String unpackerClassname = "com.izforge.izpack.installer.unpacker.Unpacker";
     private String packagerClassname = "com.izforge.izpack.compiler.packager.impl.Packager";
     private final CompilerPathResolver pathResolver;
@@ -357,6 +357,7 @@ public class CompilerConfig extends Thread
         addPanels(data);
         addListeners(data);
         addPacks(data);
+        resolveConditions(); // this should happen after add packs as it adds "izpack.selected.<pack name>" conditions
         addInstallerRequirement(data);
         checkReferencedConditions();
         checkReferencedPacks();
@@ -771,7 +772,32 @@ public class CompilerConfig extends Thread
         compiler.checkDependencies();
         compiler.checkExcludes();
 
+        checkOptionalPacks();
         notifyCompilerListener("addPacks", CompilerListener.END, data);
+    }
+
+    private void checkOptionalPacks() {
+        if (optionalPacks) {
+            List<Panel> panels = packager.getPanelList();
+            boolean packsPanelSpecified = false;
+            for (Panel panel : panels)
+            {
+                String className = panel.getClassName();
+                if (className.equals("com.izforge.izpack.panels.imgpacks.ImgPacksPanel") ||
+                        className.equals("com.izforge.izpack.panels.packs.PacksPanel") ||
+                        className.equals("com.izforge.izpack.panels.treepacks.TreePacksPanel"))
+                {
+                    packsPanelSpecified = true;
+                    break;
+                }
+            }
+            if (!packsPanelSpecified)
+            {
+                // if there are optional packs and no ImgPacksPanel, PacksPanel or TreePacksPanel specified then we just
+                // inform the user as there maybe custom panel providing similar functionality
+                logger.info("There are optional packs specified but none of the ImgPacksPanel, PacksPanel and TreePacksPanel defined.");
+            }
+        }
     }
 
     /**
@@ -781,7 +807,7 @@ public class CompilerConfig extends Thread
      *
      * @param data The XML data
      * @param baseDir the base directory of the pack
-     * @throws CompilerException an error occured during compiling
+     * @throws CompilerException an error occurred during compiling
      */
     private void addPacksSingle(IXMLElement data, File baseDir) throws CompilerException
     {
@@ -809,6 +835,10 @@ public class CompilerConfig extends Thread
             boolean loose = Boolean.parseBoolean(packElement.getAttribute("loose", "false"));
             String description = xmlCompilerHelper.requireChildNamed(packElement, "description").getContent();
             boolean required = xmlCompilerHelper.requireYesNoAttribute(packElement, "required");
+            if (!required)
+            {
+                optionalPacks = true;
+            }
             String group = packElement.getAttribute("group");
             String installGroups = packElement.getAttribute("installGroups");
             String excludeGroup = packElement.getAttribute("excludeGroup");
@@ -979,7 +1009,7 @@ public class CompilerConfig extends Thread
             }
             catch (Exception e)
             {
-                throw new CompilerException(e.getMessage());
+                throw new CompilerException(getMessage(e) + " while processing refpackset " + refPackSet.getName());
             }
         }
 
@@ -1059,7 +1089,7 @@ public class CompilerConfig extends Thread
                         logAddingFile(file.toString(), target);
                         pack.addFile(baseDir, file, target, osList,
                                      fs.getOverride(), fs.getOverrideRenameTo(),
-                                     fs.getBlockable(), fs.getAdditionals(), fs.getCondition(), fs.getPack200Properties());
+                                     fs.getBlockable(), fs.getAdditionals(), fs.getCondition());
                     }
                 }
             }
@@ -1126,7 +1156,7 @@ public class CompilerConfig extends Thread
             {
                 logAddingFile(file.toString(), target);
                 pack.addFile(baseDir, file, target, osList, override, overrideRenameTo, blockable,
-                             additionals, conditionId, readPack200Properties(singleFileNode));
+                             additionals, conditionId);
             }
             catch (IOException x)
             {
@@ -1188,8 +1218,6 @@ public class CompilerConfig extends Thread
                     fs.setFollowSymlinks(Boolean.parseBoolean(boolval));
                 }
 
-                Map<String, String> pack200Properties = readPack200Properties(fileNode);
-
                 LinkedList<String> srcfiles = new LinkedList<String>();
                 Collections.addAll(srcfiles, fs.getDirectoryScanner().getIncludedDirectories());
                 Collections.addAll(srcfiles, fs.getDirectoryScanner().getIncludedFiles());
@@ -1203,8 +1231,7 @@ public class CompilerConfig extends Thread
                             logger.info("Adding content from archive: " + abssrcfile);
                             addArchiveContent(fileNode, baseDir, abssrcfile, fs.getTargetDir(),
                                               fs.getOsList(), fs.getOverride(), fs.getOverrideRenameTo(),
-                                              fs.getBlockable(), pack, fs.getAdditionals(), fs.getCondition(),
-                                              pack200Properties);
+                                              fs.getBlockable(), pack, fs.getAdditionals(), fs.getCondition());
                         }
                         else
                         {
@@ -1212,38 +1239,16 @@ public class CompilerConfig extends Thread
                             logAddingFile(abssrcfile.toString(), target);
                             pack.addFile(baseDir, abssrcfile, target, fs.getOsList(),
                                          fs.getOverride(), fs.getOverrideRenameTo(), fs.getBlockable(),
-                                         fs.getAdditionals(), fs.getCondition(), pack200Properties);
+                                         fs.getAdditionals(), fs.getCondition());
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                throw new CompilerException(e.getMessage(), e);
+                throw new CompilerException(getMessage(e) + " while processing " + src, e);
             }
         }
-    }
-
-    private Map<String, String> readPack200Properties(IXMLElement element)
-    {
-        IXMLElement pack200Element = element.getFirstChildNamed("pack200");
-        Map<String, String> pack200Properties = null;
-        if (pack200Element != null)
-        {
-            pack200Properties = new HashMap<String, String>();
-            addNotNullAttribute(pack200Properties, Pack200.Packer.EFFORT, pack200Element, "effort");
-            addNotNullAttribute(pack200Properties, Pack200.Packer.SEGMENT_LIMIT, pack200Element, "segment-limit");
-            addNotNullAttribute(pack200Properties, Pack200.Packer.KEEP_FILE_ORDER, pack200Element, "keep-file-order");
-            addNotNullAttribute(pack200Properties, Pack200.Packer.DEFLATE_HINT, pack200Element, "deflate-hint");
-            addNotNullAttribute(pack200Properties, Pack200.Packer.MODIFICATION_TIME, pack200Element, "modification-time");
-            addNotNullAttributeIfTrue(pack200Properties, Pack200.Packer.CODE_ATTRIBUTE_PFX + "LineNumberTable",
-                    Pack200.Packer.STRIP, pack200Element, "strip-line-numbers");
-            addNotNullAttributeIfTrue(pack200Properties, Pack200.Packer.CODE_ATTRIBUTE_PFX + "LocalVariableTable",
-                    Pack200.Packer.STRIP, pack200Element, "strip-local-variables");
-            addNotNullAttributeIfTrue(pack200Properties, Pack200.Packer.CODE_ATTRIBUTE_PFX + "SourceFile",
-                    Pack200.Packer.STRIP, pack200Element, "strip-source-files");
-        }
-        return pack200Properties;
     }
 
     private void addNotNullAttribute(Map<String, String> map, String key, IXMLElement element, String attrName)
@@ -1615,7 +1620,7 @@ public class CompilerConfig extends Thread
     private void addArchiveContent(IXMLElement fileNode, File baseDir, File archive, String targetDir,
                                    List<OsModel> osList, OverrideType override, String overrideRenameTo,
                                    Blockable blockable, PackInfo pack, Map<String, ?> additionals,
-                                   String condition, Map<String, String> pack200Properties) throws Exception
+                                   String condition) throws Exception
     {
         String archiveName = archive.getName();
 
@@ -1663,7 +1668,7 @@ public class CompilerConfig extends Thread
                     {
                         String target = targetDir + "/" + dName;
                         logAddingFile(dName + " (" + archiveName + ")", target);
-                        pack.addFile(baseTempDir, tempDir, target, osList, override, overrideRenameTo, blockable, additionals, condition, null);
+                        pack.addFile(baseTempDir, tempDir, target, osList, override, overrideRenameTo, blockable, additionals, condition);
                     }
                 }
                 else
@@ -1680,7 +1685,7 @@ public class CompilerConfig extends Thread
                         {
                             String target = targetDir + "/" + entryName;
                             logAddingFile(entryName + " (" + archiveName + ")", target);
-                            pack.addFile(baseTempDir, tempFile, target, osList, override, overrideRenameTo, blockable, additionals, condition, pack200Properties);
+                            pack.addFile(baseTempDir, tempFile, target, osList, override, overrideRenameTo, blockable, additionals, condition);
                         }
                     }
                     finally
@@ -1723,7 +1728,7 @@ public class CompilerConfig extends Thread
             String uncompressedArchiveName = FilenameUtils.getBaseName(archiveName);
             String target = targetDir + "/" + uncompressedArchiveName;
             logAddingFile(uncompressedArchiveName + " (" + archiveName + ")", target);
-            pack.addFile(baseDir, temp, target, osList, override, overrideRenameTo, blockable, additionals, condition, pack200Properties);
+            pack.addFile(baseDir, temp, target, osList, override, overrideRenameTo, blockable, additionals, condition);
         }
         finally
         {
@@ -2037,7 +2042,7 @@ public class CompilerConfig extends Thread
         // A list of packsLang-files that were defined by the user in the resource-section The key of
         // this map is an packsLang-file identifier, e.g. <code>packsLang.xml_eng</code>, the values
         // are lists of {@link URL} pointing to the concrete packsLang-files.         *
-        final Map<String, List<URL>> packsLangUrlMap = new HashMap<String, List<URL>>();
+        final Map<String, List<URL>> packsLangUrlMap = new HashMap<>();
 
         IXMLElement root = data.getFirstChildNamed("resources");
         if (root == null)
@@ -2194,7 +2199,7 @@ public class CompilerConfig extends Thread
 
             // Just validate to avoid XML parser errors during installation later
             if (id.startsWith(Resources.CUSTOM_TRANSLATIONS_RESOURCE_NAME)
-                    || id.startsWith(UserInputPanelSpec.LANG_FILE_NAME)
+                    || id.startsWith(Resources.USER_INPUT_TRANSLATIONS_RESOURCE_NAME)
                     || id.startsWith(Resources.PACK_TRANSLATIONS_RESOURCE_NAME))
             {
                 new LangPackXmlParser().parse(url);
@@ -2723,6 +2728,10 @@ public class CompilerConfig extends Thread
                 {
                     info.setUninstallerPath(uninstallerPath);
                 }
+
+                boolean hideForceOption = Boolean.parseBoolean(uninstallInfo.getAttribute("hide-force-option"));
+                info.setHideForceOption(hideForceOption);
+
                 String conditionId = parseConditionAttribute(uninstallInfo);
                 if (conditionId != null)
                 {
@@ -3217,17 +3226,21 @@ public class CompilerConfig extends Thread
                                                         + e.getMessage(), e);
                 }
             }
-            try
-            {
-                rules.resolveConditions();
-            }
-            catch (Exception e)
-            {
-                throw new CompilerException("Conditions check failed: "
-                                                    + e.getMessage(), e);
-            }
         }
         notifyCompilerListener("addConditions", CompilerListener.END, data);
+    }
+
+    private void resolveConditions()
+    {
+        try
+        {
+            rules.resolveConditions();
+        }
+        catch (Exception e)
+        {
+            throw new CompilerException("Conditions check failed: "
+                    + e.getMessage(), e);
+        }
     }
 
     /**
@@ -3715,7 +3728,7 @@ public class CompilerConfig extends Thread
             }
             catch (Exception e)
             {
-                throw new CompilerException(e.getMessage());
+                throw new CompilerException(getMessage(e) + " while processing fileset " + fileSetNode.getName());
             }
         }
         return fslist;
@@ -3773,7 +3786,7 @@ public class CompilerConfig extends Thread
         }
         catch (Exception e)
         {
-            throw new CompilerException(e.getMessage());
+            throw new CompilerException(getMessage(e) + " while processing fileset " + fileSetNode.getName());
         }
 
         String attr = fileSetNode.getAttribute("includes");
@@ -3806,12 +3819,19 @@ public class CompilerConfig extends Thread
             fs.setFollowSymlinks(Boolean.parseBoolean(boolval));
         }
 
-        fs.setPack200Properties(readPack200Properties(fileSetNode));
-
         readAndAddIncludes(fileSetNode, fs);
         readAndAddExcludes(fileSetNode, fs);
 
         return fs;
+    }
+
+    private String getMessage(Exception e)
+    {
+        String message = e.getMessage();
+        if (message == null) {
+            message = e.getClass().getName();
+        }
+        return message;
     }
 
     private void readAndAddIncludes(IXMLElement parent, TargetFileSet fileset)

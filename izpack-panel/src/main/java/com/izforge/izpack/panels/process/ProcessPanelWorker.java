@@ -509,7 +509,13 @@ public class ProcessPanelWorker implements Runnable
 
             try
             {
-                params.add(variables.replace(this.filename));
+                // keep the file name in quotes as per https://bugs.openjdk.java.net/browse/JDK-8136885
+                String filename = variables.replace(this.filename);
+                if (System.getProperty("os.name").contains("Windows") && !(filename.startsWith("\"") && filename.endsWith("\""))) {
+                    params.add("\"" + filename + "\"");
+                } else {
+                    params.add(filename);
+                }
             }
             catch (Exception e)
             {

@@ -310,7 +310,7 @@ public class LanguageDialog extends JDialog
         {
           return false;
         }
-        
+
         return true;
     }
 
@@ -335,6 +335,7 @@ public class LanguageDialog extends JDialog
             installData.setMessages(locales.getMessages());
 
             AutomatedInstallDataProvider.addCustomLangpack(installData, locales);
+            AutomatedInstallDataProvider.addUserInputLangpack(installData, locales);
 
             // Configure buttons after locale has been loaded
             GuiExtension guiExtension = installData.getExtension(GuiExtension.class)
@@ -399,11 +400,6 @@ public class LanguageDialog extends JDialog
         private TreeMap<String, ImageIcon> icons = new TreeMap<>();
 
         /**
-         * Grayed icons cache.
-         */
-        private TreeMap<String, ImageIcon> grayIcons = new TreeMap<>();
-
-        /**
          * Default constructor.
          */
         public FlagRenderer()
@@ -435,22 +431,13 @@ public class LanguageDialog extends JDialog
                     ImageIcon icon;
                     icon = resources.getImageIcon("flag." + code);
                     icons.put(code, icon);
-                    icon = new ImageIcon(GrayFilter.createDisabledImage(icon.getImage()));
-                    grayIcons.put(code, icon);
                 }
                 catch (ResourceException exception)
                 {
                     logger.log(Level.WARNING, exception.getMessage(), exception);
                 }
             }
-            if (isSelected || index == -1)
-            {
-                setIcon(icons.get(code));
-            }
-            else
-            {
-                setIcon(grayIcons.get(code));
-            }
+            setIcon(icons.get(code));
             return result;
         }
     }

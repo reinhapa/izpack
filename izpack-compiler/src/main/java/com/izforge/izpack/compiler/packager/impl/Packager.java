@@ -54,9 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
-import java.util.jar.Pack200;
 import java.util.logging.Logger;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
@@ -174,8 +172,6 @@ public class Packager extends PackagerBase
                     boolean addFile = !pack.isLoose();
                     File file = packInfo.getFile(packFile);
 
-                    boolean pack200 = packFile.isPack200Jar();
-
                     // use a back reference if file was in previous pack, and in
                     // same jar
                     PackFile linkedPackFile = storedFiles.get(file);
@@ -189,106 +185,87 @@ public class Packager extends PackagerBase
 
                     if (addFile && !packFile.isDirectory())
                     {
-                        if (pack200)
-                        {
-                            /*
-                             * Warning!
-                             *
-                             * Pack200 archives must be stored in separated streams,
-                             * as the Pack200 unpacker reads the entire stream...
-                             *
-                             * See http://java.sun.com/javase/6/docs/api/java/util/jar/Pack200.Unpacker.html
-                             */
-                            packFile.setStreamResourceName("packs/pack200-" + packFile.getId());
-                            packFile.setStreamOffset(0);
-                            pack200Files.add(packFile);
-                        } else
-                        {
-                            packFile.setStreamResourceName(streamResourceName);
-                            packFile.setStreamOffset(packOutputStream.getByteCount()); // get the position
+                        packFile.setStreamResourceName(streamResourceName);
+                        packFile.setStreamOffset(packOutputStream.getByteCount()); // get the position
 
-                            PackCompression comprFormat = getInfo().getCompressionFormat();
-                            if (comprFormat != PackCompression.DEFAULT)
+                        PackCompression comprFormat = getInfo().getCompressionFormat();
+                        if (comprFormat != PackCompression.DEFAULT)
+                        {
+                            File tmpfile = null;
+                            OutputStream finalStream = null;
+
+                            try
                             {
-                                File tmpfile = null;
-                                OutputStream finalStream = null;
+                                tmpfile = File.createTempFile("izpack-compress", null, FileUtils.getTempDirectory());
+                                CountingOutputStream proxyOutputStream = new CountingOutputStream(FileUtils.openOutputStream(tmpfile));
+                                OutputStream bufferedStream = IOUtils.buffer(proxyOutputStream);
 
+                                switch (comprFormat)
+                                {
+                                    case LZMA:
+                                        // LZMA as output stream supported from commons-compress 1.13 (requires JDK 1.7)
+                                        // for now create it from the Tukaani Project (tukaani.org)
+                                        finalStream = new LZMAOutputStream(bufferedStream, new LZMA2Options(), -1);
+                                        break;
+                                    case DEFLATE:
+                                        DeflateParameters deflateParameters = new DeflateParameters();
+                                        deflateParameters.setCompressionLevel(Deflater.BEST_COMPRESSION);
+                                        new DeflateCompressorOutputStream(bufferedStream, deflateParameters);
+                                    default:
+                                        try
+                                        {
+                                            finalStream = new CompressorStreamFactory().createCompressorOutputStream(
+                                                    comprFormat.toName(),
+                                                    bufferedStream);
+                                        }
+                                        catch (CompressorException e)
+                                        {
+                                            throw new IOException(e);
+                                        }
+                                }
+
+                                long bytesWritten = FileUtils.copyFile(file, finalStream);
                                 try
                                 {
-                                    tmpfile = File.createTempFile("izpack-compress", null, FileUtils.getTempDirectory());
-                                    CountingOutputStream proxyOutputStream = new CountingOutputStream(FileUtils.openOutputStream(tmpfile));
-                                    OutputStream bufferedStream = IOUtils.buffer(proxyOutputStream);
-
-                                    switch (comprFormat)
-                                    {
-                                        case LZMA:
-                                            // LZMA as output stream supported from commons-compress 1.13 (requires JDK 1.7)
-                                            // for now create it from the Tukaani Project (tukaani.org)
-                                            finalStream = new LZMAOutputStream(bufferedStream, new LZMA2Options(), -1);
-                                            break;
-                                        case DEFLATE:
-                                            DeflateParameters deflateParameters = new DeflateParameters();
-                                            deflateParameters.setCompressionLevel(Deflater.BEST_COMPRESSION);
-                                            new DeflateCompressorOutputStream(bufferedStream, deflateParameters);
-                                        default:
-                                            try
-                                            {
-                                                finalStream = new CompressorStreamFactory().createCompressorOutputStream(
-                                                        comprFormat.toName(),
-                                                        bufferedStream);
-                                            }
-                                            catch (CompressorException e)
-                                            {
-                                                throw new IOException(e);
-                                            }
-                                    }
-
-                                    long bytesWritten = FileUtils.copyFile(file, finalStream);
-                                    try
-                                    {
-                                        finalStream.flush();
-                                    }
-                                    catch (IOException ignored)
-                                    {
-                                        // some compressor output streams don't explicitly support flushing
-                                    }
-                                    finalStream.close();
-                                    if (bytesWritten != packFile.length())
-                                    {
-                                        throw new IOException("File size mismatch when reading " + file);
-                                    }
-                                    packFile.setSize(proxyOutputStream.getByteCount());
-
-                                    final long bytesPacked = FileUtils.copyFile(tmpfile, packOutputStream);
-                                    if (bytesPacked != packFile.size()) {
-                                        throw new IOException("File size mismatch when writing " + file);
-                                    }
-
-                                    logger.fine("File " + packFile.getTargetPath() + " added compressed as "
-                                            + comprFormat.toName()
-                                            + " (" + packFile.length() + " -> " + packFile.size() + " bytes)");
+                                    finalStream.flush();
                                 }
-                                finally
+                                catch (IOException ignored)
                                 {
-                                    IOUtils.closeQuietly(finalStream);
-                                    FileUtils.deleteQuietly(tmpfile);
+                                    // some compressor output streams don't explicitly support flushing
                                 }
-                            } else
-                            {
-                                long bytesWritten = FileUtils.copyFile(file, packOutputStream);
+                                finalStream.close();
                                 if (bytesWritten != packFile.length())
                                 {
                                     throw new IOException("File size mismatch when reading " + file);
                                 }
-                                logger.fine("File " + packFile.getTargetPath() + " added uncompressed (" + bytesWritten + " bytes)");
-                            }
-                        }
+                                packFile.setSize(proxyOutputStream.getByteCount());
 
-                        storedFiles.put(file, packFile);
+                                final long bytesPacked = FileUtils.copyFile(tmpfile, packOutputStream);
+                                if (bytesPacked != packFile.size()) {
+                                    throw new IOException("File size mismatch when writing " + file);
+                                }
+
+                                logger.fine("File " + packFile.getTargetPath() + " added compressed as "
+                                        + comprFormat.toName()
+                                        + " (" + packFile.length() + " -> " + packFile.size() + " bytes)");
+                            }
+                            finally
+                            {
+                                IOUtils.closeQuietly(finalStream);
+                                FileUtils.deleteQuietly(tmpfile);
+                            }
+                        } else
+                        {
+                            long bytesWritten = FileUtils.copyFile(file, packOutputStream);
+                            if (bytesWritten != packFile.length())
+                            {
+                                throw new IOException("File size mismatch when reading " + file);
+                            }
+                            logger.fine("File " + packFile.getTargetPath() + " added uncompressed (" + bytesWritten + " bytes)");
+                        }
                     }
 
-                    // even if not written, it counts towards pack size
-                    pack.addFileSize(packFile.length());
+                    storedFiles.put(file, packFile);
                 }
 
                 if (pack.getFileSize() > pack.getSize())
@@ -331,55 +308,6 @@ public class Packager extends PackagerBase
         out.writeObject(packs);
         out.flush();
         installerJar.closeEntry();
-
-        for (PackFile pack200PackFile : pack200Files)
-        {
-            File tmpfile = null;
-            JarFile jar = null;
-
-            try
-            {
-                installerJar.putNextEntry(new ZipEntry(RESOURCES_PATH + pack200PackFile.getStreamResourceName()));
-
-                tmpfile = File.createTempFile("izpack-compress", ".pack200", FileUtils.getTempDirectory());
-                CountingOutputStream proxyOutputStream = new CountingOutputStream(FileUtils.openOutputStream(tmpfile));
-                OutputStream bufferedStream = IOUtils.buffer(proxyOutputStream);
-
-                Pack200.Packer packer = createPack200Packer(pack200PackFile);
-                jar = new JarFile(pack200PackFile.getFile());
-                packer.pack(jar, bufferedStream);
-
-                bufferedStream.flush();
-                pack200PackFile.setSize(proxyOutputStream.getByteCount());
-
-                FileUtils.copyFile(tmpfile, installerJar);
-
-                logger.fine("File " + pack200PackFile.getTargetPath() + " added compressed as Pack 200 ("
-                        + pack200PackFile.length() + " -> " + pack200PackFile.size() + " bytes)");
-            }
-            finally
-            {
-                if (jar != null)
-                {
-                    jar.close();
-                }
-                installerJar.closeEntry();
-                installerJar.flush();
-                FileUtils.deleteQuietly(tmpfile);
-            }
-        }
-    }
-
-    private Pack200.Packer createPack200Packer(PackFile packFile)
-    {
-        Pack200.Packer packer = Pack200.newPacker();
-        Map<String, String> defaultPackerProperties = packer.properties();
-        Map<String,String> localPackerProperties = packFile.getPack200Properties();
-        if (localPackerProperties != null)
-        {
-            defaultPackerProperties.putAll(localPackerProperties);
-        }
-        return packer;
     }
 
     @Override
