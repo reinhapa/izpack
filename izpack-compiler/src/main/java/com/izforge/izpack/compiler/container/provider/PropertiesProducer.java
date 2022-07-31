@@ -19,22 +19,19 @@
 
 package com.izforge.izpack.compiler.container.provider;
 
-import com.izforge.izpack.compiler.helper.AssertionHelper;
-import com.izforge.izpack.compiler.helper.XmlCompilerHelper;
-
 import jakarta.enterprise.inject.Produces;
 
-/**
- * Provide xmlCompilerHelper
- *
- * @author Anthonin Bonnefoy
- */
-public class XmlCompilerHelperProvider
-{
+import java.util.Properties;
+
+public class PropertiesProducer {
+    private final Properties properties;
+
+    public PropertiesProducer() {
+        properties = new Properties();
+    }
 
     @Produces
-    public XmlCompilerHelper provide(String installFile, AssertionHelper assertionHelper)
-    {
-        return new XmlCompilerHelper(assertionHelper);
+    Properties produce() {
+        return properties;
     }
 }

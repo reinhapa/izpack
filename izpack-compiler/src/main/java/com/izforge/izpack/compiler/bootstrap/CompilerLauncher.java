@@ -53,11 +53,6 @@ public class CompilerLauncher
 
             CompilerConfig compiler = compilerContainer.getComponent(CompilerConfig.class);
             compiler.executeCompiler();
-            // Waits
-            while (compiler.isAlive())
-            {
-                Thread.sleep(100);
-            }
 
             if (compiler.wasSuccessful())
             {
