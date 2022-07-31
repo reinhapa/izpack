@@ -23,7 +23,6 @@ import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.compiler.container.provider.CompilerDataProvider;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.container.CdiInitializationContext;
-import com.izforge.izpack.util.Platforms;
 
 /**
  * Container for compiler.
@@ -63,8 +62,8 @@ public class CompilerContainer extends AbstractContainer
     protected void fillContainer()
     {
         super.fillContainer();
-        addComponent(CompilerContainer.class, this);
         new ResolverContainerFiller().fillContainer(this);
+//        addComponent(CompilerContainer.class, this); already added by super.fillContainer()
 //        addComponent(Properties.class);
 //        addComponent(DefaultVariables.class);
 //        addComponent(CliAnalyzer.class);

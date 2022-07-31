@@ -77,7 +77,8 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
     }
     BeanImplementation existing = components.putIfAbsent(type, beanImplementation);
     if (existing != null && !existing.equals(beanImplementation)) {
-      throw new IllegalStateException("Entry for given type [" + type + "] allready registered: " + existing);
+      throw new IllegalStateException("Unable to register " + beanImplementation + " for type [" + type +
+              "]. Already registered: " + existing);
     }
   }
 
