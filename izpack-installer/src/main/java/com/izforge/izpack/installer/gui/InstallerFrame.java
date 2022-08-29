@@ -42,6 +42,7 @@ import com.izforge.izpack.installer.data.UninstallData;
 import com.izforge.izpack.installer.data.UninstallDataWriter;
 import com.izforge.izpack.installer.debugger.Debugger;
 import com.izforge.izpack.installer.unpacker.IUnpacker;
+import com.izforge.izpack.util.CleanupClient;
 import com.izforge.izpack.util.Debug;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.Platform;
@@ -56,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import static com.izforge.izpack.api.GuiId.BUTTON_HELP;
 
@@ -201,6 +203,7 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
      * The supported locales that contains the localised messages.
      */
     private final Locales locales;
+    private JFrame debugframe;
 
     /**
      * Constructs an <tt>InstallerFrame</tt>.
@@ -260,6 +263,10 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
         setPreferredSize(new Dimension(installdata.guiPrefs.width, installdata.guiPrefs.height));
         setResizable(installdata.guiPrefs.resizable);
         centerFrame(this);
+        if (debugframe != null)
+        {
+            debugframe.setVisible(true);
+        }
     }
 
     public Debugger getDebugger()
@@ -280,28 +287,13 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
             setWMClass(getTitle());
         }
 
-        // Prepares the glass pane to block the gui interaction when needed
-        JPanel glassPane = (JPanel) getGlassPane();
-        glassPane.addMouseListener(new MouseAdapter()
-        {
-        });
-        glassPane.addMouseMotionListener(new MouseMotionAdapter()
-        {
-        });
-        glassPane.addKeyListener(new KeyAdapter()
-        {
-        });
-        glassPane.addFocusListener(new FocusAdapter()
-        {
-        });
-
         // We set the layout & prepare the constraint object
         contentPane = (JPanel) getContentPane();
         contentPane.setLayout(new BorderLayout()); // layout);
 
         // We add the panels container
         panelsContainer = new JPanel();
-        panelsContainer.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+        panelsContainer.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panelsContainer.setLayout(new GridLayout(1, 1));
         contentPane.add(panelsContainer, BorderLayout.CENTER);
 
@@ -341,22 +333,42 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
         // create a debug panel if TRACE is enabled
         if (Debug.isTRACE())
         {
-            debugger = new Debugger(installdata, getIcons(), rules);
+            debugger = new Debugger(installdata, getIcons(), rules, installdata.buttonsHColor);
             // this needed to fully initialize the debugger
-            JPanel debugpanel = debugger.getDebugPanel();
-
             if (installdata.guiPrefs.modifier.containsKey("showDebugWindow")
                     && Boolean.valueOf(installdata.guiPrefs.modifier.get("showDebugWindow")))
             {
-                JFrame debugframe = new JFrame("Debug information");
-                debugframe.setContentPane(debugpanel);
-                debugframe.setSize(new Dimension(400, 400));
-                debugframe.setVisible(true);
+                // setup debug frame
+                debugframe = debugger.initialize(new JFrame("Debug information"));
+                debugframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                housekeeper.registerForCleanup(new CleanupClient() {
+                    @Override
+                    public void cleanUp() {
+                        debugger.storePositionAndSize(debugframe);
+                    }
+                });
+                // add key stroke to reset debug window settings
+                KeyStroke resetDebugWindow = KeyStroke.getKeyStroke(KeyEvent.VK_D,
+                        InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+                contentPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(resetDebugWindow, "reset.debug.window");
+                contentPane.getActionMap().put("reset.debug.window", new AbstractAction()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        final Dimension panelSize = debugger.getDefaultPanelSize();
+                        debugframe.setSize(panelSize);
+                        debugframe.setPreferredSize(panelSize);
+                        debugframe.setLocation(getX() - debugframe.getWidth() - 20, getY());
+                        debugframe.setVisible(true);
+                    }
+                });
             }
             else
             {
-                debugpanel.setPreferredSize(new Dimension(200, 400));
-                contentPane.add(debugpanel, BorderLayout.EAST);
+                final JPanel debugPanel = debugger.getDebugPanel();
+                debugPanel.setPreferredSize(new Dimension(200, 400));
+                contentPane.add(debugPanel, BorderLayout.EAST);
             }
         }
 
@@ -365,7 +377,7 @@ public class InstallerFrame extends JFrame implements InstallerBase, InstallerVi
         {
             JPanel imgPanel = new JPanel();
             imgPanel.setLayout(new BorderLayout());
-            imgPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+            imgPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
             iconLabel = new JLabel(icon);
             iconLabel.setBorder(BorderFactory.createLoweredBevelBorder());
             imgPanel.add(iconLabel, BorderLayout.NORTH);
