@@ -72,7 +72,7 @@ import com.izforge.izpack.logging.FileFormatter;
 import com.izforge.izpack.merge.MergeManager;
 import com.izforge.izpack.panels.process.ProcessPanelWorker;
 import com.izforge.izpack.panels.shortcut.ShortcutConstants;
-import com.izforge.izpack.panels.treepacks.PackValidator;
+import com.izforge.izpack.panels.packs.PackValidator;
 import com.izforge.izpack.panels.userinput.UserInputPanel;
 import com.izforge.izpack.panels.userinput.field.FieldReader;
 import com.izforge.izpack.panels.userinput.field.SimpleChoiceReader;
@@ -817,7 +817,8 @@ public class CompilerConfig
 
             boolean loose = Boolean.parseBoolean(packElement.getAttribute("loose", "false"));
             String description = xmlCompilerHelper.requireChildNamed(packElement, "description").getContent();
-            boolean required = xmlCompilerHelper.requireYesNoAttribute(packElement, "required");
+            boolean hidden = Boolean.parseBoolean(packElement.getAttribute("hidden", "false"));
+            boolean required = hidden ? true : xmlCompilerHelper.requireYesNoAttribute(packElement, "required");
             if (!required)
             {
                 optionalPacks = true;
@@ -828,7 +829,6 @@ public class CompilerConfig
             boolean uninstall = xmlCompilerHelper.validateYesNoAttribute(packElement, "uninstall", YES);
             long size = xmlCompilerHelper.getLong(packElement, "size", 0);
             String parent = packElement.getAttribute("parent");
-            boolean hidden = Boolean.parseBoolean(packElement.getAttribute("hidden", "false"));
 
             String conditionId = parseConditionAttribute(packElement);
 
@@ -3462,8 +3462,8 @@ public class CompilerConfig
             {
                 String className = xmlCompilerHelper.requireAttribute(listener, "classname");
                 Stage stage = Stage.valueOf(xmlCompilerHelper.requireAttribute(listener, "stage"));
-                // only process specs for stage="compiler" listeners
-                if (Stage.compiler.equals(stage))
+                // only process specs for stage="compile" listeners
+                if (Stage.compile.equals(stage))
                 {
                     // check <os/> specs to see if we need to instantiate and notify this listener
                     List<OsModel> osConstraints = OsConstraintHelper.getOsList(listener);
@@ -3484,7 +3484,7 @@ public class CompilerConfig
                     if (matchesCurrentSystem)
                     {
                         Class<CompilerListener> clazz = classLoader.loadClass(className, CompilerListener.class);
-                        CompilerListener l = factory.create(clazz, CompilerListener.class);
+                        CompilerListener l = factory.create(clazz.getName(), CompilerListener.class);
                         compilerListeners.add(l);
                     }
                 }

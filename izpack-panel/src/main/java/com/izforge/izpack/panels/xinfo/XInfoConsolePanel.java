@@ -19,38 +19,53 @@
  * limitations under the License.
  */
 
-package com.izforge.izpack.panels.info;
+package com.izforge.izpack.panels.xinfo;
 
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.installer.console.AbstractTextConsolePanel;
 import com.izforge.izpack.installer.console.ConsolePanel;
 import com.izforge.izpack.installer.panel.PanelView;
-import com.izforge.izpack.panels.xinfo.XInfoConsolePanel;
+import com.izforge.izpack.installer.util.PanelHelper;
+import com.izforge.izpack.panels.info.InfoPanel;
 
 /**
- * Console implementation of {@link InfoPanel}.
+ * Console implementation of {@link XInfoPanel}.
  *
  * @author Tim Anderson
  */
-public class InfoConsolePanel extends XInfoConsolePanel
+public class XInfoConsolePanel extends AbstractTextConsolePanel
 {
     /**
-     * Constructs an <tt>InfoConsolePanel</tt>.
+     * The resources.
+     */
+    private final Resources resources;
+
+    /**
+     * Resource name for panel content.
+     */
+    private final String panelResourceName;
+
+    /**
+     * Constructs an <tt>XInfoConsolePanel</tt>.
      *
      * @param resources the resources
      * @param panel     the parent panel/view. May be {@code null}
      */
-    public InfoConsolePanel(Resources resources, PanelView<ConsolePanel> panel)
+    public XInfoConsolePanel(Resources resources, PanelView<ConsolePanel> panel)
     {
-        super(resources, panel);
+        super(panel);
+        this.resources = resources;
+        panelResourceName = PanelHelper.getPanelResourceName(panel.getPanel(), "info", resources);
     }
 
     /**
-     * Returns true if variables are to be substituted in the text or else false.
+     * Returns the text to display.
      *
-     * @return false, in InfoPanel we don't want variable substitution
+     * @return the text
      */
     @Override
-    protected boolean substituteVariables() {
-        return false;
+    protected String getText()
+    {
+        return resources.getString(panelResourceName, "Error : could not load the info text!");
     }
 }

@@ -112,7 +112,7 @@ public class TargetPanelTest extends AbstractPanelTest
 
         // attempt to navigate to the next panel
         fixture.button(GuiId.BUTTON_NEXT.id).click();
-        checkWarningQuestion(fixture, installData.getMessages().get("TargetPanel.warn"));
+        checkWarningQuestion(fixture, installData.getMessages().get("TargetPanel.exists_warn"));
 
         assertEquals(userDir.getAbsolutePath(), installData.getInstallPath());
     }
@@ -161,7 +161,7 @@ public class TargetPanelTest extends AbstractPanelTest
 
         // attempt to navigate to the next panel
         fixture.button(GuiId.BUTTON_NEXT.id).click();
-        checkWarningQuestion(fixture, installData.getMessages().get("TargetPanel.warn"));
+        checkWarningQuestion(fixture, installData.getMessages().get("TargetPanel.exists_warn"));
 
         assertEquals(dir.getAbsolutePath(), installData.getInstallPath());
         assertTrue(getPanels().getView() instanceof SimpleFinishPanel);
@@ -212,14 +212,14 @@ public class TargetPanelTest extends AbstractPanelTest
 
         // attempt to navigate to the next panel
         fixture.button(GuiId.BUTTON_NEXT.id).click();
-        checkErrorMessage(fixture, messages.get("PathInputPanel.required"));
+        checkErrorMessage(fixture, messages.get("TargetPanel.required"));
 
         assertTrue(dir.mkdirs());
 
         // attempt to navigate to the next panel
         fixture.button(GuiId.BUTTON_NEXT.id).click();
 
-        checkErrorMessage(fixture, messages.get("PathInputPanel.required.forModificationInstallation"));
+        checkErrorMessage(fixture, messages.get("TargetPanel.required.forModificationInstallation"));
 
         // create the .installinformationfile
         TargetPanelTestHelper.createInstallationInfo(dir);
@@ -264,7 +264,8 @@ public class TargetPanelTest extends AbstractPanelTest
 
         // should still be on the TargetPanel
         assertEquals(panel, getPanels().getView());
-        fixture.textBox().setText(goodDir.getAbsolutePath());
+        fixture.textBox(GuiId.PATH_SELECTION_PANEL_PATH_TEXT_FIELD.id).focus();
+        fixture.textBox(GuiId.PATH_SELECTION_PANEL_PATH_TEXT_FIELD.id).setText(goodDir.getAbsolutePath());
 
         // suppress dialog indicating that goodDir will be created
         installData.setVariable("ShowCreateDirectoryMessage", "false");
@@ -299,7 +300,7 @@ public class TargetPanelTest extends AbstractPanelTest
         panel.setExistFiles(requiredFiles);
 
         fixture.button(GuiId.BUTTON_NEXT.id).click();
-        checkErrorMessage(fixture, messages.get("PathInputPanel.notValid"));
+        checkErrorMessage(fixture, messages.get("TargetPanel.notValid"));
 
         // create the required files
         for (String required : requiredFiles)

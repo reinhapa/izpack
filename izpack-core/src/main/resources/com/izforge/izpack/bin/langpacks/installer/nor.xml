@@ -65,7 +65,7 @@
     <str id="FinishPanel.done" txt="Ferdig"/>
     <str id="FinishPanel.fail" txt="Installationen mislyktes!"/>
     <str id="FinishPanel.success" txt="Installasjonen er gjennomført uten feil."/>
-    <str id="FinishPanel.uninst.info" txt="Et avinstalleringsprogram er oprettet i:"/>
+    <str id="FinishPanel.uninst.info" txt="Et avinstalleringsprogram vil bli opprettet i:"/>
 
     <!-- General installer strings -->
     <str id="installer.cancel" txt="Avbryt"/>
@@ -174,10 +174,11 @@
     <str id="JDKPathPanel.badVersion2" txt=" påkrevd: "/>
     <str id="JDKPathPanel.badVersion3" txt=") Skal denne JDK-en brukes likevel?"/>
     <str id="JDKPathPanel.badVersion4" txt="Continue anyway? [y/n] [n]"/>
-    <str id="JDKPathPanel.extendedIntro" txt="Det installerte programmet trenger en JDK mellom versjon ${JDKPathPanel.minVersion} og ${JDKPathPanel.maxVersion}. Et Java kjøretidsmiljø (JRE) er ikke nok."/>
+    <str id="JDKPathPanel.browse" txt="Bla gjennom ..."/>
     <str id="JDKPathPanel.info" txt="Velg JDK-filstien:"/>
-    <str id="JDKPathPanel.intro" txt="Det installerte programmet trenger en JDK. Et Java kjøretidsmiljø (JRE) er ikke nok."/>
+    <str id="JDKPathPanel.intro" txt="Det installerte programmet trenger en JDK mellom versjon ${JDKPathPanel.minVersion} og ${JDKPathPanel.maxVersion}. Et Java kjøretidsmiljø (JRE) er ikke nok."/>
     <str id="JDKPathPanel.jdkDownload" txt="&lt;html&gt;&lt;p&gt;This software requires at least version ${JDKPathPanel.minVersion} of the Java Development Kit (JDK).&lt;p/&gt; If it is not installed, please go to &lt;a href='http://java.sun.com/javase/downloads/'&gt;http://java.sun.com/javase/downloads&lt;/a&gt;, to download and install it.&lt;/html&gt;"/>
+    <str id="JDKPathPanel.notValid" txt="Den valgte mappen inneholder ikke produktet som er påkrevd."/>
     <str id="JDKPathPanel.nonValidPathInReg" txt="Windows-registeret inneholder en ugyldig filsti for denne JDK-en. Skal denne JDK-en brukes likevel?"/>
 
     <!-- LicencePanel strings -->
@@ -212,12 +213,6 @@
     <str id="PacksPanel.space" txt="Påkrevd plass: "/>
     <str id="PacksPanel.tip" txt="Merk: Utgråede pakker må installeres."/>
 
-    <!-- PathInputPanel strings -->
-    <str id="PathInputPanel.isfile" txt="You have entered a path to a file. Please select a path to a new or existing directory."/>
-    <str id="PathInputPanel.notValid" txt="Den valgte mappen inneholder ikke produktet som er påkrevd."/>
-    <str id="PathInputPanel.required" txt="Den valgte mappen bør eksistere fra før."/>
-    <str id="PathInputPanel.required.forModificationInstallation" txt="Den valget mappen bør eksistere fra før."/>
-
     <!-- PDFLicencePanel strings -->
     <str id="PDFLicencePanel.info" txt="Please read the following license agreement carefully:"/>
 
@@ -240,12 +235,16 @@
     <str id="TargetPanel.browse" txt="Bla gjennom ..."/>
     <str id="TargetPanel.createdir" txt="Målkatalogen vil bli opprettet:"/>
     <str id="TargetPanel.empty_target" txt="Du har ikke angitt et målkatalog! Er dette korrekt?"/>
+    <str id="TargetPanel.exists_warn" txt="Mappen eksisterer allerede! Er du sikker på du vil installere og eventuelt overskrive eksisterende filer?"/>
     <str id="TargetPanel.incompatibleInstallation" txt="Incompatible installation detected. Uninstall it first, or choose another directory to install to."/>
     <str id="TargetPanel.info" txt="Velg hvilken mappe du vil installere i: "/>
+    <str id="TargetPanel.isfile" txt="You have entered a path to a file. Please select a path to a new or existing directory."/>
     <str id="TargetPanel.nodir" txt="Dette er ikke en mappe! Velg en mappe."/>
+    <str id="TargetPanel.notValid" txt="Den valgte mappen inneholder ikke produktet som er påkrevd."/>
     <str id="TargetPanel.notwritable" txt="Denne mappen er ikke skrivbar. Velg en annen mappe!"/>
+    <str id="TargetPanel.required" txt="Den valgte mappen bør eksistere fra før."/>
+    <str id="TargetPanel.required.forModificationInstallation" txt="Den valget mappen bør eksistere fra før."/>
     <str id="TargetPanel.syntax.error" txt="Invalid directory path. Please enter a directory path that meets the operating system's requirements."/>
-    <str id="TargetPanel.warn" txt="Mappen eksisterer allerede! Er du sikker på du vil installere og eventuelt overskrive eksisterende filer?"/>
 
     <!-- TreePacksPanel Strings -->
     <str id="TreePacksPanel.children" txt="Children"/>
@@ -311,6 +310,10 @@
     <str id="UserPathPanel.summaryCaption" txt="Valgt mål"/>
 
     <!-- UserInputPanel strings -->
+    <str id="UserInputPanel.custom.console.add" txt="Enter the row number 1..{0} to edit, {1} to accept all, {2} to redisplay, {3} to add a row, and {4} to quit"/>
+    <str id="UserInputPanel.custom.console.add.and.remove" txt="Enter the row number 1..{0} to edit, {1} to accept all, {2} to redisplay, {3} to add a row, {4} to remove the last row, and {5} to quit"/>
+    <str id="UserInputPanel.custom.console.no.add.remove" txt="Enter the row number 1..{0} to edit, {1} to accept all, {2} to redisplay, and {3} to quit"/>
+    <str id="UserInputPanel.custom.console.remove" txt="Enter the row number 1..{0} to edit, {1} to accept all, {2} to redisplay, {3} to remove the last row, and {4} to quit"/>
     <str id="UserInputPanel.custom.swing.buttonlabel.add" txt="Add"/>
     <str id="UserInputPanel.custom.swing.buttonlabel.remove" txt="Remove"/>
     <str id="UserInputPanel.dir.nodirectory.caption" txt="Ingen mappe valgt"/>
