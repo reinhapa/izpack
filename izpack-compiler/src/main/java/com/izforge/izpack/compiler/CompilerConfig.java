@@ -981,7 +981,12 @@ public class CompilerConfig
                 for (String file : files)
                 {
                     File refFile = new File(dir, file);
-                    File packDir = new File(baseDir, refFile.getParent());
+                    File packDir;
+                    if (refFile.isAbsolute()) {
+                        packDir = refFile.getParentFile();
+                    } else {
+                        packDir = new File(baseDir, refFile.getParent());
+                    }
 
                     // parsing ref-pack-set file
                     IXMLElement refXMLData = this.readRefPackData(packDir, refFile.getName(), false);

@@ -6,9 +6,7 @@
   <inceptionYear>2001</inceptionYear>
   <packaging>pom</packaging>
   <name>IzPack parent</name>
-  <description>
-      The IzPack parent module
-  </description>
+  <description>The IzPack parent module</description>
   <url>http://izpack.org/</url>
 
   <licenses>
@@ -84,7 +82,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.10.9</version>
+        <version>1.10.13</version>
       </dependency>
       <dependency>
         <groupId>bsf</groupId>
@@ -177,7 +175,7 @@
       <dependency>
         <groupId>org.apache.tika</groupId>
         <artifactId>tika-parsers</artifactId>
-        <version>1.26</version>
+        <version>1.28.5</version>
       </dependency>
 
       <!-- Maven API -->
@@ -618,12 +616,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.9.1</version>
+          <version>3.12.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.11.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -648,7 +646,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -659,7 +657,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.6</version>
+          <version>0.8.11</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -751,9 +749,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.6.0</version>
-          <configuration>
-            <doclint>none</doclint>
-          </configuration>
+		  <configuration>
+			<doclint>none</doclint>
+		  </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -942,7 +940,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-site-plugin</artifactId>
-              <version>3.3</version>
+              <version>3.12.1</version>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -968,7 +966,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.10</version>
+        <version>0.8.11</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
