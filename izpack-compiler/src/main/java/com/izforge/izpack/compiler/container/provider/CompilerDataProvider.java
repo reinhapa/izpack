@@ -34,7 +34,7 @@ import jakarta.enterprise.inject.Produces;
  */
 public class CompilerDataProvider
 {
-    private String[] args;
+    private final String[] args;
 
     public CompilerDataProvider(String[] args)
     {

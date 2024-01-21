@@ -19,16 +19,15 @@
 
 package com.izforge.izpack.compiler.container.provider;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import com.izforge.izpack.compiler.data.CompilerData;
+
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.jar.JarOutputStream;
 import java.util.zip.Deflater;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-
-import com.izforge.izpack.compiler.data.CompilerData;
 
 import jakarta.enterprise.inject.Produces;
 
@@ -43,32 +42,28 @@ public class JarOutputStreamProvider
     @Produces
     public JarOutputStream provide(CompilerData compilerData)
     {
-        File file = new File(compilerData.getOutput());
-        JarOutputStream jarOutputStream = null;
-        FileOutputStream fileOutputStream = null;
-        FileUtils.deleteQuietly(file);
         try
         {
+            final Path file = Paths.get(compilerData.getOutput());
             if (compilerData.isMkdirs())
             {
-                FileUtils.forceMkdirParent(file);
+                Files.createDirectories(file.getParent());
             }
-            fileOutputStream = new FileOutputStream(file);
-            jarOutputStream = new JarOutputStream(fileOutputStream);
+            JarOutputStream jarOutputStream =  new JarOutputStream(new BufferedOutputStream(Files.newOutputStream(file)));
             int level = compilerData.getComprLevel();
             if (level >= 0 && level < 10)
             {
                 jarOutputStream.setLevel(level);
-            } else
+            }
+            else
             {
                 jarOutputStream.setLevel(Deflater.BEST_COMPRESSION);
             }
+            return jarOutputStream;
         }
         catch (IOException e)
         {
-            IOUtils.closeQuietly(fileOutputStream);
+            throw new IllegalStateException(e);
         }
-
-        return jarOutputStream;
     }
 }
