@@ -71,7 +71,7 @@ public class CompilerContainer extends AbstractContainer
     protected void fillContainer(CdiInitializationContext context)
     {
         super.fillContainer(context);
-        new ResolverContainerFiller().fillContainer(this);
+        new ResolverContainerFiller().fillContainer(context);
 
 //        addComponent(CompilerContainer.class, this); already added by super.fillContainer()
 //        addComponent(Properties.class);

@@ -20,8 +20,7 @@ public abstract class InstallerContainer extends AbstractContainer
      */
     public void setLocale(String code)
     {
-        Locales locales = getComponent(Locales.class);
-        locales.setLocale(code);
+        getComponent(Locales.class).setLocale(code);
     }
 
     /**

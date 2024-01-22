@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 
 /**
  * Fill container with resolver dependencies.
@@ -33,7 +34,7 @@ import com.izforge.izpack.api.exception.IzPackException;
  */
 public class ResolverContainerFiller
 {
-    public void fillContainer(Container container)
+    public void fillContainer(CdiInitializationContext context)
     {
 //        Properties properties = container.getComponent(Properties.class);
 //        for (Map.Entry<Object, Object> entry : getPanelDependencies().entrySet())
@@ -41,10 +42,10 @@ public class ResolverContainerFiller
 //            properties.put(entry.getKey(), entry.getValue());
 //        }
 
-//        container.addComponent(DefaultClassNameMapper.class);
-//        container.addComponent(CompilerClassLoader.class);
-//        container.addComponent(CompilerPathResolver.class);
-//        container.addComponent(MergeableResolver.class);
+//        context.addComponent(DefaultClassNameMapper.class);
+//        context.addComponent(CompilerClassLoader.class);
+//        context.addComponent(CompilerPathResolver.class);
+//        context.addComponent(MergeableResolver.class);
     }
 
     private Properties getPanelDependencies()

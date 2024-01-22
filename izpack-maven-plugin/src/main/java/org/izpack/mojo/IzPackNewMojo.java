@@ -170,16 +170,13 @@ public class IzPackNewMojo extends AbstractMojo
 
         CompilerData compilerData = initCompilerData(jarFile);
         CompilerContainer compilerContainer = new CompilerContainer(createLogHandler(), compilerData, installFile::getPath);
-        compilerContainer.getComponent(IzpackProjectInstaller.class);
-
-        CompilerConfig compilerConfig = compilerContainer.getComponent(CompilerConfig.class);
 
         propertyManager = compilerContainer.getComponent(PropertyManager.class);
         initMavenProperties(propertyManager);
 
         try
         {
-            compilerConfig.executeCompiler();
+            compilerContainer.getComponent(CompilerConfig.class).executeCompiler();
         }
         catch ( CompilerException e )
         {

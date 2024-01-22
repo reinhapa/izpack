@@ -88,9 +88,8 @@ public class TestCompilerContainer extends CompilerContainer
     {
         try
         {
-            CompilerConfig compilerConfig = getComponent(CompilerConfig.class);
             File out = getComponent(File.class);
-            compilerConfig.executeCompiler();
+            getComponent(CompilerConfig.class).executeCompiler();
             Thread currentThread = Thread.currentThread();
             currentThread.setContextClassLoader(new URLClassLoader(new URL[] {out.toURI().toURL()}, currentThread.getContextClassLoader()));
         }
