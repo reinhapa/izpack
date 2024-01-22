@@ -49,8 +49,7 @@ public class CompilerLauncher
         try
         {
             CompilerData compilerData = CliAnalyzer.parseArguments(args);
-            CompilerContainer compilerContainer = new CompilerContainer(new ConsoleHandler(), compilerData);
-            compilerContainer.addConfig("installFile", compilerData.getInstallFile());
+            CompilerContainer compilerContainer = new CompilerContainer(new ConsoleHandler(), compilerData, compilerData::getInstallFile);
 
             CompilerConfig compiler = compilerContainer.getComponent(CompilerConfig.class);
             compiler.executeCompiler();

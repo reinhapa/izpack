@@ -41,8 +41,7 @@ public class IzpackAntRunnable implements Runnable
     @Override
     public void run()
     {
-        CompilerContainer compilerContainer = new CompilerContainer(logHandler, compilerData);
-		compilerContainer.addConfig("installFile", input == null ? "<config>" : input);
+        CompilerContainer compilerContainer = new CompilerContainer(logHandler, compilerData, () -> input == null ? "<config>" : input);
 
         CompilerConfig compilerConfig = compilerContainer.getComponent(CompilerConfig.class);
         PropertyManager propertyManager = compilerContainer.getComponent(PropertyManager.class);

@@ -25,6 +25,7 @@ import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import jakarta.enterprise.inject.Vetoed;
 
+import java.util.function.Supplier;
 import java.util.logging.Handler;
 
 /**
@@ -41,12 +42,12 @@ public class CompilerContainer extends AbstractContainer
      *
      * @throws ContainerException if initialisation fails
      */
-    public CompilerContainer(Handler handler, CompilerData compilerData)
+    public CompilerContainer(Handler handler, CompilerData compilerData, Supplier<String> installFileSupplier)
     {
         initialise(ctx -> {
-            fillContainer(ctx);
             ctx.addComponent(Handler.class, handler);
             ctx.addComponent(CompilerData.class, compilerData);
+            ctx.addConfig("installFile", installFileSupplier.get());
         });
     }
 

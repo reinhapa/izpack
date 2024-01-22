@@ -31,7 +31,6 @@ import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.cdi.CdiInitializationContextImpl;
@@ -84,17 +83,6 @@ public abstract class AbstractContainer implements Container {
   }
 
   /**
-   * Register a component type.
-   *
-   * @param componentType the component type
-   * @throws ContainerException if registration fails
-   */
-  @Override
-  public <T> void addComponent(Class<T> componentType) {
-    container.addComponent(componentType);
-  }
-
-  /**
    * Register a component.
    *
    * @param componentType the component type
@@ -102,7 +90,7 @@ public abstract class AbstractContainer implements Container {
    * @param annotations optional qualifier annotations
    * @throws ContainerException if registration fails
    */
-  @Override
+  @Deprecated
   public <T, I extends T> void addComponent(Class<T> componentType, I implementation,
       Annotation... annotations) {
     container.addComponent(componentType, implementation, annotations);
@@ -122,29 +110,10 @@ public abstract class AbstractContainer implements Container {
     {
           Annotation[] qualifiers = Stream.of(componentType.getAnnotations())
               .filter(a -> a.annotationType().isAnnotationPresent(Qualifier.class))
-              .toArray(n -> new Annotation[n]);
+              .toArray(Annotation[]::new);
           return CDI.current().select(componentType, qualifiers).get();
 
   }
-
-  /**
-     * Register a config item.
-     *
-     * @param name  the name of the config item
-     * @param value the value of the config item
-     * @throws ContainerException if registration fails
-     */
-    public void addConfig(String name, Object value)
-    {
-        try
-        {
-            container.addConfig(name, value);
-        }
-        catch (IzPackException exception)
-        {
-            throw new ContainerException(exception);
-        }
-    }
 
   /**
      * Disposes of the container and all of its child containers.
@@ -173,10 +142,6 @@ public abstract class AbstractContainer implements Container {
   public AutomatedInstallData get(Resources resources, Variables variables, Platform platform,
       Locales locales) {
     return new AutomatedInstallData(variables, platform);
-  }
-
-  protected final <T> void removeComponent(Class<T> componnentType) {
-    container.removeComponent(componnentType);
   }
 
   /**
@@ -253,15 +218,6 @@ public abstract class AbstractContainer implements Container {
   }
 
   /**
-   * Returns the underlying container.
-   *
-   * @return the underlying container, or <tt>null</tt> if {@link #initialise} hasn't been invoked
-   */
-  protected final CdiInitializationContext getContext() {
-    return container;
-  }
-
-  /**
    * Creates a new container.
    *
    * @return a new container
@@ -271,6 +227,6 @@ public abstract class AbstractContainer implements Container {
   }
 
   private enum State {
-    NEW, INITIALIZING, INITIALIZED;
+    NEW, INITIALIZING, INITIALIZED
   }
 }

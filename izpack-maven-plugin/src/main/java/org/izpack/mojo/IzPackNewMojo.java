@@ -169,8 +169,7 @@ public class IzPackNewMojo extends AbstractMojo
         File jarFile = getJarFile();
 
         CompilerData compilerData = initCompilerData(jarFile);
-        CompilerContainer compilerContainer = new CompilerContainer(createLogHandler(), compilerData);
-        compilerContainer.addConfig("installFile", installFile.getPath());
+        CompilerContainer compilerContainer = new CompilerContainer(createLogHandler(), compilerData, installFile::getPath);
         compilerContainer.getComponent(IzpackProjectInstaller.class);
 
         CompilerConfig compilerConfig = compilerContainer.getComponent(CompilerConfig.class);

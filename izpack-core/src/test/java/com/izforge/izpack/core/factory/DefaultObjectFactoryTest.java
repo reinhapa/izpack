@@ -76,7 +76,7 @@ public class DefaultObjectFactoryTest
     @Ignore("check correct test set up")
     public void testCreateNoParameters()
     {
-        container.addComponent(C.class, new C(new A())); // should not be returned by the factory
+        // container.addComponent(C.class, new C(new A())); // should not be returned by the factory
 
         A a1 = factory.create(A.class);
         assertNotNull(a1);
@@ -100,7 +100,7 @@ public class DefaultObjectFactoryTest
     public void testCreateWithInjection()
     {
         A a1 = new A();
-        container.addComponent(A.class, a1);
+        // container.addComponent(A.class, a1);
 
         C c = factory.create(C.class);
         assertNotNull(c);
@@ -148,7 +148,7 @@ public class DefaultObjectFactoryTest
         assertNotNull(a2);
         assertNotSame(a1, a2);
 
-        container.addComponent(A.class, new A());
+        // container.addComponent(A.class, new A());
         A c1 = factory.create(C.class.getName(), A.class);
         assertNotNull(c1);
         assertTrue(c1 instanceof C);
@@ -196,7 +196,7 @@ public class DefaultObjectFactoryTest
     public void testCreateByClassNameWithInjection()
     {
         A a1 = new A();
-        container.addComponent(A.class, a1);
+        // container.addComponent(A.class, a1);
 
         A c = factory.create(C.class.getName(), A.class);
         assertNotNull(c);

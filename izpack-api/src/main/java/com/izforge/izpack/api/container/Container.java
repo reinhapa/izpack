@@ -38,24 +38,6 @@ import com.izforge.izpack.api.exception.ContainerException;
 public interface Container extends AutomatedInstallDataSupplier
 {
     /**
-     * Register a component type.
-     *
-     * @param componentType the component type
-     * @throws ContainerException if registration fails
-     */
-    <T> void addComponent(Class<T> componentType);
-
-    /**
-     * Register a component.
-     *
-     * @param componentType the component type
-     * @param implementation the component implementation
-     * @param annotations optional qualifier annotations
-     * @throws ContainerException if registration fails
-     */
-    <T, I extends T> void addComponent(Class<T> componentType, I implementation, Annotation...annotations);
-
-    /**
      * Retrieve a component by its component type.
      * <p/>
      * If the component type is registered but an instance does not exist, then it will be created.
