@@ -59,16 +59,16 @@ public class ConsoleInstallerContainer extends InstallerContainer
      */
     protected ConsoleInstallerContainer(CdiInitializationContext container)
     {
-        initialise(container);
+        initialise(container, this::fillContainer);
     }
 
     /**
      * Registers components with the container.
      */
-    @Override
-    protected void registerComponents()
+    @Deprecated
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.registerComponents();
+        super.fillContainer(context);
 //        addComponent(ConsoleInstallDataProvider.class);
 //        addComponent(ConsolePanelsProvider.class);
 //        addComponent(MessagesProvider.class); // required by ConsolePrompt and Console

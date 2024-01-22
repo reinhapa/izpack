@@ -51,17 +51,12 @@ public class TestAutomatedInstallerContainer extends AutomatedInstallerContainer
         super(container);
     }
 
-    /**
-     * Registers components with the container.
-     *
-     * @param container the container
-     */
-    @Override
-    protected void registerComponents()
+   @Override
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.registerComponents();
-        removeComponent(ConsolePrefs.class);
-        removeComponent(Housekeeper.class);
+        super.fillContainer(context);
+        context.removeComponent(ConsolePrefs.class);
+        context.removeComponent(Housekeeper.class);
 //        addComponent(TestConsolePrefsProvider.class);
 //        addComponent(TestHousekeeper.class);
     }

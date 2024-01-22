@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 
 /**
  * Container for com.izforge.izpack.resolve package tests.
@@ -48,11 +49,11 @@ public class TestResolveContainer extends AbstractContainer
      * Invoked by {@link #initialise} to fill the container.
      *
      * @throws ContainerException if initialisation fails
-     * @throws PicoException      for any PicoContainer error
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
+        super.fillContainer(context);
 //        addComponent(Properties.class);
 //        addComponent(CompilerPathResolver.class);
 //        addComponent(CompilerClassLoader.class);

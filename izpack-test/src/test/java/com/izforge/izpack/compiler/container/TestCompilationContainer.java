@@ -26,6 +26,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.apache.commons.io.FileUtils;
 import org.junit.runners.model.FrameworkMethod;
 
@@ -133,9 +134,9 @@ public class TestCompilationContainer extends CompilerContainer
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
         deleteLock();
         URL resource = getClass().getClassLoader().getResource(installFile);
         if (resource == null)
@@ -154,14 +155,14 @@ public class TestCompilationContainer extends CompilerContainer
         out.deleteOnExit();
         CompilerData data = new CompilerData(file.getAbsolutePath(), baseDir.getAbsolutePath(), out.getAbsolutePath(),
                                              false);
-        addConfig("installFile", file.getAbsolutePath());
-        addComponent(CompilerData.class, data);
-        addComponent(File.class, out);
+        context.addConfig("installFile", file.getAbsolutePath());
+        context.addComponent(CompilerData.class, data);
+        context.addComponent(File.class, out);
 
         final ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.INFO);
         consoleHandler.setFormatter(new MavenStyleLogFormatter());
-        addComponent(Handler.class, consoleHandler);
+        context.addComponent(Handler.class, consoleHandler);
 
 //        addComponent(JarFileProvider.class);
     }

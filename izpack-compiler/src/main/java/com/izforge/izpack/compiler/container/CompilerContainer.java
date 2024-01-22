@@ -20,12 +20,12 @@
 package com.izforge.izpack.compiler.container;
 
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.compiler.CompilerConfig;
-import com.izforge.izpack.compiler.container.provider.CompilerDataProvider;
-import com.izforge.izpack.compiler.util.CompilerClassLoader;
+import com.izforge.izpack.compiler.data.CompilerData;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import jakarta.enterprise.inject.Vetoed;
+
+import java.util.logging.Handler;
 
 /**
  * Container for compiler.
@@ -41,9 +41,13 @@ public class CompilerContainer extends AbstractContainer
      *
      * @throws ContainerException if initialisation fails
      */
-    public CompilerContainer()
+    public CompilerContainer(Handler handler, CompilerData compilerData)
     {
-        initialise();
+        initialise(ctx -> {
+            fillContainer(ctx);
+            ctx.addComponent(Handler.class, handler);
+            ctx.addComponent(CompilerData.class, compilerData);
+        });
     }
 
     /**
@@ -63,9 +67,9 @@ public class CompilerContainer extends AbstractContainer
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
         new ResolverContainerFiller().fillContainer(this);
 
 //        addComponent(CompilerContainer.class, this); already added by super.fillContainer()
@@ -88,16 +92,6 @@ public class CompilerContainer extends AbstractContainer
 //        addComponent(XmlCompilerHelperProvider.class);
 //        addComponent(JarOutputStreamProvider.class);
 //        addComponent(PlatformProvider.class);
-    }
-
-    /**
-     * Add CompilerDataComponent by processing command line args
-     *
-     * @param args command line args passed to the main
-     */
-    public void processCompileDataFromArgs(String[] args)
-    {
-        addComponent(CompilerDataProvider.class, new CompilerDataProvider(args));
     }
 
 }

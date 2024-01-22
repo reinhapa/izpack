@@ -30,6 +30,7 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -104,11 +105,11 @@ public class DefaultNavigatorTest
         container = new DefaultContainer()
         {
             @Override
-            protected void fillContainer()
+            protected void fillContainer(CdiInitializationContext context)
             {
-                super.fillContainer();
-                addComponent(InstallerFrame.class, frame);
-                addComponent(Resources.class, resources);
+                super.fillContainer(context);
+                context.addComponent(InstallerFrame.class, frame);
+                context.addComponent(Resources.class, resources);
             }
 
             @Override

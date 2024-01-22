@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -51,12 +52,12 @@ public class TestLanguageContainer extends AbstractContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        addComponent(classUnderTest);
+        super.fillContainer(context);
+        context.addComponent(classUnderTest);
 
-        addComponent(Properties.class,  System.getProperties());
+        context.addComponent(Properties.class,  System.getProperties());
 
         ResourceManager resourceManager = Mockito.mock(ResourceManager.class);
         when(resourceManager.getObject("langpacks.info")).thenReturn(Arrays.asList("eng", "fra"));
@@ -84,12 +85,12 @@ public class TestLanguageContainer extends AbstractContainer
         when(resourceManager.getInputStream(Resources.CUSTOM_ICONS_RESOURCE_NAME))
                 .thenThrow(new IzPackException("Not available"));
 
-        addComponent(ResourceManager.class, resourceManager);
-        addComponent(UninstallData.class, Mockito.mock(UninstallData.class));
-        addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
-        addComponent(AutomatedInstaller.class, Mockito.mock(AutomatedInstaller.class));
-        addComponent(PathResolver.class, Mockito.mock(PathResolver.class));
-        addComponent(TestAutomatedInstallDataProvider.class);
+        context.addComponent(ResourceManager.class, resourceManager);
+        context.addComponent(UninstallData.class, Mockito.mock(UninstallData.class));
+        context.addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
+        context.addComponent(AutomatedInstaller.class, Mockito.mock(AutomatedInstaller.class));
+        context.addComponent(PathResolver.class, Mockito.mock(PathResolver.class));
+        context.addComponent(TestAutomatedInstallDataProvider.class);
 
 //        addComponent(DefaultLocales.class, new DefaultLocales(resourceManager));
 //        addComponent(Container.class, this);

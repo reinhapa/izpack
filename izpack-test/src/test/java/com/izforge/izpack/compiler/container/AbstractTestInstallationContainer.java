@@ -46,19 +46,19 @@ public abstract class AbstractTestInstallationContainer extends AbstractContaine
     }
 
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
         TestCompilationContainer compiler = new TestCompilationContainer(klass, frameworkMethod);
         compiler.launchCompilation();
 
         // propagate compilation objects to the installer container so the installation test can use them
         CompilerData data = compiler.getComponent(CompilerData.class);
         JarFile installer = compiler.getComponent(JarFile.class);
-        addComponent(CompilerData.class, data);
-        addComponent(JarFile.class, installer);
+        context.addComponent(CompilerData.class, data);
+        context.addComponent(JarFile.class, installer);
 
-        fillInstallerContainer(getContext());
+        fillInstallerContainer(context);
     }
 
     protected abstract InstallerContainer fillInstallerContainer(CdiInitializationContext picoContainer);

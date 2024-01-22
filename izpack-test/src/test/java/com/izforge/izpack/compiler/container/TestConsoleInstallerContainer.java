@@ -61,16 +61,16 @@ public class TestConsoleInstallerContainer extends ConsoleInstallerContainer
      * Registers components with the container.
      */
     @Override
-    protected void registerComponents()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.registerComponents();
-        removeComponent(ConsoleInstaller.class);
-        addComponent(TestConsoleInstaller.class);
-        removeComponent(ConsolePrefs.class);
-        removeComponent(Console.class);
-        addComponent(TestConsolePrefsProvider.class); // required by TestConsole
-        addComponent(TestConsole.class);
-        removeComponent(Housekeeper.class);
-        addComponent(TestHousekeeper.class);
+        super.fillContainer(context);
+        context.removeComponent(ConsoleInstaller.class);
+        context.addComponent(TestConsoleInstaller.class);
+        context.removeComponent(ConsolePrefs.class);
+        context.removeComponent(Console.class);
+        context.addComponent(TestConsolePrefsProvider.class); // required by TestConsole
+        context.addComponent(TestConsole.class);
+        context.removeComponent(Housekeeper.class);
+        context.addComponent(TestHousekeeper.class);
     }
 }

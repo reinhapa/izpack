@@ -26,7 +26,6 @@ import com.izforge.izpack.compiler.container.CompilerContainer;
 import com.izforge.izpack.compiler.data.CompilerData;
 import com.izforge.izpack.compiler.data.PropertyManager;
 import com.izforge.izpack.compiler.logging.MavenStyleLogFormatter;
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Developer;
 import org.apache.maven.plugin.AbstractMojo;
@@ -38,7 +37,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 
 import java.io.File;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
@@ -171,11 +169,9 @@ public class IzPackNewMojo extends AbstractMojo
         File jarFile = getJarFile();
 
         CompilerData compilerData = initCompilerData(jarFile);
-        CompilerContainer compilerContainer = new CompilerContainer();
+        CompilerContainer compilerContainer = new CompilerContainer(createLogHandler(), compilerData);
         compilerContainer.addConfig("installFile", installFile.getPath());
         compilerContainer.getComponent(IzpackProjectInstaller.class);
-        compilerContainer.addComponent(CompilerData.class, compilerData);
-        compilerContainer.addComponent(Handler.class, createLogHandler());
 
         CompilerConfig compilerConfig = compilerContainer.getComponent(CompilerConfig.class);
 

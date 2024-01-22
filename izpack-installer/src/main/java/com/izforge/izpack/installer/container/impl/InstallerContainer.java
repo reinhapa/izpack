@@ -4,6 +4,7 @@ import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 
 /**
  * Installer container.
@@ -29,20 +30,9 @@ public abstract class InstallerContainer extends AbstractContainer
      * @throws ContainerException if initialization fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        registerComponents();
-        resolveComponents();
-    }
-
-    /**
-     * Registers components with the container.
-     *
-     * @throws ContainerException if registration fails
-     */
-    protected void registerComponents()
-    {
+        super.fillContainer(context);
 //        addComponent(RulesProvider.class);
 //        addComponent(PlatformProvider.class);
 //        addComponent(LocalesProvider.class);
@@ -75,15 +65,15 @@ public abstract class InstallerContainer extends AbstractContainer
 //        addComponent(MergeableResolver.class);
 //        addComponent(PlatformModelMatcher.class);
 //        addComponent(VariableSubstitutorImpl.class);
+        resolveComponents(context);
     }
 
     /**
      * Resolve components.
      */
-    protected void resolveComponents()
+    protected void resolveComponents(CdiInitializationContext context)
     {
 //        addComponent(UnpackerProducer.class);
 //        addComponent(CustomDataLoader.class);
     }
-
 }

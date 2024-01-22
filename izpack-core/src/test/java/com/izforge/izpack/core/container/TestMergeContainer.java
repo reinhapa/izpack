@@ -49,10 +49,10 @@ public class TestMergeContainer extends AbstractContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        addComponent(classUnderTest);
+        super.fillContainer(context);
+        context.addComponent(classUnderTest);
 //        addComponent(PlatformProvider.class);
 //        addComponent(MergeManagerImpl.class);
 //        addComponent(PathResolver.class);

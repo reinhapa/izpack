@@ -40,16 +40,16 @@ public class GUIInstallerContainer extends InstallerContainer
      */
     protected GUIInstallerContainer(CdiInitializationContext container)
     {
-        initialise(container);
+        initialise(container, this::fillContainer);
     }
 
     /**
      * Registers components with the container.
      */
     @Override
-    protected void registerComponents()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.registerComponents();
+        super.fillContainer(context);
 //        addComponent(GUIInstallDataProvider.class);
 //        addComponent(IzPanelsProvider.class);
 //        addComponent(IconsProvider.class);
@@ -68,9 +68,9 @@ public class GUIInstallerContainer extends InstallerContainer
      * Resolve components.
      */
     @Override
-    protected void resolveComponents()
+    protected void resolveComponents(CdiInitializationContext context)
     {
-        super.resolveComponents();
+        super.resolveComponents(context);
         try
         {
             SwingUtilities.invokeAndWait(new Runnable()

@@ -55,14 +55,11 @@ public class TestGUIInstallerContainer extends GUIInstallerContainer
         super(container);
     }
 
-    /**
-     * Registers components with the container.
-     */
     @Override
-    protected void registerComponents()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.registerComponents();
-        removeComponent(Housekeeper.class);
-        addComponent(TestHousekeeper.class);
+        super.fillContainer(context);
+        context.removeComponent(Housekeeper.class);
+        context.addComponent(TestHousekeeper.class);
     }
 }

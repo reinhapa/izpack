@@ -23,6 +23,7 @@ package com.izforge.izpack.uninstaller.container;
 
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.util.Platforms;
 
 
@@ -41,9 +42,9 @@ public abstract class UninstallerContainer extends AbstractContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
 //        addComponent(DefaultResources.class);
 //        addComponent(Housekeeper.class);
 //        addComponent(Librarian.class);

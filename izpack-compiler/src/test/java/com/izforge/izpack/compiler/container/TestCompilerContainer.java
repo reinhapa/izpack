@@ -27,6 +27,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.apache.commons.io.FileUtils;
 import org.junit.runners.model.FrameworkMethod;
 
@@ -105,9 +106,9 @@ public class TestCompilerContainer extends CompilerContainer
      * @throws ContainerException if initialisation fails, or the container has already been initialised
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
         try
         {
             deleteLock();
@@ -130,16 +131,16 @@ public class TestCompilerContainer extends CompilerContainer
         out.deleteOnExit();
         CompilerData data = new CompilerData(installerFile.getAbsolutePath(), baseDir.getAbsolutePath(),
                                              out.getAbsolutePath(), false);
-        addComponent(CompilerData.class, data);
-        addComponent(File.class, out);
+        context.addComponent(CompilerData.class, data);
+        context.addComponent(File.class, out);
 
-        addConfig("installFile", installerFile.getAbsolutePath());
-        addComponent(JarFileProvider.class);
+        context.addConfig("installFile", installerFile.getAbsolutePath());
+        context.addComponent(JarFileProvider.class);
 
         final ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.INFO);
         consoleHandler.setFormatter(new MavenStyleLogFormatter());
-        addComponent(Handler.class, consoleHandler);
+        context.addComponent(Handler.class, consoleHandler);
     }
 
     private void deleteLock() throws IOException

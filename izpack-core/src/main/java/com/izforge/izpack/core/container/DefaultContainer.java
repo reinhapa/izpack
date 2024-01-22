@@ -58,11 +58,11 @@ public class DefaultContainer extends AbstractContainer
     }
 
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
         if (classUnderTest != null) {
-            addComponent(classUnderTest);
+            context.addComponent(classUnderTest);
         }
     }
 

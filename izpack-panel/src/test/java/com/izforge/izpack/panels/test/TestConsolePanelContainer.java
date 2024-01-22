@@ -23,6 +23,7 @@ package com.izforge.izpack.panels.test;
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.rules.RulesEngine;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.handler.ConsolePrompt;
 import com.izforge.izpack.installer.container.provider.MessagesProvider;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
@@ -48,16 +49,16 @@ public class TestConsolePanelContainer extends AbstractTestPanelContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        addComponent(MessagesProvider.class);
-        addComponent(ConsoleInstallDataMockProvider.class);
+        super.fillContainer(context);
+        context.addComponent(MessagesProvider.class);
+        context.addComponent(ConsoleInstallDataMockProvider.class);
 
         ConsoleInstallData installData = getComponent(ConsoleInstallData.class);   //TODO:WELD: use provider pattern
-        addComponent(ConsolePrefs.class, installData.consolePrefs);
-        addComponent(TestConsole.class);
-        addComponent(ConsolePrompt.class);
+        context.addComponent(ConsolePrefs.class, installData.consolePrefs);
+        context.addComponent(TestConsole.class);
+        context.addComponent(ConsolePrompt.class);
 
         getComponent(RulesEngine.class); // force creation of the rules
     }

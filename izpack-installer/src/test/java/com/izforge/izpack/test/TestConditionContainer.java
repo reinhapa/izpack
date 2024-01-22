@@ -27,6 +27,7 @@ import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.Platform;
 
@@ -56,11 +57,11 @@ public class TestConditionContainer extends AbstractContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        addComponent(classUnderTest);
-        addComponent(TestAutomatedInstallDataProvider.class);
+        super.fillContainer(context);
+        context.addComponent(classUnderTest);
+        context.addComponent(TestAutomatedInstallDataProvider.class);
 
 //        addComponent(Platform.class, Platforms.HP_UX);
 

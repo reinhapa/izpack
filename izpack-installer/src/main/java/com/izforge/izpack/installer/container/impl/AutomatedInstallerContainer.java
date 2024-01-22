@@ -59,16 +59,16 @@ public class AutomatedInstallerContainer extends InstallerContainer
      */
     protected AutomatedInstallerContainer(CdiInitializationContext container)
     {
-        initialise(container);
+        initialise(container, this::fillContainer);
     }
 
     /**
      * Registers components with the container.
      */
     @Override
-    protected void registerComponents()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.registerComponents();
+        super.fillContainer(context);
 //        addComponent(AutomatedInstallDataProvider.class);
 //        addComponent(AutomatedPanelsProvider.class);
 //        addComponent(AutomatedPrompt.class);

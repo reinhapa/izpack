@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import com.izforge.izpack.api.container.Container;
@@ -68,7 +69,7 @@ public abstract class AbstractContainer implements Container {
   /**
    * Constructs an <tt>AbstractContainer</tt>.
    * <p/>
-   * If a container is provided, {@link #initialise(CdiInitializationContext)} will be invoked.
+   * If a container is provided, {@link #initialise(CdiInitializationContext, Consumer)} will be invoked.
    * Subclasses should only provide a container if they don't require their constructor to complete
    * before <tt>initialise</tt> is called.
    *
@@ -78,7 +79,7 @@ public abstract class AbstractContainer implements Container {
   public AbstractContainer(CdiInitializationContext container) {
     panels = new HashMap<>();
     if (container != null) {
-      initialise(container);
+      initialise(container, this::fillContainer);
     }
   }
 
@@ -187,7 +188,20 @@ public abstract class AbstractContainer implements Container {
    *         initialised
    */
   protected final void initialise() {
-    initialise(createContainer());
+    initialise(null);
+  }
+
+  /**
+   * Initialises the container.
+   * <p/>
+   * This must only be invoked once.
+   *
+   * @param action the consumer action registering additional components
+   * @throws ContainerException if initialisation fails, or the container has already been
+   *         initialised
+   */
+  protected final void initialise(Consumer<CdiInitializationContext> action) {
+    initialise(createContainer(), action);
   }
 
   /**
@@ -196,17 +210,26 @@ public abstract class AbstractContainer implements Container {
    * This must only be invoked once.
    *
    * @param context the CDI initialization context
+   * @param action the consumer action registering additional components
    * @throws ContainerException if initialisation fails, or the container has already been
    *         initialised
    */
-  protected final void initialise(CdiInitializationContext context) {
+  protected final void initialise(CdiInitializationContext context, Consumer<CdiInitializationContext> action) {
     Objects.requireNonNull(context, "context must not be null");
     if (!init.compareAndSet(State.NEW, State.INITIALIZING)) {
       throw new ContainerException("Container already initialised");
     }
     this.container = context;
     try {
+      // default components
+      context.addComponent(Container.class, this);
+      context.addComponent(AutomatedInstallDataSupplier.class, this);
+      // components of subclasses
       fillContainer(context);
+      // optional components if needed
+      if (action != null) {
+        action.accept(context);
+      }
       context.start();
     } catch (ContainerException exception) {
       throw exception;
@@ -222,26 +245,11 @@ public abstract class AbstractContainer implements Container {
    * This exposes the underlying <tt>PicoContainer</tt> to enable subclasses to perform complex
    * initialisation.
    * <p/>
-   * This implementation delegates to {@link #fillContainer()}.
    *
    * @param context the CDI initialization context
    * @throws ContainerException if initialisation fails
    */
-  protected final void fillContainer(CdiInitializationContext context) {
-    fillContainer();
-  }
-
-  /**
-   * Invoked by {@link #initialise} to fill the container.
-   * <p/>
-   * This implementation is a no-op.
-   * <p/>
-   *
-   * @throws ContainerException if initialisation fails
-   */
-  protected void fillContainer() {
-    addComponent(Container.class, this);
-    addComponent(AutomatedInstallDataSupplier.class, this);
+  protected void fillContainer(CdiInitializationContext context) {
   }
 
   /**

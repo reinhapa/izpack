@@ -26,6 +26,7 @@ import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.provider.GUIInstallDataProvider;
 import com.izforge.izpack.uninstaller.container.UninstallerContainer;
 import com.izforge.izpack.util.Platform;
@@ -53,9 +54,9 @@ public class GUIUninstallerContainer extends UninstallerContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
 //        addComponent(UninstallerFrame.class);
 //        addComponent(GUIPrompt.class);
     }

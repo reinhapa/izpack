@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.container.Container;
@@ -57,15 +58,14 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
-
-        addComponent(ObjectFactory.class, new DefaultObjectFactory(this)); //TODO:WELD: remove container reference if possible
-        addComponent(IUnpacker.class, Mockito.mock(IUnpacker.class));
-        addComponent(TestHousekeeper.class, Mockito.mock(TestHousekeeper.class));
-        addComponent(Container.class, this);
+        super.fillContainer(context);
+        context.addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
+        context.addComponent(ObjectFactory.class, new DefaultObjectFactory(this)); //TODO:WELD: remove container reference if possible
+        context.addComponent(IUnpacker.class, Mockito.mock(IUnpacker.class));
+        context.addComponent(TestHousekeeper.class, Mockito.mock(TestHousekeeper.class));
+        context.addComponent(Container.class, this);
 
         Locales locales = Mockito.mock(Locales.class);
         when(locales.getISOCode()).thenReturn("eng");
@@ -82,7 +82,7 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
         {
             throw new ContainerException(exception);
         }
-        addComponent(Locales.class, locales);
+        context.addComponent(Locales.class, locales);
 
 //        addComponent(Properties.class);
 //        addComponent(DefaultVariables.class);

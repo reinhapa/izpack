@@ -20,6 +20,7 @@
  */
 package com.izforge.izpack.panels.test;
 
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
@@ -56,10 +57,10 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
-        addComponent(Log.class, Mockito.mock(Log.class));
+        super.fillContainer(context);
+        context.addComponent(Log.class, Mockito.mock(Log.class));
 //        addComponent(InstallDataConfiguratorWithRules.class);
 //        addComponent(GUIPrompt.class);
 //        addComponent(GUIInstallDataMockProvider.class);

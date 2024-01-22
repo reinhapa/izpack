@@ -27,6 +27,7 @@ import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.provider.ConsoleInstallDataProvider;
 import com.izforge.izpack.uninstaller.container.UninstallerContainer;
 import com.izforge.izpack.util.Platform;
@@ -55,12 +56,12 @@ public class ConsoleUninstallerContainer extends UninstallerContainer
      * @throws ContainerException if initialisation fails
      */
     @Override
-    protected void fillContainer()
+    protected void fillContainer(CdiInitializationContext context)
     {
-        super.fillContainer();
+        super.fillContainer(context);
         ConsolePrefs consolePrefs = new ConsolePrefs();
         consolePrefs.enableConsoleReader = false;
-        addComponent(ConsolePrefs.class, consolePrefs);
+        context.addComponent(ConsolePrefs.class, consolePrefs);
 
 //        addComponent(DefaultVariables.class);
 //        addComponent(AutomatedInstallData.class);
