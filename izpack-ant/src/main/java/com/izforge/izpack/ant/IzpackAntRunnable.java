@@ -44,9 +44,9 @@ public class IzpackAntRunnable implements Runnable
         CompilerContainer compilerContainer = new CompilerContainer(logHandler, compilerData, () -> input == null ? "<config>" : input);
 
 
+        PropertyManager propertyManager = compilerContainer.getComponent(PropertyManager.class);
         if (properties != null)
         {
-            PropertyManager propertyManager = compilerContainer.getComponent(PropertyManager.class);
             Enumeration<Object> e = properties.keys();
             while (e.hasMoreElements())
             {
