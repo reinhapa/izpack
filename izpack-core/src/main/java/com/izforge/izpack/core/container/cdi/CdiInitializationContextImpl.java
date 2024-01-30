@@ -99,8 +99,6 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
     if (init.compareAndSet(State.NEW, State.INITIALIZING)) {
       SeContainerInitializer initializer = SeContainerInitializer.newInstance();
       ManualBeanDefinitions beanDefinitions = new ManualBeanDefinitions();
-      // scan also .jar files without beans.xml
-      initializer.addProperty("javax.enterprise.inject.scan.implicit", Boolean.TRUE);
       initializer.addExtensions(beanDefinitions);
       components.values().stream().distinct()
           .forEach(implementation -> implementation.register(initializer, beanDefinitions));

@@ -36,7 +36,7 @@ public class ResolverContainerFiller
 {
     public void fillContainer(CdiInitializationContext context)
     {
-//        Properties properties = container.getComponent(Properties.class);
+//        Properties properties = context.getComponent(Properties.class);
 //        for (Map.Entry<Object, Object> entry : getPanelDependencies().entrySet())
 //        {
 //            properties.put(entry.getKey(), entry.getValue());
@@ -51,9 +51,8 @@ public class ResolverContainerFiller
     private Properties getPanelDependencies()
     {
         Properties properties = new Properties();
-        try
+        try (InputStream inStream = getClass().getResourceAsStream("panelDependencies.properties"))
         {
-            InputStream inStream = getClass().getResourceAsStream("panelDependencies.properties");
             properties.load(inStream);
         }
         catch (IOException e)

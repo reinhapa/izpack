@@ -33,6 +33,7 @@ import com.izforge.izpack.installer.data.UninstallDataWriter;
 import com.izforge.izpack.installer.requirement.RequirementsChecker;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.PrivilegedRunner;
+import jakarta.enterprise.inject.Vetoed;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +50,7 @@ import javax.xml.transform.stream.StreamSource;
  * @author Julien Ponge <julien@izforge.com>
  * @author Johannes Lehtinen <johannes.lehtinen@iki.fi>
  */
+@Vetoed
 public class AutomatedInstaller implements InstallerBase
 {
 

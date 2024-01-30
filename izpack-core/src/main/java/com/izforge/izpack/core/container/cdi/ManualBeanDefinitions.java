@@ -24,10 +24,13 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
 import jakarta.enterprise.inject.spi.Extension;
 import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
+import jakarta.enterprise.inject.spi.WithAnnotations;
 
 final class ManualBeanDefinitions implements Extension, Consumer<DynamicBean<?>> {
   private static final Logger logger = Logger.getLogger(CdiInitializationContextImpl.class.getName());
@@ -47,19 +50,19 @@ final class ManualBeanDefinitions implements Extension, Consumer<DynamicBean<?>>
     additionalBeans.forEach(event::addBean);
   }
 
-  //@WithAnnotations({Dependent.class, ApplicationScoped.class}) 
-  public void annotatedType(@Observes ProcessAnnotatedType<?> type) {
+
+  public void annotatedType(@Observes @WithAnnotations({ApplicationScoped.class, Dependent.class}) ProcessAnnotatedType<?> type) {
     Class<?> javaClass = type.getAnnotatedType().getJavaClass();
     if (additionalBeans.stream().anyMatch(ab -> ab.getTypes().stream().anyMatch(p -> containsType(javaClass, p)))) {
-      logger.info(() -> "Vetoing "  + type);
+      logger.info(() -> "***** Vetoing "  + type);
       type.veto();
     }
   }
 
   boolean containsType(Class<?> javaClass, Type type) {
-    if (type instanceof Class) {
+    if (!javaClass.isInterface() &&  type instanceof Class) {
       Class<?> typeClass = (Class<?>)type;
-      return !Object.class.equals(typeClass) && typeClass.equals(javaClass);
+      return javaClass.equals(typeClass);
     }
     return false;
   }
