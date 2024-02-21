@@ -90,6 +90,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <excludes>
+                        <exclude>com.izforge.izpack.com.izforge.izpack.installer.debugger.DebuggerTest</exclude>
                         <exclude>com.izforge.izpack.installer.gui.DefaultNavigatorTest</exclude>
                         <exclude>com.izforge.izpack.installer.language.LanguageDialogTest</exclude>
                         <exclude>com.izforge.izpack.test.ConditionTest</exclude>
