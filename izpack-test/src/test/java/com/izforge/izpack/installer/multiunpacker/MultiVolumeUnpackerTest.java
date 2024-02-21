@@ -428,13 +428,12 @@ public class MultiVolumeUnpackerTest
     {
         Properties properties = new Properties();
         PackagerListener packagerListener = Mockito.mock(PackagerListener.class);
-        JarOutputStream jar = new JarOutputStream(new FileOutputStream(installerJar));
         MergeManager mergeManager = Mockito.mock(MergeManager.class);
         CompilerPathResolver resolver = Mockito.mock(CompilerPathResolver.class);
         MergeableResolver mergeableResolver = Mockito.mock(MergeableResolver.class);
         CompilerData data = new CompilerData(null, baseDir.getPath(), installerJar.getPath(), true);
         RulesEngine rulesEngine = Mockito.mock(RulesEngine.class);
-        MultiVolumePackager packager = new MultiVolumePackager(properties, packagerListener, jar, mergeManager,
+        MultiVolumePackager packager = new MultiVolumePackager(properties, packagerListener, mergeManager,
                                                                resolver, mergeableResolver, data, rulesEngine);
         packager.setInfo(new Info());
         return packager;

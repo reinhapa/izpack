@@ -28,8 +28,9 @@ import com.izforge.izpack.merge.MergeManager;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 import java.net.URI;
@@ -38,7 +39,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
-import java.util.jar.JarOutputStream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
@@ -53,6 +53,8 @@ import static org.mockito.Mockito.verify;
  */
 public abstract class AbstractPackagerTest
 {
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     /**
      * The merge manager.
@@ -68,7 +70,7 @@ public abstract class AbstractPackagerTest
     @Test
     public void noSplash() throws IOException
     {
-        PackagerBase packager = createPackager(Mockito.mock(JarOutputStream.class), mergeManager);
+        PackagerBase packager = createPackager(new File(temporaryFolder.getRoot(), "installer.jar"), mergeManager);
         packager.writeManifest();
 
         verify(mergeManager).addResourceToMerge(anyString(), eq("META-INF/MANIFEST.MF"));
@@ -77,7 +79,7 @@ public abstract class AbstractPackagerTest
     @Test
     public void noGuiPrefs() throws IOException
     {
-        PackagerBase packager = createPackager(Mockito.mock(JarOutputStream.class), mergeManager);
+        PackagerBase packager = createPackager(new File(temporaryFolder.getRoot(), "installer.jar"), mergeManager);
         packager.writeManifest();
 
         verify(mergeManager).addResourceToMerge(anyString(), anyString());
@@ -125,11 +127,11 @@ public abstract class AbstractPackagerTest
     /**
      * Helper to create a packager that writes to the provided jar.
      *
-     * @param jar          the jar stream
+     * @param installerJar the installer jar destination
      * @param mergeManager the merge manager
      * @return a new packager
      */
-    protected abstract PackagerBase createPackager(JarOutputStream jar, MergeManager mergeManager);
+    protected abstract PackagerBase createPackager(File installerJar, MergeManager mergeManager);
 
     /**
      * Verifies that the pack size is calculated correctly.
@@ -142,10 +144,9 @@ public abstract class AbstractPackagerTest
      */
     private void checkSize(long expectedSize, long expectedFileSize, long size, File... files) throws Exception
     {
-        File jar = File.createTempFile("installer", ".jar");
+        File installerJar = File.createTempFile("installer", ".jar");
 
-        JarOutputStream output = new JarOutputStream(new FileOutputStream(jar));
-        PackagerBase packager = createPackager(output, mergeManager);
+        PackagerBase packager = createPackager(installerJar, mergeManager);
 
         PackInfo packInfo = new PackInfo("Core", "Core", null, true, false, null, true, size);
         long fileSize = 0;
@@ -158,7 +159,7 @@ public abstract class AbstractPackagerTest
         packager.addPack(packInfo);
         packager.createInstaller();
 
-        InputStream jarEntry = getJarEntry("resources/packs.info", jar);
+        InputStream jarEntry = getJarEntry("resources/packs.info", installerJar);
 
         ObjectInputStream packStream = new ObjectInputStream(jarEntry);
         List<PackInfo> packsInfo = (List<PackInfo>) packStream.readObject();
@@ -169,7 +170,7 @@ public abstract class AbstractPackagerTest
 
         IOUtils.closeQuietly(jarEntry);
         IOUtils.closeQuietly(packStream);
-        assertTrue(jar.delete());
+        assertTrue(installerJar.delete());
     }
 
     /**

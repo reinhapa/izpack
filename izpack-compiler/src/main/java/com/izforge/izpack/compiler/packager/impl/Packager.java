@@ -36,7 +36,6 @@ import com.izforge.izpack.util.NoCloseOutputStream;
 import com.izforge.izpack.util.StreamSupport;
 import org.apache.commons.io.output.CountingOutputStream;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -49,7 +48,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.jar.JarOutputStream;
 import java.util.logging.Logger;
-import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 
 /**
@@ -70,17 +68,16 @@ public class Packager extends PackagerBase
      *
      * @param properties        the properties
      * @param listener          the packager listener
-     * @param jarOutputStream   the installer jar output stream
      * @param mergeManager      the merge manager
      * @param pathResolver      the path resolver
      * @param mergeableResolver the mergeable resolver
      * @param compilerData      the compiler data
      */
-    public Packager(Properties properties, PackagerListener listener, JarOutputStream jarOutputStream,
-                    MergeManager mergeManager, CompilerPathResolver pathResolver, MergeableResolver mergeableResolver,
-                    CompilerData compilerData, RulesEngine rulesEngine)
+    public Packager(Properties properties, PackagerListener listener, MergeManager mergeManager,
+                    CompilerPathResolver pathResolver, MergeableResolver mergeableResolver, CompilerData compilerData,
+                    RulesEngine rulesEngine)
     {
-        super(properties, listener, jarOutputStream, mergeManager, pathResolver, mergeableResolver,
+        super(properties, listener, mergeManager, pathResolver, mergeableResolver,
                 compilerData, rulesEngine);
         this.compilerData = compilerData;
     }
@@ -88,23 +85,7 @@ public class Packager extends PackagerBase
     private JarOutputStream getJarOutputStream(Path jarFile) throws IOException
     {
         Files.deleteIfExists(jarFile);
-        if (compilerData.isMkdirs())
-        {
-            Files.createDirectories(jarFile.getParent());
-        }
-
-        JarOutputStream jarOutputStream = new JarOutputStream(new BufferedOutputStream(Files.newOutputStream(jarFile)));
-
-        int level = compilerData.getComprLevel();
-        if (level >= 0 && level < 10)
-        {
-            jarOutputStream.setLevel(level);
-        } else
-        {
-            jarOutputStream.setLevel(Deflater.BEST_COMPRESSION);
-        }
-
-        return jarOutputStream;
+        return getJarOutputStream(jarFile, compilerData);
     }
 
     /**
