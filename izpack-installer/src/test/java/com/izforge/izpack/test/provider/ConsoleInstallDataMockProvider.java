@@ -28,6 +28,7 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Platforms;
 
+import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Produces;
 
 /**
@@ -35,6 +36,7 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
+@Alternative
 public class ConsoleInstallDataMockProvider extends AbstractInstallDataMockProvider
 {
 

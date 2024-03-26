@@ -20,6 +20,9 @@ package com.izforge.izpack.core.container.cdi;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -40,8 +43,8 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   private static final Logger logger = Logger.getLogger(CdiInitializationContextImpl.class.getName());
 
   private final AtomicReference<State> init = new AtomicReference<>(State.NEW);
-  private final HashMap<Class<?>, BeanImplementation> components;
-  private final HashMap<String, Object> configurations;
+  private final Map<Class<?>, BeanImplementation> components;
+  private final Map<String, Object> configurations;
 
   private SeContainer seContainer;
 
@@ -83,9 +86,9 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   }
 
   @Override
-  public <T> void removeComponent(Class<T> componnentType) {
+  public <T> void removeComponent(Class<T> type) {
     checkNew();
-    components.remove(componnentType);
+    components.remove(type);
   }
 
   @Override
@@ -101,7 +104,7 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
       ManualBeanDefinitions beanDefinitions = new ManualBeanDefinitions();
       initializer.addExtensions(beanDefinitions);
       components.values().stream().distinct()
-          .forEach(implementation -> implementation.register(initializer, beanDefinitions));
+          .forEach(implementation -> implementation.register(initializer, beanDefinitions::registerBean));
       seContainer = initializer.initialize();
       init.set(State.RUNNING);
     }
@@ -112,6 +115,8 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
     if (init.compareAndSet(State.RUNNING, State.STOPPING)) {
       seContainer.close();
       seContainer = null;
+      components.clear();
+      configurations.clear();
       init.set(State.STOPPED);
     }
   }
@@ -154,7 +159,7 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
 
     static <T> DynamicBean<T> dynamicBean(Class<T> type, Object instance,
         Annotation[] annotations) {
-      DynamicBean<T> bean = new DynamicBean<>(type, () -> type.cast(instance));
+      DynamicBean<T> bean = new DynamicBean<>(type, type.cast(instance));
       for (Annotation annotation : annotations) {
         bean.addQualifier(annotation);
       }

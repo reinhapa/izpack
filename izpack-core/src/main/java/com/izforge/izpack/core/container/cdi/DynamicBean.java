@@ -39,13 +39,13 @@ import jakarta.enterprise.inject.spi.PassivationCapable;
 
 final class DynamicBean<T> implements Bean<T>, PassivationCapable {
   private final Class<T> type;
-  private final Supplier<T> producer;
+  private final T instance;
   private final Set<Type> types;
   private final Set<Annotation> qualifiers;
 
-  DynamicBean(Class<T> type, Supplier<T> producer) {
+  DynamicBean(Class<T> type, T instance) {
     this.type = type;
-    this.producer = producer;
+    this.instance = instance;
     qualifiers = new HashSet<>(Arrays.asList(Default.Literal.INSTANCE, Any.Literal.INSTANCE));
     types = collectTypes(type);
   }
@@ -91,7 +91,7 @@ final class DynamicBean<T> implements Bean<T>, PassivationCapable {
 
   @Override
   public final T create(CreationalContext<T> creationalContext) {
-    return producer.get();
+    return instance;
   }
 
   @Override
@@ -137,5 +137,10 @@ final class DynamicBean<T> implements Bean<T>, PassivationCapable {
   @Override
   public String getId() {
     return type.getName();
+  }
+
+  @Override
+  public String toString() {
+    return String.format("DynamicBean(%s)", instance);
   }
 }

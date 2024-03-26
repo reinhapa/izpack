@@ -20,7 +20,7 @@
  */
 package com.izforge.izpack.panels.test;
 
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -62,10 +62,10 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
     {
         super.fillContainer(context);
         context.addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
-        context.addComponent(ObjectFactory.class, new DefaultObjectFactory(this)); //TODO:WELD: remove container reference if possible
+//        context.addComponent(ObjectFactory.class, new DefaultObjectFactory(this)); //TODO:WELD: remove container reference if possible
         context.addComponent(IUnpacker.class, Mockito.mock(IUnpacker.class));
         context.addComponent(TestHousekeeper.class, Mockito.mock(TestHousekeeper.class));
-        context.addComponent(Container.class, this);
+//        context.addComponent(Container.class, this);
 
         Locales locales = Mockito.mock(Locales.class);
         when(locales.getISOCode()).thenReturn("eng");

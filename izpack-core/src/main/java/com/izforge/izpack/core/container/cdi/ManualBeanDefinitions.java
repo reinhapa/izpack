@@ -20,7 +20,9 @@ package com.izforge.izpack.core.container.cdi;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -32,18 +34,23 @@ import jakarta.enterprise.inject.spi.Extension;
 import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
 import jakarta.enterprise.inject.spi.WithAnnotations;
 
-final class ManualBeanDefinitions implements Extension, Consumer<DynamicBean<?>> {
-  private static final Logger logger = Logger.getLogger(CdiInitializationContextImpl.class.getName());
+final class ManualBeanDefinitions implements Extension {
+  private static final Logger LOGGER = Logger.getLogger(CdiInitializationContextImpl.class.getName());
 
   private final List<DynamicBean<?>> additionalBeans;
+  private final Set<Class<?>> vetoedBeans;
 
   ManualBeanDefinitions() {
     additionalBeans = new ArrayList<>();
+    vetoedBeans = new HashSet<>();
   }
 
-  @Override
-  public void accept(DynamicBean<?> implementationBean) {
+  void registerBean(DynamicBean<?> implementationBean) {
     additionalBeans.add(implementationBean);
+  }
+
+  void addVeto(Class<?> vetoedType) {
+    vetoedBeans.add(vetoedType);
   }
 
   public void afterBeanDiscovery(@Observes AfterBeanDiscovery event) {
@@ -53,8 +60,8 @@ final class ManualBeanDefinitions implements Extension, Consumer<DynamicBean<?>>
 
   public void annotatedType(@Observes @WithAnnotations({ApplicationScoped.class, Dependent.class}) ProcessAnnotatedType<?> type) {
     Class<?> javaClass = type.getAnnotatedType().getJavaClass();
-    if (additionalBeans.stream().anyMatch(ab -> ab.getTypes().stream().anyMatch(p -> containsType(javaClass, p)))) {
-      logger.info(() -> "***** Vetoing "  + type);
+    if (vetoedBeans.contains(javaClass) || additionalBeans.stream().anyMatch(ab -> ab.getTypes().stream().anyMatch(p -> containsType(javaClass, p)))) {
+      LOGGER.info(() -> "***** Vetoing "  + type);
       type.veto();
     }
   }

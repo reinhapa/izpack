@@ -40,7 +40,7 @@ public interface CdiInitializationContext {
 
   void addConfig(String name, Object value) throws IzPackException;
 
-  <T> void removeComponent(Class<T> componnentType);
+  <T> void removeComponent(Class<T> componentType);
 
   void start();
 
