@@ -38,9 +38,11 @@ import com.izforge.izpack.test.util.TestConsole;
  */
 public class TestConsolePanelContainer extends AbstractTestPanelContainer
 {
+    private Class<?> classUnderTest;
 
-    public TestConsolePanelContainer()
+    public TestConsolePanelContainer(Class<?> classUnderTest)
     {
+        this.classUnderTest = classUnderTest;
         initialise();
     }
 
@@ -53,6 +55,7 @@ public class TestConsolePanelContainer extends AbstractTestPanelContainer
     protected void fillContainer(CdiInitializationContext context)
     {
         super.fillContainer(context);
+        context.addComponent(classUnderTest);
 //        context.addComponent(MessagesProvider.class);
 
         context.addComponent(ConsoleInstallDataMockProvider.class);

@@ -32,6 +32,7 @@ import com.izforge.izpack.api.handler.Prompt;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.uninstaller.event.UninstallerListeners;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 
@@ -40,6 +41,7 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class UninstallerListenersProvider
 {
 

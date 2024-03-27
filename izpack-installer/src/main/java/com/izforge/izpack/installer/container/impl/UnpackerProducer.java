@@ -26,9 +26,11 @@ import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.installer.unpacker.IUnpacker;
 import com.izforge.izpack.util.ClassUtil;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
 
+@ApplicationScoped
 public class UnpackerProducer {
 
   @Produces

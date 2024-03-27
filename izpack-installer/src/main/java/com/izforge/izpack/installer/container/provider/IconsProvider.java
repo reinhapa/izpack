@@ -14,11 +14,13 @@ import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.installer.gui.InstallerFrame;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 /**
  * Provide icons database
  */
+@ApplicationScoped
 public class IconsProvider
 {
     private static final Logger logger = Logger.getLogger(IconsProvider.class.getName());

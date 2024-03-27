@@ -33,6 +33,7 @@ import com.izforge.izpack.installer.automation.AutomatedPanels;
 import com.izforge.izpack.installer.automation.PanelAutomationHelper;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 
@@ -41,6 +42,7 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class AutomatedPanelsProvider extends PanelsProvider
 {
 

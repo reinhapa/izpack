@@ -40,14 +40,16 @@ import com.izforge.izpack.util.Platform;
  */
 public class TestGUIPanelContainer extends AbstractTestPanelContainer
 {
+    private Class<?> classUnderTest;
 
     /**
      * Constructs a {@code TestGUIPanelContainer}.
      *
      * @throws ContainerException if initialisation fails
      */
-    public TestGUIPanelContainer()
+    public TestGUIPanelContainer(Class<?> classUnderTest)
     {
+        this.classUnderTest = classUnderTest;
         initialise();
     }
 
@@ -60,6 +62,7 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
     protected void fillContainer(CdiInitializationContext context)
     {
         super.fillContainer(context);
+        context.addComponent(classUnderTest);
         context.addComponent(Log.class, Mockito.mock(Log.class));
 //        addComponent(InstallDataConfiguratorWithRules.class);
 //        addComponent(GUIPrompt.class);

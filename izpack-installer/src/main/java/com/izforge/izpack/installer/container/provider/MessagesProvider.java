@@ -24,6 +24,7 @@ package com.izforge.izpack.installer.container.provider;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Messages;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 
@@ -32,6 +33,7 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class MessagesProvider
 {
 

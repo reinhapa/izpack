@@ -40,6 +40,7 @@ import com.izforge.izpack.panels.simplefinish.SimpleFinishPanel;
 import com.izforge.izpack.panels.test.AbstractPanelTest;
 import com.izforge.izpack.panels.test.TestGUIPanelContainer;
 import com.izforge.izpack.test.Container;
+import jakarta.inject.Inject;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -70,6 +71,7 @@ public class InstallationTypePanelTest extends AbstractPanelTest
      * @param uninstallDataWriter the uninstallation data writer
      * @param locales             the locales
      */
+    @Inject
     public InstallationTypePanelTest(TestGUIPanelContainer container, GUIInstallData installData,
                                      ResourceManager resourceManager,
                                      ObjectFactory factory, RulesEngine rules, IconsDatabase icons,

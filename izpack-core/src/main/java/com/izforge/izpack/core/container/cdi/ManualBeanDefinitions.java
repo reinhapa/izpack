@@ -26,13 +26,12 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import com.izforge.izpack.core.provider.LocalesProvider;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.event.Observes;
-import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
-import jakarta.enterprise.inject.spi.Extension;
-import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
-import jakarta.enterprise.inject.spi.WithAnnotations;
+import jakarta.enterprise.inject.spi.*;
+import org.jboss.weld.annotated.slim.backed.BackedAnnotatedMethod;
 
 final class ManualBeanDefinitions implements Extension {
   private static final Logger LOGGER = Logger.getLogger(CdiInitializationContextImpl.class.getName());

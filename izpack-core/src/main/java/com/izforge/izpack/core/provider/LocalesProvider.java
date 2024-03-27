@@ -33,12 +33,13 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class LocalesProvider
 {
 
-   @Produces
-   @ApplicationScoped
-   public Locales provide(ResourceManager resources)
+    @Produces
+    @ApplicationScoped
+    public Locales provide(ResourceManager resources)
     {
         Locales locales = new DefaultLocales(resources);
         resources.setLocales(locales);

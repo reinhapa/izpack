@@ -44,6 +44,7 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
 
   private final AtomicReference<State> init = new AtomicReference<>(State.NEW);
   private final Map<Class<?>, BeanImplementation> components;
+  private final Set<Class<?>> vetoed;
   private final Map<String, Object> configurations;
 
   private SeContainer seContainer;
@@ -51,6 +52,7 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   public CdiInitializationContextImpl() {
     components = new HashMap<>();
     configurations = new HashMap<>();
+    vetoed = new HashSet<>();
   }
 
   private void checkNew() {
@@ -88,7 +90,9 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
   @Override
   public <T> void removeComponent(Class<T> type) {
     checkNew();
-    components.remove(type);
+    if (components.remove(type) == null) {
+      vetoed.add(type);
+    }
   }
 
   @Override
@@ -105,6 +109,7 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
       initializer.addExtensions(beanDefinitions);
       components.values().stream().distinct()
           .forEach(implementation -> implementation.register(initializer, beanDefinitions::registerBean));
+      vetoed.forEach(beanDefinitions::addVeto);
       seContainer = initializer.initialize();
       init.set(State.RUNNING);
     }
@@ -117,6 +122,7 @@ public final class CdiInitializationContextImpl implements CdiInitializationCont
       seContainer = null;
       components.clear();
       configurations.clear();
+      vetoed.clear();
       init.set(State.STOPPED);
     }
   }

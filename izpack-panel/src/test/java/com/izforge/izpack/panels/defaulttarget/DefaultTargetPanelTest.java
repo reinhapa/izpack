@@ -27,6 +27,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import jakarta.inject.Inject;
 import org.junit.Test;
 
 import com.izforge.izpack.api.factory.ObjectFactory;
@@ -62,6 +63,7 @@ public class DefaultTargetPanelTest extends AbstractPanelTest
      * @param uninstallDataWriter the uninstallation data writer
      * @param locales             the locales
      */
+    @Inject
     public DefaultTargetPanelTest(TestGUIPanelContainer container, GUIInstallData installData,
                                   ResourceManager resourceManager,
                                   ObjectFactory factory, RulesEngine rules, IconsDatabase icons,

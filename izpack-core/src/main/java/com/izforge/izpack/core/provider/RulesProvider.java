@@ -38,6 +38,7 @@ import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 /**
@@ -46,6 +47,7 @@ import jakarta.enterprise.inject.Produces;
  * @author Anthonin Bonnefoy
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class RulesProvider
 {
     private static final Logger logger = Logger.getLogger(RulesProvider.class.getName());

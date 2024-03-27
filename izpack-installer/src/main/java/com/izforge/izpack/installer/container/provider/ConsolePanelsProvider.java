@@ -34,6 +34,7 @@ import com.izforge.izpack.installer.console.ConsolePanels;
 import com.izforge.izpack.util.Console;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 
@@ -42,6 +43,7 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
+@ApplicationScoped
 public class ConsolePanelsProvider extends PanelsProvider
 {
 

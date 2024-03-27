@@ -24,6 +24,7 @@ import static org.hamcrest.core.StringContains.containsString;
 
 import java.util.Arrays;
 
+import jakarta.inject.Inject;
 import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.Before;
@@ -55,6 +56,7 @@ import com.izforge.izpack.panels.test.TestGUIPanelContainer;
 public class PanelDisplayTest extends AbstractPanelTest
 {
 
+    @Inject
     public PanelDisplayTest(GUIInstallData guiInstallData, ResourceManager resourceManager,
                             UninstallDataWriter uninstallDataWriter, TestGUIPanelContainer container,
                             IconsDatabase icons, RulesEngine rules, ObjectFactory factory, Locales locales)

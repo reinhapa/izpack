@@ -28,6 +28,8 @@ import java.net.URL;
 import java.util.Locale;
 
 import com.izforge.izpack.core.container.CdiInitializationContext;
+import com.izforge.izpack.core.provider.LocalesProvider;
+import com.izforge.izpack.util.Housekeeper;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.container.Container;
@@ -64,7 +66,7 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
         context.addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
 //        context.addComponent(ObjectFactory.class, new DefaultObjectFactory(this)); //TODO:WELD: remove container reference if possible
         context.addComponent(IUnpacker.class, Mockito.mock(IUnpacker.class));
-        context.addComponent(TestHousekeeper.class, Mockito.mock(TestHousekeeper.class));
+        context.addComponent(Housekeeper.class, Mockito.mock(TestHousekeeper.class));
 //        context.addComponent(Container.class, this);
 
         Locales locales = Mockito.mock(Locales.class);
@@ -82,6 +84,8 @@ public abstract class AbstractTestPanelContainer extends AbstractContainer
         {
             throw new ContainerException(exception);
         }
+
+        context.removeComponent(LocalesProvider.class);
         context.addComponent(Locales.class, locales);
 
 //        addComponent(Properties.class);

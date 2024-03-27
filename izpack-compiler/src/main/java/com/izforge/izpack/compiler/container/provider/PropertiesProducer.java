@@ -19,10 +19,12 @@
 
 package com.izforge.izpack.compiler.container.provider;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 import java.util.Properties;
 
+@ApplicationScoped
 public class PropertiesProducer {
     private final Properties properties;
 

@@ -24,6 +24,10 @@ package com.izforge.izpack.test.util;
 
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.util.Console;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +40,8 @@ import java.util.List;
  *
  * @author Tim Anderson
  */
+@Alternative
+@Priority(0)
 public class TestConsole extends Console
 {
     /**
@@ -71,6 +77,7 @@ public class TestConsole extends Console
     /**
      * Constructs a <tt>TestConsole</tt>.
      */
+    @Inject
     public TestConsole(InstallData installData)
     {
         super(installData);

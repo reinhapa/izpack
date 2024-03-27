@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import jakarta.inject.Inject;
 import org.apache.commons.io.FileUtils;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.fixture.JOptionPaneFixture;
@@ -83,6 +84,7 @@ public class TargetPanelTest extends AbstractPanelTest
      * @param uninstallDataWriter the uninstallation data writer
      * @param locales             the locales
      */
+    @Inject
     public TargetPanelTest(TestGUIPanelContainer container, GUIInstallData installData, ResourceManager resourceManager,
                            ObjectFactory factory, RulesEngine rules, IconsDatabase icons,
                            UninstallDataWriter uninstallDataWriter, Locales locales)

@@ -58,11 +58,13 @@ import com.izforge.izpack.util.OsVersion;
 import com.izforge.izpack.util.PlatformModelMatcher;
 import com.izforge.izpack.util.TemporaryDirectory;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 /**
  * Abstract base class for providers of {@link InstallData}.
  */
+@ApplicationScoped
 public class AutomatedInstallDataProvider
 {
     /**
