@@ -16,22 +16,35 @@
 
 package com.izforge.izpack.installer.container.provider;
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.ConsolePrefs;
-import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
-import com.izforge.izpack.util.Platform;
+import com.izforge.izpack.util.Housekeeper;
+import com.izforge.izpack.util.PlatformModelMatcher;
 
-public final class ConsoleInstallDataProvider
+public class ConsoleInstallDataProvider extends AbstractInstallDataProvider
 {
 
-  public static AutomatedInstallData provide(Resources resources, Variables variables, Platform platform)
-  {
-        final ConsoleInstallData installData = new ConsoleInstallData(variables, platform);
-        loadConsoleInstallData(installData, resources);
-        return installData;
+    public ConsoleInstallData provide(Resources resources, Locales locales, DefaultVariables variables,
+                                      Housekeeper housekeeper, PlatformModelMatcher matcher)
+            throws Exception
+    {
+        final ConsoleInstallData consoleInstallData = new ConsoleInstallData(variables, matcher.getCurrentPlatform());
+        consoleInstallData.setVariable(InstallData.INSTALLER_MODE, InstallData.INSTALLER_MODE_CONSOLE);
+        loadInstallData(consoleInstallData, resources, matcher, housekeeper);
+        loadConsoleInstallData(consoleInstallData, resources);
+        loadInstallerRequirements(consoleInstallData, resources);
+        loadDynamicVariables(variables, consoleInstallData, resources);
+        loadDynamicConditions(consoleInstallData, resources);
+        loadDefaultLocale(consoleInstallData, locales);
+        // Load custom langpack if exist.
+        AbstractInstallDataProvider.addCustomLangpack(consoleInstallData, locales);
+        // Load user input langpack if exist.
+        AbstractInstallDataProvider.addUserInputLangpack(consoleInstallData, locales);
+        return consoleInstallData;
     }
 
     /**
@@ -40,7 +53,7 @@ public final class ConsoleInstallDataProvider
      * @param installData the console installation data
      * @throws Exception
      */
-    private static void loadConsoleInstallData(ConsoleInstallData installData, Resources resources)
+    private void loadConsoleInstallData(ConsoleInstallData installData, Resources resources) throws Exception
     {
         installData.consolePrefs = (ConsolePrefs) resources.getObject("ConsolePrefs");
     }
