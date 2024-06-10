@@ -203,6 +203,7 @@ public class AutomatedInstallDataProvider
     {
         // Determine the hostname and IP address
         String hostname;
+        String canonicalHostname;
         String IPAddress;
 
         try
@@ -210,11 +211,13 @@ public class AutomatedInstallDataProvider
             InetAddress localHost = InetAddress.getLocalHost();
             IPAddress = localHost.getHostAddress();
             hostname = localHost.getHostName();
+            canonicalHostname = localHost.getCanonicalHostName();
         }
         catch (Exception exception)
         {
             logger.log(Level.WARNING, "Failed to determine hostname and IP address", exception);
             hostname = "";
+            canonicalHostname = "";
             IPAddress = "";
         }
 
@@ -225,6 +228,7 @@ public class AutomatedInstallDataProvider
         installData.setVariable(ScriptParserConstant.USER_NAME, System.getProperty("user.name"));
         installData.setVariable(ScriptParserConstant.IP_ADDRESS, IPAddress);
         installData.setVariable(ScriptParserConstant.HOST_NAME, hostname);
+        installData.setVariable(ScriptParserConstant.CANONICAL_HOST_NAME, canonicalHostname);
         installData.setVariable(ScriptParserConstant.FILE_SEPARATOR, File.separator);
     }
 
