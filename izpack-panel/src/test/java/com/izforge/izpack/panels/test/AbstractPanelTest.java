@@ -72,7 +72,7 @@ public class AbstractPanelTest
     /**
      * The test container.
      */
-    private final TestGUIPanelContainer container;
+    private final com.izforge.izpack.api.container.Container container;
 
     /**
      * The installation data.
@@ -132,7 +132,7 @@ public class AbstractPanelTest
      * @param uninstallDataWriter the uninstallation data writer
      * @param locales             the locales
      */
-    public AbstractPanelTest(TestGUIPanelContainer container, GUIInstallData installData,
+    public AbstractPanelTest(com.izforge.izpack.api.container.Container container, GUIInstallData installData,
                              ResourceManager resourceManager,
                              ObjectFactory factory, RulesEngine rules, IconsDatabase icons,
                              UninstallDataWriter uninstallDataWriter, Locales locales)
@@ -273,7 +273,7 @@ public class AbstractPanelTest
         }
         InstallerFrame frame = handle[0];
         frameFixture = new FrameFixture(frame);
-        container.addComponent(InstallerFrame.class, frame);
+        // container.addComponent(InstallerFrame.class, frame);
         InstallDataConfiguratorWithRules configuratorWithRules = new InstallDataConfiguratorWithRules(
                 installData, rules, Platforms.UNIX);
         InstallerController controller = new InstallerController(configuratorWithRules, frame);

@@ -82,7 +82,7 @@ public class ProcessPanelTest extends AbstractPanelTest
      * @param locales             the locales
      */
     @Inject
-    public ProcessPanelTest(TestGUIPanelContainer container, GUIInstallData installData,
+    public ProcessPanelTest(com.izforge.izpack.api.container.Container container, GUIInstallData installData,
                             ResourceManager resourceManager, ObjectFactory factory, RulesEngine rules,
                             IconsDatabase icons, UninstallDataWriter uninstallDataWriter, Locales locales)
     {

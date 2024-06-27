@@ -27,11 +27,16 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.Platforms;
 
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Produces;
 
 /**
  * Mock provider for guiInstallData
  */
+@Alternative
+@Priority(0)
 public class GUIInstallDataMockProvider extends AbstractInstallDataMockProvider
 {
 

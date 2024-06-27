@@ -20,7 +20,10 @@
  */
 package com.izforge.izpack.panels.test;
 
+import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
 import com.izforge.izpack.core.container.CdiInitializationContext;
+import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
+import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
@@ -66,8 +69,10 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
         context.addComponent(Log.class, Mockito.mock(Log.class));
 //        addComponent(InstallDataConfiguratorWithRules.class);
 //        addComponent(GUIPrompt.class);
-//        addComponent(GUIInstallDataMockProvider.class);
+//        context.addComponent(GUIInstallDataMockProvider.class);
 //        addComponent(IconsProvider.class);
+
+        context.removeComponent(AutomatedInstallDataProvider.class);
     }
 
     @Override

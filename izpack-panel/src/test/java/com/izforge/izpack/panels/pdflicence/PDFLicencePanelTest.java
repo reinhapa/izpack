@@ -56,7 +56,7 @@ import static org.junit.Assert.assertThat;
 @Container(TestConsolePanelContainer.class)
 public class PDFLicencePanelTest extends AbstractPanelTest {
 
-	public PDFLicencePanelTest(TestGUIPanelContainer container, GUIInstallData installData,
+	public PDFLicencePanelTest(com.izforge.izpack.api.container.Container container, GUIInstallData installData,
 							   ResourceManager resourceManager, ObjectFactory factory,
 							   RulesEngine rules, IconsDatabase icons,
 							   UninstallDataWriter uninstallDataWriter, Locales locales)

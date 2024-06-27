@@ -85,7 +85,7 @@ public class TargetPanelTest extends AbstractPanelTest
      * @param locales             the locales
      */
     @Inject
-    public TargetPanelTest(TestGUIPanelContainer container, GUIInstallData installData, ResourceManager resourceManager,
+    public TargetPanelTest(com.izforge.izpack.api.container.Container container, GUIInstallData installData, ResourceManager resourceManager,
                            ObjectFactory factory, RulesEngine rules, IconsDatabase icons,
                            UninstallDataWriter uninstallDataWriter, Locales locales)
     {

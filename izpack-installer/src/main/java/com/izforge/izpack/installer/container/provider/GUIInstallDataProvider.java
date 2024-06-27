@@ -26,11 +26,14 @@ import com.izforge.izpack.gui.LabelFactory;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.OsVersion;
 import com.izforge.izpack.util.Platform;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Provide installData for GUI :
  * Load install data with l&f and GUIPrefs
  */
+@ApplicationScoped
 public class GUIInstallDataProvider
 {
     private static final Logger logger = Logger.getLogger(GUIInstallDataProvider.class.getName());
@@ -77,7 +80,7 @@ public class GUIInstallDataProvider
         looksVariants.put("plasticXP", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
     }
 
-
+    @Produces
     public static GUIInstallData provide(Resources resources, Variables variables, Platform platform)
     {
         final GUIInstallData installData = new GUIInstallData(variables, platform);
@@ -85,9 +88,9 @@ public class GUIInstallDataProvider
         loadGUIInstallData(installData, resources);
         try
         {
-            loadLookAndFeel(installData);
+          loadLookAndFeel(installData);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to load look & feel", e);
+          logger.log(Level.SEVERE, "Failed to load look & feel", e);
         }
         if (UIManager.getColor("Button.background") != null)
         {
@@ -244,14 +247,14 @@ public class GUIInstallDataProvider
 
             logger.info("Using laf " + variant);
             SwingUtilities.invokeLater(() -> {
-                try {
-                    UIManager.setLookAndFeel(variant);
-                    UIManager.getLookAndFeelDefaults().put("ClassLoader", JPanel.class.getClassLoader());
-                    checkSubstanceLafLoaded();
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error loading Substance look and feel: " + e.getMessage(), e);
-                    System.out.println("Substance Graphite failed to initialize");
-                }
+              try {
+                  UIManager.setLookAndFeel(variant);
+                  UIManager.getLookAndFeelDefaults().put("ClassLoader", JPanel.class.getClassLoader());
+                  checkSubstanceLafLoaded();
+              } catch (Exception e) {
+                  logger.log(Level.SEVERE, "Error loading Substance look and feel: " + e.getMessage(), e);
+                System.out.println("Substance Graphite failed to initialize");
+              }
             });
         }
     }

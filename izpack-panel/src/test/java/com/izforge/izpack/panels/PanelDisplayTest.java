@@ -58,7 +58,7 @@ public class PanelDisplayTest extends AbstractPanelTest
 
     @Inject
     public PanelDisplayTest(GUIInstallData guiInstallData, ResourceManager resourceManager,
-                            UninstallDataWriter uninstallDataWriter, TestGUIPanelContainer container,
+                            UninstallDataWriter uninstallDataWriter, com.izforge.izpack.api.container.Container container,
                             IconsDatabase icons, RulesEngine rules, ObjectFactory factory, Locales locales)
     {
         super(container, guiInstallData, resourceManager, factory, rules, icons, uninstallDataWriter, locales);
