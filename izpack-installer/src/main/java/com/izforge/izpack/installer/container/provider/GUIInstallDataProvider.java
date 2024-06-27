@@ -17,6 +17,7 @@ import javax.swing.plaf.metal.MetalTheme;
 
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.GUIPrefs.LookAndFeel;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.LookAndFeels;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Resources;
@@ -81,7 +82,7 @@ public class GUIInstallDataProvider
     }
 
     @Produces
-    public static GUIInstallData provide(Resources resources, Variables variables, Platform platform)
+    public static InstallData provide(Resources resources, Variables variables, Platform platform)
     {
         final GUIInstallData installData = new GUIInstallData(variables, platform);
         // Loads the installation data

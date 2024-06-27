@@ -22,6 +22,7 @@
 package com.izforge.izpack.uninstaller.gui;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
@@ -62,7 +63,7 @@ public class GUIUninstallerContainer extends UninstallerContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return GUIInstallDataProvider.provide(resources, variables, platform);
     }

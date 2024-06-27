@@ -38,11 +38,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
+import com.izforge.izpack.api.data.InstallData;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
-import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
+import com.izforge.izpack.api.data.InstallDataSupplier;
 import com.izforge.izpack.api.data.DynamicInstallerRequirementValidator;
 import com.izforge.izpack.api.data.DynamicVariable;
 import com.izforge.izpack.api.data.Info;
@@ -56,7 +57,6 @@ import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
 import com.izforge.izpack.core.resource.DefaultLocales;
 import com.izforge.izpack.core.resource.ResourceManager;
-import com.izforge.izpack.installer.data.InstallData;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.PlatformModelMatcher;
 
@@ -77,7 +77,7 @@ public class AutomatedInstallDataProviderTest
     @Test
     public void testCustomLangPack() throws Exception
     {
-        AutomatedInstallDataSupplier automatedInstallDataSupplier = Mockito.mock(AutomatedInstallDataSupplier.class);
+        InstallDataSupplier automatedInstallDataSupplier = Mockito.mock(InstallDataSupplier.class);
         ClassLoader loader = Mockito.mock(ClassLoader.class);
         ResourceManager resources = new ResourceManager(loader)
         {
@@ -123,11 +123,11 @@ public class AutomatedInstallDataProviderTest
         Housekeeper housekeeper = Mockito.mock(Housekeeper.class);
         PlatformModelMatcher matcher = Mockito.mock(PlatformModelMatcher.class);
         when(matcher.getCurrentPlatform()).thenReturn(MANDRAKE_LINUX);
-        when(automatedInstallDataSupplier.get(resources, variables, MANDRAKE_LINUX, locales)).thenReturn(new InstallData(variables, MANDRAKE_LINUX));
+        when(automatedInstallDataSupplier.get(resources, variables, MANDRAKE_LINUX, locales)).thenReturn(new AutomatedInstallData(variables, MANDRAKE_LINUX));
 
         // populate the installation data
         AutomatedInstallDataProvider provider = new AutomatedInstallDataProvider();
-        AutomatedInstallData installData = provider.provide(automatedInstallDataSupplier, resources,
+        InstallData installData = provider.provide(automatedInstallDataSupplier, resources,
             locales, variables, housekeeper, matcher);
 
         // verify the expected messages are returned

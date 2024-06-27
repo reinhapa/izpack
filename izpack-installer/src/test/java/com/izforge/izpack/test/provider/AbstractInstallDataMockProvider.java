@@ -51,12 +51,12 @@ public abstract class AbstractInstallDataMockProvider
     }
 
     /**
-     * Creates a new {@link com.izforge.izpack.api.data.AutomatedInstallData}.
+     * Creates a new {@link InstallData}.
      *
      * @param variables the variables
-     * @return a new {@link com.izforge.izpack.api.data.AutomatedInstallData}
+     * @return a new {@link InstallData}
      */
-    protected AutomatedInstallData createInstallData(Variables variables)
+    protected InstallData createInstallData(Variables variables)
     {
         return new AutomatedInstallData(variables, Platforms.MAC_OSX);
     }

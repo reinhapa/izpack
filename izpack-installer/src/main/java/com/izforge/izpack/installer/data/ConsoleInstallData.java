@@ -18,14 +18,16 @@ package com.izforge.izpack.installer.data;
 
 import java.io.Serializable;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.util.Platform;
 
 import jakarta.enterprise.inject.Vetoed;
+import jakarta.inject.Inject;
 
 @Vetoed
-public class ConsoleInstallData extends InstallData implements Serializable
+public class ConsoleInstallData extends AutomatedInstallData implements Serializable
 {
     private static final long serialVersionUID = -4272255846202671405L;
 
@@ -34,6 +36,7 @@ public class ConsoleInstallData extends InstallData implements Serializable
      */
     public ConsolePrefs consolePrefs;
 
+    @Inject
     public ConsoleInstallData(Variables variables, Platform platform)
     {
         super(variables, platform);

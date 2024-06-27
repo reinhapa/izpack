@@ -29,6 +29,7 @@ import java.util.Optional;
 
 import javax.swing.UIManager;
 
+import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.installer.ISummarisable;
@@ -36,6 +37,7 @@ import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.util.Platform;
 
 import jakarta.enterprise.inject.Vetoed;
+import jakarta.inject.Inject;
 
 /**
  * Encloses information about the install process.
@@ -44,7 +46,7 @@ import jakarta.enterprise.inject.Vetoed;
  * @author Johannes Lehtinen <johannes.lehtinen@iki.fi>
  */
 @Vetoed
-public class GUIInstallData extends InstallData implements Serializable, GuiExtension
+public class GUIInstallData extends AutomatedInstallData implements Serializable, GuiExtension
 {
 
     private static final long serialVersionUID = 4048793450990024505L;
@@ -64,7 +66,7 @@ public class GUIInstallData extends InstallData implements Serializable, GuiExte
      */
     private List<ISummarisable> panels = new ArrayList<>();
 
-
+    @Inject
     public GUIInstallData(Variables variables, Platform platform)
     {
         super(variables, platform);

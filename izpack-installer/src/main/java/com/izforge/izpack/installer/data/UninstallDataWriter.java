@@ -1,6 +1,6 @@
 package com.izforge.izpack.installer.data;
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.merge.Mergeable;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.data.CustomData;
@@ -36,7 +36,7 @@ public class UninstallDataWriter
     /**
      * Install data.
      */
-    private final AutomatedInstallData installData;
+    private final InstallData installData;
 
     /**
      * The path resolver.
@@ -77,7 +77,7 @@ public class UninstallDataWriter
      * @param rules         the rules engine
      */
     @Inject
-    public UninstallDataWriter(UninstallData uninstallData, AutomatedInstallData installData, PathResolver pathResolver,
+    public UninstallDataWriter(UninstallData uninstallData, InstallData installData, PathResolver pathResolver,
                                RulesEngine rules)
     {
         this.uninstallData = uninstallData;

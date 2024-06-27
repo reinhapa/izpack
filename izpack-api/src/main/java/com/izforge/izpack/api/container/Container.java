@@ -22,9 +22,7 @@
 
 package com.izforge.izpack.api.container;
 
-import java.lang.annotation.Annotation;
-
-import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
+import com.izforge.izpack.api.data.InstallDataSupplier;
 import com.izforge.izpack.api.exception.ContainerException;
 
 
@@ -35,7 +33,7 @@ import com.izforge.izpack.api.exception.ContainerException;
  * @author Tim Anderson
  * @author Patrick Reinhart
  */
-public interface Container extends AutomatedInstallDataSupplier
+public interface Container extends InstallDataSupplier
 {
     /**
      * Retrieve a component by its component type.

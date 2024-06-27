@@ -20,10 +20,9 @@
  */
 package com.izforge.izpack.panels.test;
 
-import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
-import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
@@ -76,7 +75,7 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return GUIInstallDataProvider.provide(resources, variables, platform);
     }

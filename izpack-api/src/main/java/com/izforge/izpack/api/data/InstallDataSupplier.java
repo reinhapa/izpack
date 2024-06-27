@@ -27,14 +27,14 @@ import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.util.Platform;
 
 /**
- * The implementer is responsible to create a {@link AutomatedInstallData} instance.
+ * The implementer is responsible to create a {@link InstallData} instance.
  * 
  * @author Patrick Reinhart
  */
-public interface AutomatedInstallDataSupplier {
+public interface InstallDataSupplier {
 
   /**
-   * Returns a new {@link AutomatedInstallData} instance.
+   * Returns a new {@link InstallData} instance.
    * 
    * @param resources the resource manager to obtain optional resources
    * @param variables the supported variables
@@ -42,6 +42,6 @@ public interface AutomatedInstallDataSupplier {
    * @param locales the locale information
    * @return a newly created automated installation data instance
    */
-  AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales);
+  InstallData get(Resources resources, Variables variables, Platform platform, Locales locales);
 
 }

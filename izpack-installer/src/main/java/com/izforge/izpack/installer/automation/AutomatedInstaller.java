@@ -26,6 +26,7 @@ import com.izforge.izpack.api.adaptator.IXMLParser;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.Info;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.installer.base.InstallerBase;
 import com.izforge.izpack.installer.data.UninstallData;
@@ -62,7 +63,7 @@ public class AutomatedInstaller implements InstallerBase
     /**
      * The automated installation data.
      */
-    private final AutomatedInstallData installData;
+    private final InstallData installData;
 
     /**
      * Installation requirements.
@@ -94,7 +95,7 @@ public class AutomatedInstaller implements InstallerBase
      * @param uninstallDataWriter the uninstallation data writer
      * @param housekeeper         the house-keeper
      */
-    public AutomatedInstaller(AutomatedPanels panels, AutomatedInstallData installData, Locales locales,
+    public AutomatedInstaller(AutomatedPanels panels, InstallData installData, Locales locales,
                               RequirementsChecker requirements, UninstallDataWriter uninstallDataWriter,
                               Housekeeper housekeeper)
     {

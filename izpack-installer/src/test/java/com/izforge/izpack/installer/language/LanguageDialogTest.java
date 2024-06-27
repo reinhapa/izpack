@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Locale;
 
+import com.izforge.izpack.api.data.InstallData;
 import org.fest.swing.fixture.DialogFixture;
 import org.hamcrest.core.Is;
 import org.junit.After;
@@ -63,7 +64,7 @@ public class LanguageDialogTest
      * The installation data.
      */
     @Inject
-    private AutomatedInstallData installData;
+    private InstallData installData;
 
     /**
      * The locales.

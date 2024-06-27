@@ -19,7 +19,8 @@
 package com.izforge.izpack.test;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
-import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
+import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.data.InstallDataSupplier;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
@@ -36,8 +37,8 @@ public class TestAutomatedInstallDataProvider
 {
   @Produces
   @ApplicationScoped
-  public AutomatedInstallData produce(AutomatedInstallDataSupplier installDataSupplier,
-      Resources resources, Locales locales, Variables variables, Platform platform)
+  public InstallData produce(InstallDataSupplier installDataSupplier,
+                             Resources resources, Locales locales, Variables variables, Platform platform)
   {
     return installDataSupplier.get(resources, variables, platform, locales);
   }

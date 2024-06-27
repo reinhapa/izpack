@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.izforge.izpack.api.container.Container;
-import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Panel;
 import com.izforge.izpack.api.exception.IzPackException;
 import com.izforge.izpack.api.factory.ObjectFactory;
@@ -57,7 +57,7 @@ public class IzPanelsProvider extends PanelsProvider
      * @throws IzPackException if a panel doesn't have unique identifier
      */
     @Produces
-    public IzPanels provide(ObjectFactory factory, Container container, AutomatedInstallData installData,
+    public IzPanels provide(ObjectFactory factory, Container container, InstallData installData,
                             PlatformModelMatcher matcher)
     {
         List<IzPanelView> panels = new ArrayList<>();

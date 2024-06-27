@@ -16,18 +16,19 @@
 
 package com.izforge.izpack.installer.container.provider;
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.ConsolePrefs;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.core.data.DefaultVariables;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Platform;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public final class ConsoleInstallDataProvider
 {
 
-    public static AutomatedInstallData provide(Resources resources, Variables variables, Platform platform)
+    public static InstallData provide(Resources resources, Variables variables, Platform platform)
     {
         final ConsoleInstallData installData = new ConsoleInstallData(variables, platform);
         loadConsoleInstallData(installData, resources);

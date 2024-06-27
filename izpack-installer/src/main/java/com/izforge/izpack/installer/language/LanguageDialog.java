@@ -50,7 +50,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import com.izforge.izpack.api.GuiId;
-import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
@@ -78,7 +78,7 @@ public class LanguageDialog extends JDialog
     /**
      * The installation data.
      */
-    private final AutomatedInstallData installData;
+    private final InstallData installData;
 
     /**
      * The resources.
@@ -115,7 +115,7 @@ public class LanguageDialog extends JDialog
      * @param installData  the installation data
      */
     @Inject
-    public LanguageDialog(Resources resources, Locales locales, AutomatedInstallData installData, IconsDatabase icons)
+    public LanguageDialog(Resources resources, Locales locales, InstallData installData, IconsDatabase icons)
     {
         super();
         ImageIcon imageIcon = icons.get("JFrameIcon");

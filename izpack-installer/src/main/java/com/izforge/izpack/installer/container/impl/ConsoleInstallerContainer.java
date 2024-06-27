@@ -22,7 +22,7 @@
 package com.izforge.izpack.installer.container.impl;
 
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
@@ -83,7 +83,7 @@ public class ConsoleInstallerContainer extends InstallerContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return ConsoleInstallDataProvider.provide(resources, variables, platform);
     }

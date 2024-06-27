@@ -24,6 +24,7 @@ package com.izforge.izpack.panels.userinput.field.rule;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.izforge.izpack.api.data.InstallData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

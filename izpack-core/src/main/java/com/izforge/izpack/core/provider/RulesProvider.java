@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.api.resource.Resources;
@@ -67,7 +68,7 @@ public class RulesProvider
      * @return a new rules engine
      */
     @Produces
-    public RulesEngine provide(AutomatedInstallData installData, DefaultVariables variables,
+    public RulesEngine provide(InstallData installData, DefaultVariables variables,
                                ConditionContainer conditionContainer, Resources resources)
     {
         RulesEngine result = new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());

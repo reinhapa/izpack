@@ -19,6 +19,9 @@
 
 package com.izforge.izpack.installer.data;
 
+import com.izforge.izpack.api.installer.ISummarisable;
+import com.izforge.izpack.installer.gui.IzPanel;
+
 import java.util.Map;
 
 public interface GuiExtension {
@@ -26,4 +29,6 @@ public interface GuiExtension {
   void configureGuiButtons();
   
   Map<String, String> modifiers();
+
+  void addPanel(ISummarisable view);
 }

@@ -24,14 +24,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
-import com.izforge.izpack.api.installer.ISummarisable;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.util.Platform;
 
 import jakarta.enterprise.inject.Vetoed;
+import jakarta.inject.Inject;
+
+import static com.izforge.izpack.util.Platform.Name.WINDOWS;
 
 /**
  * Encloses information about the install process. This implementation is not thread safe.
@@ -72,22 +75,22 @@ public class AutomatedInstallData implements InstallData
     /**
      * The complete list of packs.
      */
-    private List<Pack> allPacks;
+    private final List<Pack> allPacks;
 
     /**
      * The available packs.
      */
-    private List<Pack> availablePacks;
+    private final List<Pack> availablePacks;
 
     /**
      * The selected packs.
      */
-    private List<Pack> selectedPacks;
+    private final List<Pack> selectedPacks;
 
     /**
      * The panels order.
      */
-    private List<Panel> panelsOrder;
+    private final List<Panel> panelsOrder;
 
     /**
      * Can we close the installer ?
@@ -154,14 +157,16 @@ public class AutomatedInstallData implements InstallData
      * @param variables the variables
      * @param platform  the platform
      */
+    @Inject
     public AutomatedInstallData(Variables variables, Platform platform)
     {
         this.variables = variables;
         this.platform = platform;
-        setAvailablePacks(new ArrayList<Pack>());
-        setSelectedPacks(new ArrayList<Pack>());
-        setPanelsOrder(new ArrayList<Panel>());
-        setAttributes(new HashMap<String, Object>());
+        this.allPacks = new ArrayList<>();
+        this.selectedPacks = new ArrayList<>();
+        this.availablePacks = new ArrayList<>();
+        this.panelsOrder = new ArrayList<>();
+        this.attributes = new HashMap<>();
     }
 
     /**
@@ -219,9 +224,10 @@ public class AutomatedInstallData implements InstallData
      * @see #getInstallPath
      */
     @Override
-    public void setInstallPath(String path)
+    public final void setInstallPath(String path)
     {
         setVariable(INSTALL_PATH, path);
+        setInstallDriveFromPath(path, INSTALL_DRIVE);
     }
 
     /**
@@ -243,9 +249,23 @@ public class AutomatedInstallData implements InstallData
      * @see #getDefaultInstallPath
      */
     @Override
-    public void setDefaultInstallPath(String path)
+    public final void setDefaultInstallPath(String path)
     {
         setVariable(DEFAULT_INSTALL_PATH, path);
+        setInstallDriveFromPath(path, DEFAULT_INSTALL_DRIVE);
+    }
+
+
+    private void setInstallDriveFromPath(String path, String variable)
+    {
+        if (getPlatform().isA(WINDOWS))
+        {
+            String[] parts = path.trim().split(":", 2);
+            if (parts.length > 0 && parts[0].length() == 1)
+            {
+                setVariable(variable, parts[0] + ":");
+            }
+        }
     }
 
     /**
@@ -255,7 +275,7 @@ public class AutomatedInstallData implements InstallData
      * @see #setDefaultInstallPath
      */
     @Override
-    public String getDefaultInstallPath()
+    public final String getDefaultInstallPath()
     {
         return getVariable(DEFAULT_INSTALL_PATH);
     }
@@ -419,20 +439,23 @@ public class AutomatedInstallData implements InstallData
         return allPacks;
     }
 
-    public void setAllPacks(List<Pack> allPacks)
-    {
-        this.allPacks = allPacks;
-    }
-
     @Override
     public List<Pack> getAvailablePacks()
     {
         return availablePacks;
     }
 
-    public void setAvailablePacks(List<Pack> availablePacks)
+    public void updateAvailablePacks(Predicate<Pack> availablePredicate)
     {
-        this.availablePacks = availablePacks;
+        availablePacks.clear();
+        allPacks.stream().filter(availablePredicate).forEach(availablePacks::add);
+    }
+
+    @Override
+    public void updateSelectedPacks(Predicate<Pack> selectedPredicate)
+    {
+        selectedPacks.clear();
+        availablePacks.stream().filter(selectedPredicate).forEach(selectedPacks::add);
     }
 
     @Override
@@ -442,20 +465,9 @@ public class AutomatedInstallData implements InstallData
     }
 
     @Override
-    public void setSelectedPacks(List<Pack> selectedPacks)
-    {
-        this.selectedPacks = selectedPacks;
-    }
-
-    @Override
     public List<Panel> getPanelsOrder()
     {
         return panelsOrder;
-    }
-
-    public void setPanelsOrder(List<Panel> panelsOrder)
-    {
-        this.panelsOrder = panelsOrder;
     }
 
     @Override
@@ -521,11 +533,6 @@ public class AutomatedInstallData implements InstallData
         return attributes;
     }
 
-    public void setAttributes(Map<String, Object> attributes)
-    {
-        this.attributes = attributes;
-    }
-
     @Override
     public List<DynamicInstallerRequirementValidator> getDynamicInstallerRequirements()
     {
@@ -546,9 +553,6 @@ public class AutomatedInstallData implements InstallData
     public List<InstallerRequirement> getInstallerRequirements()
     {
         return installerrequirements;
-    }
-
-    public void addPanel(ISummarisable view) {
     }
 
     @Override

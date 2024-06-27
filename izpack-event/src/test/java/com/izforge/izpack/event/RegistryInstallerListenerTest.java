@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import org.junit.Assume;
@@ -180,7 +181,7 @@ public class RegistryInstallerListenerTest
     }
 
     /**
-     * Verifies that the Windows registry is updated by {@link RegistryInstallerListener#afterPacks}.
+     * Verifies that the Windows registry is updated by {@link RegistryInstallerListener#afterPacks(List)}.
      *
      * @throws NativeLibException for any regitry error
      */

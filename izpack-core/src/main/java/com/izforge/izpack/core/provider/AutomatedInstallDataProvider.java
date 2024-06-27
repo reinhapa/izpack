@@ -25,7 +25,6 @@ package com.izforge.izpack.core.provider;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -35,7 +34,7 @@ import java.util.logging.Logger;
 
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.data.AutomatedInstallData;
-import com.izforge.izpack.api.data.AutomatedInstallDataSupplier;
+import com.izforge.izpack.api.data.InstallDataSupplier;
 import com.izforge.izpack.api.data.DynamicInstallerRequirementValidator;
 import com.izforge.izpack.api.data.DynamicVariable;
 import com.izforge.izpack.api.data.Info;
@@ -74,12 +73,12 @@ public class AutomatedInstallDataProvider
 
 
     @Produces
-    public AutomatedInstallData provide(
-        AutomatedInstallDataSupplier installDataSupplier, Resources resources, Locales locales,
-        Variables variables, Housekeeper housekeeper, PlatformModelMatcher matcher)
+    public InstallData provide(
+            InstallDataSupplier installDataSupplier, Resources resources, Locales locales,
+            Variables variables, Housekeeper housekeeper, PlatformModelMatcher matcher)
         throws IOException, ClassNotFoundException
     {
-        AutomatedInstallData installData = installDataSupplier.get(resources, variables, matcher.getCurrentPlatform(), locales);
+        InstallData installData = installDataSupplier.get(resources, variables, matcher.getCurrentPlatform(), locales);
         loadInstallData(installData, resources, matcher, housekeeper);
         loadDynamicVariables(variables, installData, resources);
         loadDynamicConditions(installData, resources);
@@ -105,7 +104,7 @@ public class AutomatedInstallDataProvider
      * @throws ResourceException      for any resource error
      */
     @SuppressWarnings("unchecked")
-    private void loadInstallData(AutomatedInstallData installData, Resources resources,
+    private void loadInstallData(InstallData installData, Resources resources,
         PlatformModelMatcher matcher, Housekeeper housekeeper)
         throws IOException, ClassNotFoundException
     {
@@ -144,22 +143,21 @@ public class AutomatedInstallDataProvider
 
         // We read the panels order data
         List<Panel> panelsOrder = (List<Panel>) resources.getObject("panelsOrder");
+        List<Panel> installDataPanelsOrder = installData.getPanelsOrder();
+        installDataPanelsOrder.clear();
+        installDataPanelsOrder.addAll(panelsOrder);
 
         // We read the packs data
-        List<PackInfo> packs = (List<PackInfo>)resources.getObject("packs.info");
+        List<PackInfo> packInfos = (List<PackInfo>)resources.getObject("packs.info");
+        List<Pack> allPacks = installData.getAllPacks();
+        // initialize all packs first
+        allPacks.clear();
+        packInfos.forEach(packInfo -> allPacks.add(packInfo.getPack()));
+        // update available packs
+        installData.updateAvailablePacks(pack -> matcher.matchesCurrentPlatform(pack.getOsConstraints()));
+        // update selected based on the available packs
+        installData.updateSelectedPacks(Pack::isPreselected);
 
-        List<Pack> availablePacks = new ArrayList<>();
-        List<Pack> allPacks = new ArrayList<>();
-
-        for (PackInfo packInfo : packs)
-        {
-            Pack pack = packInfo.getPack();
-            allPacks.add(pack);
-            if (matcher.matchesCurrentPlatform(pack.getOsConstraints()))
-            {
-                availablePacks.add(pack);
-            }
-        }
         setStandardVariables(installData, dir);
 
         // We load the user variables
@@ -170,19 +168,6 @@ public class AutomatedInstallDataProvider
             for (String varName : vars)
             {
                 installData.setVariable(varName, properties.getProperty(varName));
-            }
-        }
-
-        installData.setPanelsOrder(panelsOrder);
-        installData.setAvailablePacks(availablePacks);
-        installData.setAllPacks(allPacks);
-
-        // get list of preselected packs
-        for (Pack availablePack : availablePacks)
-        {
-            if (availablePack.isPreselected())
-            {
-                installData.getSelectedPacks().add(availablePack);
             }
         }
 
@@ -237,7 +222,7 @@ public class AutomatedInstallDataProvider
      *
      * @param installData the install data to be used
      */
-    public static void addCustomLangpack(AutomatedInstallData installData, Locales locales)
+    public static void addCustomLangpack(InstallData installData, Locales locales)
     {
         addLangpack(Resources.CUSTOM_TRANSLATIONS_RESOURCE_NAME, "custom", installData, locales);
     }
@@ -247,12 +232,12 @@ public class AutomatedInstallDataProvider
      *
      * @param installData the install data to be used
      */
-    public static void addUserInputLangpack(AutomatedInstallData installData, Locales locales)
+    public static void addUserInputLangpack(InstallData installData, Locales locales)
     {
         addLangpack(Resources.USER_INPUT_TRANSLATIONS_RESOURCE_NAME, "user input", installData, locales);
     }
 
-    private static void addLangpack(String resName, String langPackName, AutomatedInstallData installData, Locales locales)
+    private static void addLangpack(String resName, String langPackName, InstallData installData, Locales locales)
     {
         // We try to load and add langpack.
         try
@@ -413,7 +398,7 @@ public class AutomatedInstallDataProvider
      * @param resources   the resources
      */
     @SuppressWarnings("unchecked")
-    private void loadDynamicConditions(AutomatedInstallData installData, Resources resources)
+    private void loadDynamicConditions(InstallData installData, Resources resources)
     {
         try
         {
@@ -436,7 +421,7 @@ public class AutomatedInstallDataProvider
      * @throws ResourceNotFoundException if the resource cannot be found
      */
     @SuppressWarnings("unchecked")
-    private void loadInstallerRequirements(AutomatedInstallData installData, Resources resources)
+    private void loadInstallerRequirements(InstallData installData, Resources resources)
     {
         List<InstallerRequirement> requirements =
                 (List<InstallerRequirement>) resources.getObject("installerrequirements");
@@ -450,7 +435,7 @@ public class AutomatedInstallDataProvider
      * @param locales     the supported locales
      * @throws IOException for any I/O error
      */
-    public static void loadDefaultLocale(AutomatedInstallData installData, Locales locales)
+    public static void loadDefaultLocale(InstallData installData, Locales locales)
     {
         Locale locale = locales.getLocale();
         if (locale != null)

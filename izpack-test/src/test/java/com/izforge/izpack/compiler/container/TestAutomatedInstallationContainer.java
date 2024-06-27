@@ -8,7 +8,6 @@ import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.container.impl.InstallerContainer;
-import com.izforge.izpack.installer.data.InstallData;
 import com.izforge.izpack.util.Platform;
 
 
@@ -33,6 +32,6 @@ public class TestAutomatedInstallationContainer extends AbstractTestInstallation
     @Override
     public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
     {
-        return new InstallData(variables, platform);
+        return new AutomatedInstallData(variables, platform);
     }
 }

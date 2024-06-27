@@ -22,9 +22,12 @@
 package com.izforge.izpack.installer.gui;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.installer.data.GuiExtension;
 import com.izforge.izpack.installer.panel.AbstractPanels;
 
 
@@ -38,7 +41,7 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
     /**
      * The installation data.
      */
-    private final AutomatedInstallData installData;
+    private final InstallData installData;
 
     /**
      * The container to add {@link IzPanel}s to.
@@ -62,7 +65,7 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
      * @param container   the container to register {@link IzPanel}s with
      * @param installData the installation data
      */
-    public IzPanels(List<IzPanelView> panels, Container container, AutomatedInstallData installData)
+    public IzPanels(List<IzPanelView> panels, Container container, InstallData installData)
     {
         super(panels, installData);
         this.container = container;
@@ -74,11 +77,13 @@ public class IzPanels extends AbstractPanels<IzPanelView, IzPanel>
      */
     public void initialise()
     {
+        GuiExtension guiExtension = installData.getExtension(GuiExtension.class)
+                .orElseThrow(() -> new IllegalArgumentException("Unsupported install data reference"));
         for (IzPanelView panel : getPanelViews())
         {
             // need to defer creation of the IzPanel until after the InstallerFrame is constructed
             IzPanel view = panel.getView();
-            installData.addPanel(view);
+            guiExtension.addPanel(view);
             String panelId = panel.getPanelId();
             if (panelId == null)
             {
