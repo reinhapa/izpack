@@ -22,12 +22,8 @@ package com.izforge.izpack.panels.test;
 
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.exception.ContainerException;
-import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.handler.ConsolePrompt;
-import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
-import com.izforge.izpack.installer.container.provider.MessagesProvider;
-import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.test.provider.ConsoleInstallDataMockProvider;
 import com.izforge.izpack.test.util.TestConsole;
 

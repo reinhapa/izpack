@@ -78,7 +78,7 @@ public class AutomatedInstallerContainer extends InstallerContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public AutomatedInstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return new AutomatedInstallData(variables, platform);
     }

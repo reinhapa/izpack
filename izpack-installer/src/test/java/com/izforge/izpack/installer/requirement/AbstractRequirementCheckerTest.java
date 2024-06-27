@@ -65,14 +65,10 @@ public abstract class AbstractRequirementCheckerTest
      */
     public AbstractRequirementCheckerTest()
     {
-        installData = new ConsoleInstallData(new DefaultVariables(), Platforms.FEDORA_LINUX);
-
-        ConsolePrefs prefs = new ConsolePrefs();
-        prefs.enableConsoleReader = false;
-        installData.consolePrefs = prefs;
-
-        Info info = new Info();
-        installData.setInfo(info);
+        ConsolePrefs consolePrefs = new ConsolePrefs();
+        consolePrefs.enableConsoleReader = false;
+        installData = new ConsoleInstallData(new DefaultVariables(), Platforms.FEDORA_LINUX, consolePrefs);
+        installData.setInfo(new Info());
 
         InputStream langPack = getClass().getResourceAsStream("/com/izforge/izpack/bin/langpacks/installer/eng.xml");
         assertNotNull(langPack);

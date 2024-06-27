@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -100,7 +101,7 @@ public class TestLanguageContainer extends AbstractContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales) {
+    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales) {
         GUIInstallDataMockProvider provider = new GUIInstallDataMockProvider();
         return provider.provide(variables, locales);
     }

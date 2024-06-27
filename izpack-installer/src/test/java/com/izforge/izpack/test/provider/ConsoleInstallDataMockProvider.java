@@ -65,13 +65,9 @@ public class ConsoleInstallDataMockProvider extends AbstractInstallDataMockProvi
     @Override
     protected ConsoleInstallData createInstallData(Variables variables)
     {
-        ConsoleInstallData result = new ConsoleInstallData(variables, Platforms.MAC_OSX);
-
         ConsolePrefs consolePrefs = new ConsolePrefs();
         consolePrefs.enableConsoleReader = false;
-        result.consolePrefs = consolePrefs;
-
-        return result;
+        return new ConsoleInstallData(variables, Platforms.MAC_OSX, consolePrefs);
     }
 
 }

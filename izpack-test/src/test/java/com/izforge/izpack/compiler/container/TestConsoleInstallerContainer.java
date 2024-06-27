@@ -25,7 +25,6 @@ import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.console.ConsoleInstaller;
 import com.izforge.izpack.installer.console.TestConsoleInstaller;
-import com.izforge.izpack.installer.console.TestConsolePrefsProvider;
 import com.izforge.izpack.installer.container.impl.ConsoleInstallerContainer;
 import com.izforge.izpack.test.util.TestConsole;
 import com.izforge.izpack.test.util.TestHousekeeper;
@@ -68,7 +67,6 @@ public class TestConsoleInstallerContainer extends ConsoleInstallerContainer
         context.addComponent(TestConsoleInstaller.class);
         context.removeComponent(ConsolePrefs.class);
         context.removeComponent(Console.class);
-        context.addComponent(TestConsolePrefsProvider.class); // required by TestConsole
         context.addComponent(TestConsole.class);
         context.removeComponent(Housekeeper.class);
         context.addComponent(TestHousekeeper.class);

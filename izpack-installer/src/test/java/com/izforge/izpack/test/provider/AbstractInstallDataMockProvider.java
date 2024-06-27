@@ -25,7 +25,7 @@ import com.izforge.izpack.api.data.Info;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.core.provider.AutomatedInstallDataProvider;
+import com.izforge.izpack.core.provider.InstallDataProvider;
 import com.izforge.izpack.util.Platforms;
 
 /**
@@ -46,8 +46,8 @@ public abstract class AbstractInstallDataMockProvider
     {
         Info info = new Info();
         installData.setInfo(info);
-        AutomatedInstallDataProvider.loadDefaultLocale(installData, locales);
-        AutomatedInstallDataProvider.setStandardVariables(installData, null);
+        InstallDataProvider.loadDefaultLocale(installData, locales);
+        InstallDataProvider.setStandardVariables(installData, null);
     }
 
     /**

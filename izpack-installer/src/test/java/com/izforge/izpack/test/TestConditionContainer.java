@@ -21,7 +21,7 @@
 
 package com.izforge.izpack.test;
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
+import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
@@ -75,7 +75,7 @@ public class TestConditionContainer extends AbstractContainer
     }
 
     @Override
-    public AutomatedInstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return new GUIInstallData(variables, platform);
     }

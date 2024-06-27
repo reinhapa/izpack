@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.InstallData;
-import com.izforge.izpack.api.data.InstallDataSupplier;
+import com.izforge.izpack.api.data.InstallDataHandler;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
@@ -140,8 +140,8 @@ public abstract class AbstractContainer implements Container {
   }
 
   @Override
-  public InstallData get(Resources resources, Variables variables, Platform platform,
-                         Locales locales) {
+  public InstallData create(Resources resources, Variables variables, Platform platform,
+                            Locales locales) {
     return new AutomatedInstallData(variables, platform);
   }
 
@@ -189,7 +189,7 @@ public abstract class AbstractContainer implements Container {
     try {
       // default components
       context.addComponent(Container.class, this);
-      context.addComponent(InstallDataSupplier.class, this);
+      context.addComponent(InstallDataHandler.class, this);
       // components of subclasses
       fillContainer(context);
       // optional components if needed

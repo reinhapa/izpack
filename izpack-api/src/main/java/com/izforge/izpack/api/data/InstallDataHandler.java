@@ -31,7 +31,7 @@ import com.izforge.izpack.util.Platform;
  * 
  * @author Patrick Reinhart
  */
-public interface InstallDataSupplier {
+public interface InstallDataHandler {
 
   /**
    * Returns a new {@link InstallData} instance.
@@ -42,6 +42,6 @@ public interface InstallDataSupplier {
    * @param locales the locale information
    * @return a newly created automated installation data instance
    */
-  InstallData get(Resources resources, Variables variables, Platform platform, Locales locales);
+  InstallData create(Resources resources, Variables variables, Platform platform, Locales locales);
 
 }

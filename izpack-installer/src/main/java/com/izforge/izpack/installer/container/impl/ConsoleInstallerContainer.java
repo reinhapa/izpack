@@ -28,7 +28,7 @@ import com.izforge.izpack.api.exception.ContainerException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.CdiInitializationContext;
-import com.izforge.izpack.installer.container.provider.ConsoleInstallDataProvider;
+import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Platform;
 
 /**
@@ -83,8 +83,8 @@ public class ConsoleInstallerContainer extends InstallerContainer
     }
 
     @Override
-    public InstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
     {
-        return ConsoleInstallDataProvider.provide(resources, variables, platform);
+        return new ConsoleInstallData(variables, platform, resources);
     }
   }

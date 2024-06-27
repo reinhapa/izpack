@@ -21,6 +21,7 @@ import java.io.Serializable;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.util.Platform;
 
 import jakarta.enterprise.inject.Vetoed;
@@ -34,12 +35,22 @@ public class ConsoleInstallData extends AutomatedInstallData implements Serializ
     /**
      * The console preferences.
      */
-    public ConsolePrefs consolePrefs;
+    private final ConsolePrefs consolePrefs;
 
     @Inject
-    public ConsoleInstallData(Variables variables, Platform platform)
+    public ConsoleInstallData(Variables variables, Platform platform, Resources resources)
+    {
+        this(variables, platform, (ConsolePrefs) resources.getObject("ConsolePrefs"));
+    }
+
+    public ConsoleInstallData(Variables variables, Platform platform, ConsolePrefs consolePrefs)
     {
         super(variables, platform);
+        this.consolePrefs = consolePrefs;
+    }
+
+    void setConsolePrefs(ConsolePrefs consolePrefs) {
+
     }
 
     @Override

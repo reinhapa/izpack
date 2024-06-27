@@ -27,14 +27,14 @@ import com.izforge.izpack.gui.LabelFactory;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.OsVersion;
 import com.izforge.izpack.util.Platform;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Vetoed;
 
 /**
  * Provide installData for GUI :
  * Load install data with l&f and GUIPrefs
  */
-@ApplicationScoped
+@Vetoed
 public class GUIInstallDataProvider
 {
     private static final Logger logger = Logger.getLogger(GUIInstallDataProvider.class.getName());

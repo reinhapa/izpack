@@ -93,7 +93,7 @@ public class GUIInstallerContainer extends InstallerContainer
     }
 
     @Override
-    public InstallData get(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
     {
         return GUIInstallDataProvider.provide(resources, variables, platform);
     }

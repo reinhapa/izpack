@@ -33,8 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
-import com.izforge.izpack.api.data.AutomatedInstallData;
-import com.izforge.izpack.api.data.InstallDataSupplier;
+import com.izforge.izpack.api.data.InstallDataHandler;
 import com.izforge.izpack.api.data.DynamicInstallerRequirementValidator;
 import com.izforge.izpack.api.data.DynamicVariable;
 import com.izforge.izpack.api.data.Info;
@@ -64,21 +63,21 @@ import jakarta.enterprise.inject.Produces;
  * Abstract base class for providers of {@link InstallData}.
  */
 @ApplicationScoped
-public class AutomatedInstallDataProvider
+public class InstallDataProvider
 {
     /**
      * The logger.
      */
-    private static final Logger logger = Logger.getLogger(AutomatedInstallDataProvider.class.getName());
+    private static final Logger logger = Logger.getLogger(InstallDataProvider.class.getName());
 
 
     @Produces
     public InstallData provide(
-            InstallDataSupplier installDataSupplier, Resources resources, Locales locales,
+            InstallDataHandler installDataHandler, Resources resources, Locales locales,
             Variables variables, Housekeeper housekeeper, PlatformModelMatcher matcher)
         throws IOException, ClassNotFoundException
     {
-        InstallData installData = installDataSupplier.get(resources, variables, matcher.getCurrentPlatform(), locales);
+        InstallData installData = installDataHandler.create(resources, variables, matcher.getCurrentPlatform(), locales);
         loadInstallData(installData, resources, matcher, housekeeper);
         loadDynamicVariables(variables, installData, resources);
         loadDynamicConditions(installData, resources);
