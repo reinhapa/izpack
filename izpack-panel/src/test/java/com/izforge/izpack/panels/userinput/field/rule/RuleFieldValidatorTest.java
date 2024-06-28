@@ -79,8 +79,7 @@ public class RuleFieldValidatorTest
     public void prepare()
     {
         installData = new AutomatedInstallData(new DefaultVariables(), Platforms.LINUX);
-        RulesEngine rules = new RulesEngineImpl(conditionContainer,
-                                                installData.getPlatform());
+        RulesEngine rules = new RulesEngineImpl(installData, conditionContainer);
         installData.setRules(rules);
         factory = new DefaultObjectFactory(container);
     }

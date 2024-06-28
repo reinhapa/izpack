@@ -31,7 +31,6 @@ import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.util.Housekeeper;

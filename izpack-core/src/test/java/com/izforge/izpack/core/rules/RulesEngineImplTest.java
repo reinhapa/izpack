@@ -167,7 +167,7 @@ public class RulesEngineImplTest
     {
         DefaultVariables variables = new DefaultVariables();
         Platform linux = Platforms.LINUX;
-        engine = new RulesEngineImpl(new AutomatedInstallData(variables, linux), null, linux);
+        engine = new RulesEngineImpl(new AutomatedInstallData(variables, linux), null);
         variables.setRules(engine);
 
         Map<String, Condition> conditions = new HashMap<>();
@@ -737,7 +737,7 @@ public class RulesEngineImplTest
     private void checkPlatformCondition(Platform platform, String... conditions)
     {
         RulesEngine rules = new RulesEngineImpl(new AutomatedInstallData(new DefaultVariables(), platform),
-                                                conditionContainer, platform);
+                                                conditionContainer);
         for (String condition : conditions)
         {
             assertTrue("Expected " + condition + " to be true", rules.isConditionTrue(condition));
@@ -787,7 +787,7 @@ public class RulesEngineImplTest
      */
     private RulesEngine createRulesEngine(InstallData installData)
     {
-        return new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
+        return new RulesEngineImpl(installData, conditionContainer);
     }
 
 }

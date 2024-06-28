@@ -74,17 +74,11 @@ public class RulesEngineImpl implements RulesEngine
 {
 
     private final Map<String, String> panelConditions = new HashMap<>();
-
     private final Map<String, String> packConditions = new HashMap<>();
-
     private final Map<String, String> optionalPackConditions = new HashMap<>();
-
     private final Map<String, Condition> conditionsMap = new HashMap<>();
-
     private final Set<ConditionReference> refConditions = new HashSet<>();
-
     private final InstallData installData;
-
     private final ConditionContainer container;
 
     private static final Logger logger = Logger.getLogger(RulesEngineImpl.class.getName());
@@ -113,20 +107,13 @@ public class RulesEngineImpl implements RulesEngine
         TYPE_CLASS_NAMES.put("variable", VariableCondition.class.getName());
     }
 
-    public RulesEngineImpl(ConditionContainer container, Platform platform)
-    {
-        this.installData = null;
-        this.container = container;
-        initStandardConditions(platform);
-    }
-
-    public RulesEngineImpl(InstallData installData, ConditionContainer container, Platform platform)
+    public RulesEngineImpl(InstallData installData, ConditionContainer container)
     {
         this.installData = installData;
         this.container = container;
         if (installData != null)
         {
-            initStandardConditions(platform);
+            initStandardConditions(installData.getPlatform());
         }
     }
 

@@ -162,7 +162,7 @@ public class ContainsConditionTest
      */
     private RulesEngine createRulesEngine(InstallData installData)
     {
-        return new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
+        return new RulesEngineImpl(installData, conditionContainer);
     }
 
 }

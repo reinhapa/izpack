@@ -245,8 +245,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.FREEBSD);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
-                installData.getPlatform());
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer);
         rules.readConditionMap(conditions);
         variables.setRules(rules);
 
@@ -278,8 +277,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
-                installData.getPlatform());
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer);
         rules.readConditionMap(conditions);
         variables.setRules(rules);
 
@@ -321,8 +319,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
-                installData.getPlatform());
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer);
         rules.readConditionMap(conditions);
         variables.setRules(rules);
 
@@ -437,8 +434,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
-                installData.getPlatform());
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer);
         rules.readConditionMap(conditions);
         variables.setRules(rules);
 
@@ -624,8 +620,7 @@ public class DefaultVariablesTest
 
         // set up the rules
         AutomatedInstallData installData = new AutomatedInstallData(variables, Platforms.LINUX);
-        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer,
-                installData.getPlatform());
+        RulesEngineImpl rules = new RulesEngineImpl(installData, conditionContainer);
         rules.readConditionMap(conditions);
         variables.setRules(rules);
 

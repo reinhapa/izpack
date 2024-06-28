@@ -99,7 +99,7 @@ public class DefaultNavigatorTest
     {
         frame = Mockito.mock(InstallerFrame.class);
         installData = new GUIInstallData(new DefaultVariables(), Platforms.WINDOWS);
-        RulesEngine rules = new RulesEngineImpl(Mockito.mock(ConditionContainer.class), Platforms.WINDOWS);
+        RulesEngine rules = new RulesEngineImpl(installData, Mockito.mock(ConditionContainer.class));
         installData.setRules(rules);
         final Resources resources = Mockito.mock(Resources.class);
         installData.setMessages(new LocaleDatabase((Messages) null, new DefaultLocales(resources)));

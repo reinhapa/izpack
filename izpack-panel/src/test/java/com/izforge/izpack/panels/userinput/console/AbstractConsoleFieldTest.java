@@ -73,7 +73,7 @@ public abstract class AbstractConsoleFieldTest
         InputStream langPack = getClass().getResourceAsStream("/com/izforge/izpack/bin/langpacks/installer/eng.xml");
         assertNotNull(langPack);
         installData.setMessages(new LocaleDatabase(langPack, Mockito.mock(Locales.class)));
-        RulesEngine rules = new RulesEngineImpl(conditionContainer, installData.getPlatform());
+        RulesEngine rules = new RulesEngineImpl(installData, conditionContainer);
         installData.setRules(rules);
     }
 

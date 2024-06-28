@@ -24,6 +24,7 @@ import com.izforge.izpack.api.data.Info;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.core.factory.InstallDataFactory;
+import com.izforge.izpack.core.rules.RulesEngineImpl;
 
 /**
  * Test provider for {@link InstallData}.
@@ -41,8 +42,8 @@ final class MockInstallDataProvider
      */
     static void populate(InstallData installData, Locales locales)
     {
-        Info info = new Info();
-        installData.setInfo(info);
+        installData.setInfo(new Info());
+        installData.setRules(new RulesEngineImpl(installData,null));
         InstallDataFactory.loadDefaultLocale(installData, locales);
         InstallDataFactory.setStandardVariables(installData, null);
     }

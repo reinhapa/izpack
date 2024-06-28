@@ -173,24 +173,28 @@ public final class InstallDataFactory
     public static void initializeRules(InstallData installData, Variables variables,
                                        ConditionContainer conditionContainer, Resources resources)
     {
-        RulesEngine result = new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
-        Map<String, Condition> conditions = readConditions(resources);
-        if (conditions != null && !conditions.isEmpty())
+        RulesEngine rules = installData.getRules();
+        if (rules == null)
         {
-            result.readConditionMap(conditions);
-        }
-        else
-        {
-            IXMLElement xml = readConditions();
-            if (xml != null)
+            rules = new RulesEngineImpl(installData, conditionContainer);
+            Map<String, Condition> conditions = readConditions(resources);
+            if (conditions != null && !conditions.isEmpty())
             {
-                result.analyzeXml(xml);
+                rules.readConditionMap(conditions);
             }
+            else
+            {
+                IXMLElement xml = readConditions();
+                if (xml != null)
+                {
+                    rules.analyzeXml(xml);
+                }
+            }
+            installData.setRules(rules);
         }
-        installData.setRules(result);
-        variables.setRules(result);
-
+        variables.setRules(rules);
     }
+
     /**
      * Reads conditions using the resources.
      * <p/>

@@ -73,7 +73,7 @@ public class GUIRuleFieldTest
     public void postConstruct()
     {
         installData = new GUIInstallData(new DefaultVariables(), Platforms.HP_UX);
-        RulesEngine rules = new RulesEngineImpl(conditionContainer, installData.getPlatform());
+        RulesEngine rules = new RulesEngineImpl(installData, conditionContainer);
         installData.setRules(rules);
     }
 
