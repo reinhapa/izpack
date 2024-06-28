@@ -31,7 +31,9 @@ import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.core.factory.InstallDataFactory;
+import com.izforge.izpack.core.rules.ConditionContainer;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.Platform;
 import com.izforge.izpack.util.PlatformModelMatcher;
@@ -47,13 +49,15 @@ public class InstallDataProvider
 {
     @Produces
     public InstallData provide(
-            InstallDataHandler dataHandler, Resources resources, Locales locales,
+            InstallDataHandler dataHandler, Resources resources, Locales locales, ConditionContainer conditionContainer,
             Variables variables, Housekeeper housekeeper, PlatformModelMatcher matcher)
         throws IOException, ClassNotFoundException
     {
         Platform platform = matcher.getCurrentPlatform();
         Predicate<Pack> availablePackPredicate = pack -> matcher.matchesCurrentPlatform(pack.getOsConstraints());
         InstallData installData = dataHandler.create(resources, variables, platform, locales, availablePackPredicate);
+
+        InstallDataFactory.initializeRules(installData, variables, conditionContainer, resources);
         InstallDataFactory.initializeTempDirectores(installData, housekeeper);
         return installData;
     }

@@ -22,7 +22,9 @@
 
 package com.izforge.izpack.core.factory;
 
+import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
+import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.data.DynamicInstallerRequirementValidator;
 import com.izforge.izpack.api.data.DynamicVariable;
 import com.izforge.izpack.api.data.Info;
@@ -38,6 +40,11 @@ import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.exception.ResourceNotFoundException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.api.rules.Condition;
+import com.izforge.izpack.api.rules.RulesEngine;
+import com.izforge.izpack.core.data.DefaultVariables;
+import com.izforge.izpack.core.rules.ConditionContainer;
+import com.izforge.izpack.core.rules.RulesEngineImpl;
 import com.izforge.izpack.util.Housekeeper;
 import com.izforge.izpack.util.IoHelper;
 import com.izforge.izpack.util.OsVersion;
@@ -46,9 +53,11 @@ import com.izforge.izpack.util.TemporaryDirectory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -59,6 +68,10 @@ import java.util.logging.Logger;
 public final class InstallDataFactory
 {
     private static final Logger LOGGER = Logger.getLogger(InstallDataFactory.class.getName());
+    /**
+     * Resource name of the conditions specification
+     */
+    private static final String CONDITIONS_SPECRESOURCENAME = "conditions.xml";
 
     public static <I extends InstallData> I create(
             Resources resources, Variables variables, Platform platform, Locales locales,
@@ -155,6 +168,80 @@ public final class InstallDataFactory
                 installData.setVariable(varName, properties.getProperty(varName));
             }
         }
+    }
+
+    public static void initializeRules(InstallData installData, Variables variables,
+                                       ConditionContainer conditionContainer, Resources resources)
+    {
+        RulesEngine result = new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
+        Map<String, Condition> conditions = readConditions(resources);
+        if (conditions != null && !conditions.isEmpty())
+        {
+            result.readConditionMap(conditions);
+        }
+        else
+        {
+            IXMLElement xml = readConditions();
+            if (xml != null)
+            {
+                result.analyzeXml(xml);
+            }
+        }
+        installData.setRules(result);
+        variables.setRules(result);
+
+    }
+    /**
+     * Reads conditions using the resources.
+     * <p/>
+     * This looks for a serialized resource named <em>"rules"</em>.
+     *
+     * @param resources the resources
+     * @return the conditions, keyed on id, or <tt>null</tt> if the resource doesn't exist or cannot be read
+     */
+    @SuppressWarnings("unchecked")
+    private static Map<String, Condition> readConditions(Resources resources)
+    {
+        Map<String, Condition> rules = null;
+        try
+        {
+            rules = (Map<String, Condition>) resources.getObject("rules");
+        }
+        catch (ResourceNotFoundException rnfe)
+        {
+            LOGGER.fine("No optional rules defined");
+        }
+        catch (ResourceException re)
+        {
+            LOGGER.log(Level.SEVERE, "Optional rules could not be loaded", re);
+        }
+        return rules;
+    }
+
+    /**
+     * Reads conditions from the class path.
+     * <p/>
+     * This looks for an XML resource named <em>"conditions.xml"</em>.
+     *
+     * @return the conditions, or <tt>null</tt> if they cannot be read
+     */
+    private static IXMLElement readConditions()
+    {
+        IXMLElement conditions = null;
+        try
+        {
+            InputStream input = ClassLoader.getSystemResourceAsStream(CONDITIONS_SPECRESOURCENAME);
+            if (input != null)
+            {
+                XMLParser xmlParser = new XMLParser();
+                conditions = xmlParser.parse(input);
+            }
+        }
+        catch (Exception e)
+        {
+            LOGGER.fine("No optional resource found: " + CONDITIONS_SPECRESOURCENAME);
+        }
+        return conditions;
     }
 
     public static void initializeTempDirectores(InstallData installData, Housekeeper housekeeper) throws IOException

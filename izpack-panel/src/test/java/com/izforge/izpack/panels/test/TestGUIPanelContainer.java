@@ -24,6 +24,7 @@ import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.core.provider.InstallDataProvider;
+import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
 import org.mockito.Mockito;
 
 import com.izforge.izpack.api.data.Variables;
@@ -73,13 +74,13 @@ public class TestGUIPanelContainer extends AbstractTestPanelContainer
 //        context.addComponent(GUIInstallDataMockProvider.class);
 //        addComponent(IconsProvider.class);
 
-        context.removeComponent(InstallDataProvider.class);
+//        context.removeComponent(InstallDataProvider.class);
     }
 
     @Override
     public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales,
                               Predicate<Pack> availablePackPredicate)
     {
-        return GUIInstallDataFactory.create(resources, variables, platform, locales, availablePackPredicate);
+        return GUIInstallDataMockProvider.create(variables, locales);
     }
 }

@@ -42,6 +42,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.core.rules.ConditionContainer;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -80,8 +81,10 @@ public class InstallDataHandlerTest
     @Test
     public void testCustomLangPack() throws Exception
     {
-        InstallDataHandler dataHandler = Mockito.mock(InstallDataHandler.class);
-        ClassLoader loader = Mockito.mock(ClassLoader.class);
+        InstallDataHandler dataHandler = Mockito.mock();
+        ClassLoader loader = Mockito.mock();
+        ConditionContainer conditionContainer = Mockito.mock();
+
         ResourceManager resources = new ResourceManager(loader)
         {
             @Override
@@ -133,7 +136,7 @@ public class InstallDataHandlerTest
 
         // populate the installation data
         InstallDataProvider provider = new InstallDataProvider();
-        InstallData installData = provider.provide(dataHandler, resources, locales, variables, housekeeper, matcher);
+        InstallData installData = provider.provide(dataHandler, resources, locales, conditionContainer, variables, housekeeper, matcher);
 
         // verify the expected messages are returned
         Messages messages = installData.getMessages();

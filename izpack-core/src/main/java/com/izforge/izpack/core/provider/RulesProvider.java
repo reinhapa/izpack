@@ -51,96 +51,15 @@ import jakarta.enterprise.inject.Produces;
 @ApplicationScoped
 public class RulesProvider
 {
-    private static final Logger logger = Logger.getLogger(RulesProvider.class.getName());
-
-    /**
-     * Resource name of the conditions specification
-     */
-    private static final String CONDITIONS_SPECRESOURCENAME = "conditions.xml";
-
     /**
      * Reads the conditions specification file and initializes the rules engine.
      *
      * @param installData        the installation data
-     * @param variables          the variables
-     * @param conditionContainer the condition container
-     * @param resources          the resources
      * @return a new rules engine
      */
     @Produces
-    public RulesEngine provide(InstallData installData, DefaultVariables variables,
-                               ConditionContainer conditionContainer, Resources resources)
+    public RulesEngine provide(InstallData installData)
     {
-        RulesEngine result = new RulesEngineImpl(installData, conditionContainer, installData.getPlatform());
-        Map<String, Condition> conditions = readConditions(resources);
-        if (conditions != null && !conditions.isEmpty())
-        {
-            result.readConditionMap(conditions);
-        }
-        else
-        {
-            IXMLElement xml = readConditions();
-            if (xml != null)
-            {
-                result.analyzeXml(xml);
-            }
-        }
-        installData.setRules(result);
-        variables.setRules(result);
-        return result;
+        return installData.getRules();
     }
-
-    /**
-     * Reads conditions using the resources.
-     * <p/>
-     * This looks for a serialized resource named <em>"rules"</em>.
-     *
-     * @param resources the resources
-     * @return the conditions, keyed on id, or <tt>null</tt> if the resource doesn't exist or cannot be read
-     */
-    @SuppressWarnings("unchecked")
-    private Map<String, Condition> readConditions(Resources resources)
-    {
-        Map<String, Condition> rules = null;
-        try
-        {
-            rules = (Map<String, Condition>) resources.getObject("rules");
-        }
-        catch (ResourceNotFoundException rnfe)
-        {
-            logger.fine("No optional rules defined");
-        }
-        catch (ResourceException re)
-        {
-            logger.log(Level.SEVERE, "Optional rules could not be loaded", re);
-        }
-        return rules;
-    }
-
-    /**
-     * Reads conditions from the class path.
-     * <p/>
-     * This looks for an XML resource named <em>"conditions.xml"</em>.
-     *
-     * @return the conditions, or <tt>null</tt> if they cannot be read
-     */
-    private IXMLElement readConditions()
-    {
-        IXMLElement conditions = null;
-        try
-        {
-            InputStream input = ClassLoader.getSystemResourceAsStream(CONDITIONS_SPECRESOURCENAME);
-            if (input != null)
-            {
-                XMLParser xmlParser = new XMLParser();
-                conditions = xmlParser.parse(input);
-            }
-        }
-        catch (Exception e)
-        {
-            logger.fine("No optional resource found: " + CONDITIONS_SPECRESOURCENAME);
-        }
-        return conditions;
-    }
-
 }

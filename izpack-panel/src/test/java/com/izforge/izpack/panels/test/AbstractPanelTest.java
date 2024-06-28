@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import com.izforge.izpack.api.data.InstallData;
 import org.fest.swing.fixture.ContainerFixture;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.timing.Condition;
@@ -132,13 +133,12 @@ public class AbstractPanelTest
      * @param uninstallDataWriter the uninstallation data writer
      * @param locales             the locales
      */
-    public AbstractPanelTest(com.izforge.izpack.api.container.Container container, GUIInstallData installData,
-                             ResourceManager resourceManager,
-                             ObjectFactory factory, RulesEngine rules, IconsDatabase icons,
-                             UninstallDataWriter uninstallDataWriter, Locales locales)
+    public AbstractPanelTest(com.izforge.izpack.api.container.Container container, InstallData installData,
+                             ResourceManager resourceManager, ObjectFactory factory, RulesEngine rules,
+                             IconsDatabase icons, UninstallDataWriter uninstallDataWriter, Locales locales)
     {
         this.container = container;
-        this.installData = installData;
+        this.installData = (GUIInstallData) installData;
         this.resourceManager = resourceManager;
         this.factory = factory;
         this.rules = rules;

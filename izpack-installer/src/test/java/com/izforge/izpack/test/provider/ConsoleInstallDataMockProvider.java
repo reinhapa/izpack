@@ -47,7 +47,7 @@ public class ConsoleInstallDataMockProvider
      * @return an {@link ConsoleInstallData}
      * @throws IOException if the default messages cannot be found
      */
-    public static ConsoleInstallData create(Variables variables, Locales locales) throws IOException
+    public static ConsoleInstallData create(Variables variables, Locales locales)
     {
         ConsolePrefs consolePrefs = new ConsolePrefs();
         consolePrefs.enableConsoleReader = false;

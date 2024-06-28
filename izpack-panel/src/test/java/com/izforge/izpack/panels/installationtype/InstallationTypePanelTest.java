@@ -72,7 +72,7 @@ public class InstallationTypePanelTest extends AbstractPanelTest
      * @param locales             the locales
      */
     @Inject
-    public InstallationTypePanelTest(com.izforge.izpack.api.container.Container container, GUIInstallData installData,
+    public InstallationTypePanelTest(com.izforge.izpack.api.container.Container container, InstallData installData,
                                      ResourceManager resourceManager,
                                      ObjectFactory factory, RulesEngine rules, IconsDatabase icons,
                                      UninstallDataWriter uninstallDataWriter, Locales locales)
