@@ -20,44 +20,30 @@
  */
 package com.izforge.izpack.test.provider;
 
-import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.Info;
 import com.izforge.izpack.api.data.InstallData;
-import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.core.provider.InstallDataProvider;
-import com.izforge.izpack.util.Platforms;
+import com.izforge.izpack.core.factory.InstallDataFactory;
 
 /**
  * Test provider for {@link InstallData}.
  *
  * @author Tim Anderson
  */
-public abstract class AbstractInstallDataMockProvider
+final class MockInstallDataProvider
 {
 
     /**
-     * Populates an {@link AutomatedInstallData}.
+     * Populates an {@link InstallData}.
      *
      * @param installData the installation data to populate
      * @param locales     the locales
      */
-    protected void populate(AutomatedInstallData installData, Locales locales)
+    static void populate(InstallData installData, Locales locales)
     {
         Info info = new Info();
         installData.setInfo(info);
-        InstallDataProvider.loadDefaultLocale(installData, locales);
-        InstallDataProvider.setStandardVariables(installData, null);
-    }
-
-    /**
-     * Creates a new {@link InstallData}.
-     *
-     * @param variables the variables
-     * @return a new {@link InstallData}
-     */
-    protected InstallData createInstallData(Variables variables)
-    {
-        return new AutomatedInstallData(variables, Platforms.MAC_OSX);
+        InstallDataFactory.loadDefaultLocale(installData, locales);
+        InstallDataFactory.setStandardVariables(installData, null);
     }
 }

@@ -22,7 +22,6 @@
 package com.izforge.izpack.installer.gui;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.AutomatedInstallData;

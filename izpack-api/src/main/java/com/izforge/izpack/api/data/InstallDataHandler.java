@@ -22,9 +22,13 @@
 
 package com.izforge.izpack.api.data;
 
+import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.util.Platform;
+
+import java.io.IOException;
+import java.util.function.Predicate;
 
 /**
  * The implementer is responsible to create a {@link InstallData} instance.
@@ -40,8 +44,11 @@ public interface InstallDataHandler {
    * @param variables the supported variables
    * @param platform the actual platform
    * @param locales the locale information
+   * @param availablePackPredicate the predicate to select the available {@link Pack}s
    * @return a newly created automated installation data instance
+   * @throws ResourceException if resource access problems occur
    */
-  InstallData create(Resources resources, Variables variables, Platform platform, Locales locales);
+  InstallData create(Resources resources, Variables variables, Platform platform, Locales locales,
+                     Predicate<Pack> availablePackPredicate) throws ResourceException;
 
 }

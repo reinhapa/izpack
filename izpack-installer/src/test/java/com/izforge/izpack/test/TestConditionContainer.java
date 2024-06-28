@@ -22,14 +22,18 @@
 package com.izforge.izpack.test;
 
 import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.AbstractContainer;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.Platform;
+
+import java.util.function.Predicate;
 
 /**
  * Container for condition tests.
@@ -61,7 +65,6 @@ public class TestConditionContainer extends AbstractContainer
     {
         super.fillContainer(context);
         context.addComponent(classUnderTest);
-        context.addComponent(TestAutomatedInstallDataProvider.class);
 
 //        addComponent(Platform.class, Platforms.HP_UX);
 
@@ -75,7 +78,8 @@ public class TestConditionContainer extends AbstractContainer
     }
 
     @Override
-    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
+    public InstallData create(Resources resources, Variables variables, Platform platform,
+                              Locales locales, Predicate<Pack> availablePackPredicate) throws ResourceException
     {
         return new GUIInstallData(variables, platform);
     }

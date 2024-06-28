@@ -21,6 +21,7 @@ package com.izforge.izpack.core.rules.process;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.izforge.izpack.api.data.InstallData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +29,6 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.IXMLParser;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.data.AutomatedInstallData;
-import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.core.container.DefaultContainer;
 import com.izforge.izpack.core.data.DefaultVariables;

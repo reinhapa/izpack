@@ -29,7 +29,9 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
+import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -113,7 +115,8 @@ public class DefaultNavigatorTest
             }
 
             @Override
-            public AutomatedInstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
+            public AutomatedInstallData create(Resources resources, Variables variables, Platform platform,
+                                               Locales locales, Predicate<Pack> availablePackPredicate)
             {
                 return installData;
             }

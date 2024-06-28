@@ -22,7 +22,6 @@
 package com.izforge.izpack.installer.requirement;
 
 import com.izforge.izpack.api.data.AutomatedInstallData;
-import com.izforge.izpack.api.data.ConsolePrefs;
 import com.izforge.izpack.api.handler.Prompt;
 import com.izforge.izpack.core.handler.ConsolePrompt;
 import com.izforge.izpack.test.util.TestConsole;

@@ -25,7 +25,6 @@ package com.izforge.izpack.test.util;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.util.Console;
 import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 

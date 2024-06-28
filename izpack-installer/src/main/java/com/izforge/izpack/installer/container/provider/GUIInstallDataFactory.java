@@ -1,9 +1,26 @@
+/*
+ * Copyright 2016 Julien Ponge, René Krell and the IzPack team.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.izforge.izpack.installer.container.provider;
 
 import java.awt.Color;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,25 +36,25 @@ import com.izforge.izpack.api.data.GUIPrefs;
 import com.izforge.izpack.api.data.GUIPrefs.LookAndFeel;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.LookAndFeels;
+import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.data.Variables;
+import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.gui.ButtonFactory;
 import com.izforge.izpack.gui.IzPackKMetalTheme;
 import com.izforge.izpack.gui.LabelFactory;
 import com.izforge.izpack.installer.data.GUIInstallData;
 import com.izforge.izpack.util.OsVersion;
 import com.izforge.izpack.util.Platform;
-import jakarta.enterprise.inject.Produces;
-import jakarta.enterprise.inject.Vetoed;
 
 /**
  * Provide installData for GUI :
  * Load install data with l&f and GUIPrefs
  */
-@Vetoed
-public class GUIInstallDataProvider
+public final class GUIInstallDataFactory
 {
-    private static final Logger logger = Logger.getLogger(GUIInstallDataProvider.class.getName());
+    private static final Logger logger = Logger.getLogger(GUIInstallDataFactory.class.getName());
 
     public static final String MODIFIER_USE_BUTTON_ICONS = "useButtonIcons";
     public static final String MODIFIER_USE_LABEL_ICONS = "useLabelIcons";
@@ -81,10 +98,15 @@ public class GUIInstallDataProvider
         looksVariants.put("plasticXP", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
     }
 
-    @Produces
-    public static InstallData provide(Resources resources, Variables variables, Platform platform)
+    private GUIInstallDataFactory()
     {
-        final GUIInstallData installData = new GUIInstallData(variables, platform);
+    }
+
+    public static InstallData create(Resources resources, Variables variables, Platform platform, Locales locales,
+                                     Predicate<Pack> availablePackPredicate)
+    {
+        final GUIInstallData installData = InstallDataFactory.create(resources, variables, platform, locales,
+                availablePackPredicate, GUIInstallData::new);
         // Loads the installation data
         loadGUIInstallData(installData, resources);
         try

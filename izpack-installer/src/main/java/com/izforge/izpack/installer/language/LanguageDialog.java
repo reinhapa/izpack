@@ -53,7 +53,7 @@ import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
-import com.izforge.izpack.core.provider.InstallDataProvider;
+import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.installer.data.GuiExtension;
 
@@ -333,8 +333,8 @@ public class LanguageDialog extends JDialog
             installData.setLocale(locales.getLocale(), locales.getISOCode());
             installData.setMessages(locales.getMessages());
 
-            InstallDataProvider.addCustomLangpack(installData, locales);
-            InstallDataProvider.addUserInputLangpack(installData, locales);
+            InstallDataFactory.addCustomLangpack(installData, locales);
+            InstallDataFactory.addUserInputLangpack(installData, locales);
 
             // Configure buttons after locale has been loaded
             GuiExtension guiExtension = installData.getExtension(GuiExtension.class)

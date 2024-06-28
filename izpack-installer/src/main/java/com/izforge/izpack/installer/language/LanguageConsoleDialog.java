@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import com.izforge.izpack.api.exception.UserInterruptException;
 import com.izforge.izpack.api.resource.Locales;
-import com.izforge.izpack.core.provider.InstallDataProvider;
+import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.installer.data.ConsoleInstallData;
 import com.izforge.izpack.util.Console;
 import com.izforge.izpack.util.Housekeeper;
@@ -100,8 +100,8 @@ public class LanguageConsoleDialog {
       Locale.setDefault(newLocale);
       installData.setLocale(locales.getLocale(), locales.getISOCode());
       installData.setMessages(locales.getMessages());
-      InstallDataProvider.addCustomLangpack(installData, locales);
-      InstallDataProvider.addUserInputLangpack(installData, locales);
+      InstallDataFactory.addCustomLangpack(installData, locales);
+      InstallDataFactory.addUserInputLangpack(installData, locales);
     }
     catch (Exception exception)
     {

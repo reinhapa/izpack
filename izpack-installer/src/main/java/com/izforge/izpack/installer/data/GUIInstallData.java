@@ -36,16 +36,12 @@ import com.izforge.izpack.api.installer.ISummarisable;
 import com.izforge.izpack.api.resource.Messages;
 import com.izforge.izpack.util.Platform;
 
-import jakarta.enterprise.inject.Vetoed;
-import jakarta.inject.Inject;
-
 /**
  * Encloses information about the install process.
  *
  * @author Julien Ponge <julien@izforge.com>
  * @author Johannes Lehtinen <johannes.lehtinen@iki.fi>
  */
-@Vetoed
 public class GUIInstallData extends AutomatedInstallData implements Serializable, GuiExtension
 {
 
@@ -66,7 +62,6 @@ public class GUIInstallData extends AutomatedInstallData implements Serializable
      */
     private List<ISummarisable> panels = new ArrayList<>();
 
-    @Inject
     public GUIInstallData(Variables variables, Platform platform)
     {
         super(variables, platform);

@@ -24,17 +24,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.InstallData;
 import com.izforge.izpack.api.data.InstallDataHandler;
+import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
 import com.izforge.izpack.core.container.cdi.CdiInitializationContextImpl;
+import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.util.Platform;
 
 import jakarta.enterprise.inject.spi.CDI;
@@ -141,8 +145,8 @@ public abstract class AbstractContainer implements Container {
 
   @Override
   public InstallData create(Resources resources, Variables variables, Platform platform,
-                            Locales locales) {
-    return new AutomatedInstallData(variables, platform);
+                            Locales locales, Predicate<Pack> availablePackPredicate) throws ResourceException {
+    return InstallDataFactory.create(resources, variables, platform, locales, availablePackPredicate, AutomatedInstallData::new);
   }
 
   /**

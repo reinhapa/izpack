@@ -4,10 +4,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.function.Predicate;
 
 import javax.swing.ImageIcon;
 
 import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.core.container.CdiInitializationContext;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -25,7 +27,6 @@ import com.izforge.izpack.installer.automation.AutomatedInstaller;
 import com.izforge.izpack.installer.data.UninstallData;
 import com.izforge.izpack.installer.data.UninstallDataWriter;
 import com.izforge.izpack.merge.resolve.PathResolver;
-import com.izforge.izpack.test.TestAutomatedInstallDataProvider;
 import com.izforge.izpack.test.provider.GUIInstallDataMockProvider;
 import com.izforge.izpack.util.Platform;
 
@@ -91,7 +92,6 @@ public class TestLanguageContainer extends AbstractContainer
         context.addComponent(UninstallDataWriter.class, Mockito.mock(UninstallDataWriter.class));
         context.addComponent(AutomatedInstaller.class, Mockito.mock(AutomatedInstaller.class));
         context.addComponent(PathResolver.class, Mockito.mock(PathResolver.class));
-        context.addComponent(TestAutomatedInstallDataProvider.class);
 
 //        addComponent(DefaultLocales.class, new DefaultLocales(resourceManager));
 //        addComponent(Container.class, this);
@@ -101,8 +101,8 @@ public class TestLanguageContainer extends AbstractContainer
     }
 
     @Override
-    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales) {
-        GUIInstallDataMockProvider provider = new GUIInstallDataMockProvider();
-        return provider.provide(variables, locales);
+    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales,
+                              Predicate<Pack> availablePackPredicate) {
+        return GUIInstallDataMockProvider.create(variables, locales);
     }
 }

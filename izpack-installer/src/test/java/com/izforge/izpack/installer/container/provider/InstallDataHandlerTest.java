@@ -20,9 +20,12 @@
  */
 package com.izforge.izpack.installer.container.provider;
 
+import static com.izforge.izpack.core.factory.InstallDataFactory.create;
 import static com.izforge.izpack.util.Platforms.MANDRAKE_LINUX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
@@ -77,7 +80,7 @@ public class InstallDataHandlerTest
     @Test
     public void testCustomLangPack() throws Exception
     {
-        InstallDataHandler installDataHandler = Mockito.mock(InstallDataHandler.class);
+        InstallDataHandler dataHandler = Mockito.mock(InstallDataHandler.class);
         ClassLoader loader = Mockito.mock(ClassLoader.class);
         ResourceManager resources = new ResourceManager(loader)
         {
@@ -122,13 +125,15 @@ public class InstallDataHandlerTest
         DefaultVariables variables = new DefaultVariables();
         Housekeeper housekeeper = Mockito.mock(Housekeeper.class);
         PlatformModelMatcher matcher = Mockito.mock(PlatformModelMatcher.class);
+
         when(matcher.getCurrentPlatform()).thenReturn(MANDRAKE_LINUX);
-        when(installDataHandler.create(resources, variables, MANDRAKE_LINUX, locales)).thenReturn(new AutomatedInstallData(variables, MANDRAKE_LINUX));
+        when(dataHandler.create(eq(resources), eq(variables), eq(MANDRAKE_LINUX), eq(locales), notNull()))
+                .thenAnswer(ctx -> create(ctx.getArgument(0), ctx.getArgument(1), ctx.getArgument(2),
+                        ctx.getArgument(3), ctx.getArgument(4), AutomatedInstallData::new));
 
         // populate the installation data
         InstallDataProvider provider = new InstallDataProvider();
-        InstallData installData = provider.provide(installDataHandler, resources,
-            locales, variables, housekeeper, matcher);
+        InstallData installData = provider.provide(dataHandler, resources, locales, variables, housekeeper, matcher);
 
         // verify the expected messages are returned
         Messages messages = installData.getMessages();

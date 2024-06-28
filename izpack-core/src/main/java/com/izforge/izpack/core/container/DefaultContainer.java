@@ -24,13 +24,18 @@ package com.izforge.izpack.core.container;
 import com.izforge.izpack.api.container.Container;
 import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.data.InstallData;
+import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.exception.ContainerException;
+import com.izforge.izpack.api.exception.ResourceException;
 import com.izforge.izpack.api.resource.Locales;
 import com.izforge.izpack.api.resource.Resources;
+import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.util.Platform;
 
 import jakarta.enterprise.inject.Vetoed;
+
+import java.util.function.Predicate;
 
 /**
  * Default implementation of the {@link Container} interface.
@@ -68,8 +73,8 @@ public class DefaultContainer extends AbstractContainer
     }
 
     @Override
-    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales)
-    {
-        return new AutomatedInstallData(variables, platform);
+    public InstallData create(Resources resources, Variables variables, Platform platform, Locales locales,
+                              Predicate<Pack> availablePackPredicate) throws ResourceException {
+        return InstallDataFactory.create(resources, variables, platform, locales, availablePackPredicate, AutomatedInstallData::new);
     }
 }
