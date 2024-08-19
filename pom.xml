@@ -45,7 +45,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <mavenVersion>3.9.8</mavenVersion>
+    <mavenVersion>3.9.9</mavenVersion>
     <weldVersion>5.1.2.Final</weldVersion>
     <jandexVersion>2.4.5.Final</jandexVersion>
     <skipTests>false</skipTests>
