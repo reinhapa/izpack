@@ -43,7 +43,6 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
-@ApplicationScoped
 public class ConsolePanelsProvider extends PanelsProvider
 {
 

@@ -41,6 +41,7 @@ import com.izforge.izpack.core.container.cdi.CdiInitializationContextImpl;
 import com.izforge.izpack.core.factory.InstallDataFactory;
 import com.izforge.izpack.util.Platform;
 
+import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Qualifier;
 
@@ -113,11 +114,15 @@ public abstract class AbstractContainer implements Container {
     @Override
     public <T> T getComponent(Class<T> componentType)
     {
-          Annotation[] qualifiers = Stream.of(componentType.getAnnotations())
-              .filter(a -> a.annotationType().isAnnotationPresent(Qualifier.class))
-              .toArray(Annotation[]::new);
-          return CDI.current().select(componentType, qualifiers).get();
-
+      Annotation[] qualifiers = Stream.of(componentType.getAnnotations())
+          .filter(a -> a.annotationType().isAnnotationPresent(Qualifier.class))
+          .toArray(Annotation[]::new);
+      Instance<T> instance = CDI.current().select(componentType, qualifiers);
+      if (instance.isResolvable())
+      {
+        return instance.get();
+      }
+    return null;
   }
 
   /**

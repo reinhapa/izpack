@@ -29,6 +29,12 @@ import com.izforge.izpack.util.ClassUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.logging.Logger;
+
 
 /**
  * Default implementation of {@link ObjectFactory}.
@@ -38,10 +44,33 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class DefaultObjectFactory implements ObjectFactory
 {
+    private static final Logger LOGGER = Logger.getLogger(DefaultObjectFactory.class.getName());
+
     /**
      * The container.
      */
     private final Container container;
+
+    /**
+     * Creates a new instance of the specified class name.
+     * <p/>
+     * Constructor arguments may be specified as parameters, or injected by the factory.
+     * When specified as parameters, order is unimportant, but must be unambiguous.
+     *
+     * @param className  the class name
+     * @param superType  the super type
+     * @param parameters additional constructor parameters
+     * @return a new instance
+     * @throws ClassCastException if <tt>className</tt> does not implement or extend <tt>superType</tt>
+     * @throws com.izforge.izpack.api.exception.IzPackClassNotFoundException
+     *                            if the class cannot be found
+     */
+    @Override
+    public <T> T create(String className, Class<T> superType, Object... parameters)
+    {
+        Class<? extends T> type = ClassUtil.getClass(className, superType);
+        return create(type, parameters);
+    }
 
 
     /**
@@ -74,29 +103,66 @@ public class DefaultObjectFactory implements ObjectFactory
         }
         else
         {
-            throw new UnsupportedOperationException("create with arguments");
+            return createInternal(type, parameters).orElseThrow(() ->
+                new UnsupportedOperationException(String.format("Unable to create %s with arguments %s",
+                        type.getName(), Arrays.toString(parameters))));
         }
-        
     }
 
-    /**
-     * Creates a new instance of the specified class name.
-     * <p/>
-     * Constructor arguments may be specified as parameters, or injected by the factory.
-     * When specified as parameters, order is unimportant, but must be unambiguous.
-     *
-     * @param className  the class name
-     * @param superType  the super type
-     * @param parameters additional constructor parameters
-     * @return a new instance
-     * @throws ClassCastException if <tt>className</tt> does not implement or extend <tt>superType</tt>
-     * @throws com.izforge.izpack.api.exception.IzPackClassNotFoundException
-     *                            if the class cannot be found
-     */
-    @Override
-    public <T> T create(String className, Class<T> superType, Object... parameters)
+    private <T> Optional<T> createInternal(Class<T> type, Object... parameters)
     {
-        Class<? extends T> type = ClassUtil.getClass(className, superType);
-        return create(type, parameters);
+        LOGGER.info("Try to construct " + type.getName());
+        if (parameters.length == 0)
+        {
+            T component = container.getComponent(type);
+            if (component != null)
+            {
+                return Optional.of(component);
+            }
+        }
+        for (Constructor<?> constructor : type.getDeclaredConstructors())
+        {
+            if (constructor.canAccess(null)) {
+                LOGGER.info("Try using " + constructor);
+                final Object[] parameterValues = getParameterValues(type, parameters, constructor);
+                if (parameterValues != null)
+                {
+                    try
+                    {
+                        return Optional.of((T) constructor.newInstance(parameterValues));
+                    }
+                    catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+                    {
+                        throw new UnsupportedOperationException(String.format("Failed to create %s with arguments %s",
+                                type.getName(), Arrays.toString(parameterValues)));
+                    }
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    private <T> Object[] getParameterValues(Class<T> type, Object[] parameters, Constructor<?> constructor) {
+        final Class<?>[] parameterTypes = constructor.getParameterTypes();
+        final Object[] parameterValues = new Object[parameterTypes.length];
+        for (int index = 0; index < parameterTypes.length; index++) {
+            Object parameterValue = lookupParameter(parameterTypes[index], parameters);
+            if (parameterValue == null) {
+                return null;
+            }
+            parameterValues[index] = parameterValue;
+        }
+        return parameterValues;
+    }
+
+    private <T> T lookupParameter(Class<T> parameterType, Object[] parameters) {
+        for (Object parameter : parameters)
+        {
+            if (parameterType.isAssignableFrom(parameter.getClass()))
+            {
+                return (T)parameter;
+            }
+        }
+        return createInternal(parameterType).orElse(container.getComponent(parameterType));
     }
 }

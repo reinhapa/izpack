@@ -42,7 +42,6 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
-@ApplicationScoped
 public class IzPanelsProvider extends PanelsProvider
 {
     /**

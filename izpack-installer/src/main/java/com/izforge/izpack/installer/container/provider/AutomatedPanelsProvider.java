@@ -42,7 +42,6 @@ import jakarta.enterprise.inject.Produces;
  *
  * @author Tim Anderson
  */
-@ApplicationScoped
 public class AutomatedPanelsProvider extends PanelsProvider
 {
 
@@ -58,8 +57,8 @@ public class AutomatedPanelsProvider extends PanelsProvider
      * @throws IzPackException if a panel doesn't have unique identifier
      */
     @Produces
-    public AutomatedPanels provide(ObjectFactory factory, InstallData installData,
-                                   PanelAutomationHelper helper, PlatformModelMatcher matcher)
+    public AutomatedPanels provide(ObjectFactory factory, InstallData installData, PanelAutomationHelper helper,
+                                   PlatformModelMatcher matcher)
     {
         List<AutomatedPanelView> panels = new ArrayList<>();
 
