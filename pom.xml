@@ -46,7 +46,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <mavenVersion>3.9.9</mavenVersion>
-    <weldVersion>5.1.2.Final</weldVersion>
+    <weldVersion>5.1.3.Final</weldVersion>
     <jandexVersion>2.4.5.Final</jandexVersion>
     <skipTests>false</skipTests>
     <skipUnitTests>${skipTests}</skipUnitTests>
