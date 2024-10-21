@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     strategy:
       matrix:
         jdk: ['17']
@@ -44,6 +46,8 @@ jobs:
     needs: build
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
