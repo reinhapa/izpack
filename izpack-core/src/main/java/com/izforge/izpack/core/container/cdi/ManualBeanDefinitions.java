@@ -23,15 +23,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import com.izforge.izpack.core.provider.LocalesProvider;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.spi.*;
-import org.jboss.weld.annotated.slim.backed.BackedAnnotatedMethod;
 
 final class ManualBeanDefinitions implements Extension {
   private static final Logger LOGGER = Logger.getLogger(CdiInitializationContextImpl.class.getName());
@@ -66,8 +63,7 @@ final class ManualBeanDefinitions implements Extension {
   }
 
   boolean containsType(Class<?> javaClass, Type type) {
-    if (!javaClass.isInterface() &&  type instanceof Class) {
-      Class<?> typeClass = (Class<?>)type;
+    if (!javaClass.isInterface() &&  type instanceof Class<?> typeClass) {
       return javaClass.equals(typeClass);
     }
     return false;
