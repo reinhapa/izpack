@@ -6,7 +6,9 @@
   <inceptionYear>2001</inceptionYear>
   <packaging>pom</packaging>
   <name>IzPack parent</name>
-  <description>The IzPack parent module</description>
+  <description>
+      The IzPack parent module
+  </description>
   <url>http://izpack.org/</url>
 
   <licenses>
@@ -775,7 +777,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.11.1</version>
+          <version>3.11.2</version>
           <configuration>
             <doclint>none</doclint>
           </configuration>
