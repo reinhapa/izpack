@@ -138,18 +138,19 @@
             <artifactId>jai_core</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk18on</artifactId>
-        <version>1.79</version>
-      </dependency>
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-ext-jdk18on</artifactId>
-        <version>1.78.1</version>
-      </dependency>
-
+	  </dependency>
+	  <dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcprov-jdk18on</artifactId>
+		<version>1.80</version>
+	  </dependency>
+	  <dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcprov-ext-jdk18on</artifactId>
+		<version>1.78.1</version>
+	  </dependency>
+	  <!-- PDF Panel -->
+      
       <!-- Commons apache -->
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -730,7 +731,6 @@
             </execution>
           </executions>
           <configuration>
-            <encoding>UTF-8</encoding>
             <systemPropertyVariables>
               <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
             </systemPropertyVariables>

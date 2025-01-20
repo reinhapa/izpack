@@ -2713,6 +2713,12 @@ public class CompilerConfig
         {
             logger.info("Adding uninstaller");
 
+            // Write the manifest first so that it is not overwritten
+            try {
+                writeManifest();
+            } catch (IOException e) {
+                throw new CompilerException("Error while writing manifest", e);
+            }
             //REFACTOR Change the way uninstaller is created
             mergeManager.addResourceToMerge("com/izforge/izpack/uninstaller/");
             mergeManager.addResourceToMerge("uninstaller-META-INF/");
@@ -2760,6 +2766,17 @@ public class CompilerConfig
 
         packager.setInfo(info);
         notifyCompilerListener("addInfoConditional", CompilerListener.END, data);
+    }
+
+    /**
+     * Write manifest in the installer jar for uninstaller.
+     *
+     * @throws IOException for any I/O error
+     */
+    private void writeManifest() throws IOException
+    {
+        final InputStream inputStream = CompilerConfig.class.getResourceAsStream("/uninstaller-META-INF/MANIFEST.MF");
+        mergeManager.addResourceToMerge(compilerData.getTempManifestFileWithAdditionalEntries(inputStream), "uninstaller-META-INF/MANIFEST.MF");
     }
 
     /**

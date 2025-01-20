@@ -22,7 +22,15 @@ package com.izforge.izpack.compiler.data;
 import com.izforge.izpack.api.data.Info;
 import jakarta.enterprise.inject.Vetoed;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 /**
  * Data for compiler
@@ -92,6 +100,11 @@ public class CompilerData
      */
     private Info externalInfo = new Info();
 
+    /**
+     * A list of key/value pairs to add to the manifest.
+     */
+    private Map<String, String> manifestEntries;
+
     private static final String VERSION_BUNDLE = "version";
 
     /**
@@ -152,10 +165,11 @@ public class CompilerData
     }
 
     public CompilerData(String packCompression, String kind, String installFile, String installText, String basedir,
-                        String output, boolean mkdirs, int comprLevel, Info externalInfo)
+                        String output, boolean mkdirs, int comprLevel, Info externalInfo, Map<String, String> manifestEntries)
     {
         this(packCompression, kind, installFile, installText, basedir, output, mkdirs, comprLevel);
         this.externalInfo = externalInfo;
+        this.manifestEntries = manifestEntries;
     }
 
     /**
@@ -243,4 +257,27 @@ public class CompilerData
         return this.externalInfo;
     }
 
+    public Map<String, String> getManifestEntries() {
+        return manifestEntries;
+    }
+
+    public String getTempManifestFileWithAdditionalEntries(InputStream inputStream) throws IOException {
+        Manifest manifest = new Manifest(inputStream);
+        final Map<String, String> manifestEntries = getManifestEntries();
+        final Attributes mainAttributes = manifest.getMainAttributes();
+        if (manifestEntries != null)
+        {
+            for (String key : manifestEntries.keySet())
+            {
+                mainAttributes.putIfAbsent(new Attributes.Name(key), manifestEntries.get(key));
+            }
+        }
+        Path tempManifest = Files.createTempFile("MANIFEST", ".MF");
+        tempManifest.toFile().deleteOnExit();
+        try (OutputStream manifestOutputStream = Files.newOutputStream(tempManifest))
+        {
+            manifest.write(manifestOutputStream);
+        }
+        return tempManifest.toAbsolutePath().toString();
+    }
 }
