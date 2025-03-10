@@ -7,23 +7,9 @@ updates:
 - package-ecosystem: "maven"
   directories: 
     - "/"
-    - "/izpack-ant"
-    - "/izpack-api"
-    - "/izpack-compiler"
-    - "/izpack-core"
-    - "/izpack-dist"
-    - "/izpack-event"
-    - "/izpack-gui"
-    - "/izpack-installer"
-    - "/izpack-maven-plugin"
-    - "/izpack-native-parent"
-    - "/izpack-panel"
-    - "/izpack-test"
-    - "/izpack-test-common"
-    - "/izpack-test-listener"
-    - "/izpack-tools"
-    - "/izpack-uninstaller"
-    - "/izpack-util"
-    - "/izpack-wrapper"
   schedule:
     interval: "daily"
+  ignore:
+    - dependency-name: org.easytesting:fest-util
+      versions:
+        - ">= 1.1.6"
