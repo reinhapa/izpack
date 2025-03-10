@@ -34,6 +34,7 @@ import com.izforge.izpack.merge.MergeManager;
 import com.izforge.izpack.merge.resolve.MergeableResolver;
 import com.izforge.izpack.util.NoCloseOutputStream;
 import com.izforge.izpack.util.StreamSupport;
+import org.apache.commons.compress.java.util.jar.Pack200;
 import org.apache.commons.io.output.CountingOutputStream;
 
 import java.io.IOException;
