@@ -133,7 +133,15 @@
         <version>1.80</version>
       </dependency>
       <!-- PDF Panel -->
-      
+
+      <!-- Console Panel -->
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.18.3</version>
+      </dependency>
+      <!-- Console Panel -->
+
       <!-- Commons apache -->
       <dependency>
         <groupId>org.apache.commons</groupId>
