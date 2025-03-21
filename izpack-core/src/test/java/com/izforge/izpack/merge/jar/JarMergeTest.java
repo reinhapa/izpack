@@ -67,7 +67,7 @@ public class JarMergeTest
     private MergeableResolver mergeableResolver;
 
     @Test
-    public void testAddJarContent() throws Exception
+    public void testAddJarContent()
     {
         URL resource = ClassLoader.getSystemResource("com/izforge/izpack/merge/test/jar-hellopanel-1.0-SNAPSHOT.jar");
         Mergeable jarMerge = mergeableResolver.getMergeableFromURL(resource);
@@ -78,22 +78,22 @@ public class JarMergeTest
     //TODO:check failing reason later
     @Ignore()
     @Test
-    public void testMergeClassFromJarFile() throws Exception
+    public void testMergeClassFromJarFile()
     {
-        List<Mergeable> jarMergeList = pathResolver.getMergeableFromPath("org/fest/assertions/Assert.class");
+        List<Mergeable> jarMergeList = pathResolver.getMergeableFromPath("org/apache/commons/io/ByteOrderMark.class");
 
         assertThat(jarMergeList.size(), Is.is(1));
 
         Mergeable jarMerge = jarMergeList.get(0);
-        assertThat(jarMerge, MergeMatcher.isMergeableContainingFiles("org/fest/assertions/Assert.class"));
+        assertThat(jarMerge, MergeMatcher.isMergeableContainingFiles("org/apache/commons/io/ByteOrderMark.class"));
     }
 
     //TODO:check failing reason later
     @Ignore()
     @Test
-    public void testMergeClassFromJarFileWithDestination() throws Exception
+    public void testMergeClassFromJarFileWithDestination()
     {
-        List<Mergeable> jarMergeList = pathResolver.getMergeableFromPath("org/fest/assertions/Assert.class",
+        List<Mergeable> jarMergeList = pathResolver.getMergeableFromPath("org/apache/commons/io/ByteOrderMark.class",
                                                                          "foo/SomeRandomClass.class");
 
         assertThat(jarMergeList.size(), Is.is(1));
@@ -103,7 +103,7 @@ public class JarMergeTest
     }
 
     @Test
-    public void testMergeJarFoundDynamicallyLoaded() throws Exception
+    public void testMergeJarFoundDynamicallyLoaded()
     {
         URL urlJar = ClassLoader.getSystemResource("com/izforge/izpack/merge/test/jar-hellopanel-1.0-SNAPSHOT.jar");
         URLClassLoader loader = URLClassLoader.newInstance(new URL[]{urlJar}, ClassLoader.getSystemClassLoader());
@@ -116,7 +116,7 @@ public class JarMergeTest
 
 
     @Test
-    public void testFindPanelInJar() throws Exception
+    public void testFindPanelInJar()
     {
         URL resource = ClassLoader.getSystemResource("com/izforge/izpack/merge/test/izpack-panel-5.0.0-SNAPSHOT.jar");
         Mergeable jarMerge = mergeableResolver.getMergeableFromURL(resource);
@@ -128,7 +128,7 @@ public class JarMergeTest
 
 
     @Test
-    public void testFindFileInJarFoundWithURL() throws Exception
+    public void testFindFileInJarFoundWithURL()
     {
         URL urlJar = ClassLoader.getSystemResource("com/izforge/izpack/merge/test/jar-hellopanel-1.0-SNAPSHOT.jar");
         URLClassLoader loader = URLClassLoader.newInstance(new URL[]{urlJar}, ClassLoader.getSystemClassLoader());
@@ -139,7 +139,7 @@ public class JarMergeTest
     }
 
     @Test
-    public void testRegexpMatch() throws Exception
+    public void testRegexpMatch()
     {
         String toCheckKo = "com/izforge/izpack/panels/installationgroup/";
         String toCheckOk = "com/izforge/izpack/panels/install/InstallationPanel.class";

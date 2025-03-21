@@ -47,9 +47,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
+    <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
     <!-- Maven 2 confuses the usage of the Nexus staging plugin and would require further customization -->
     <mavenVersion>3.9.9</mavenVersion>
     <skipTests>false</skipTests>
@@ -98,7 +98,7 @@
       <dependency>
         <groupId>jakarta.inject</groupId>
         <artifactId>jakarta.inject-api</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.1.MR</version>
       </dependency>
       <dependency>
         <groupId>jakarta.enterprise</groupId>
@@ -108,7 +108,7 @@
       <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-core</artifactId>
-        <version>6.0.0.Final</version>
+        <version>6.0.1.Final</version>
       </dependency>
       <dependency>
         <groupId>org.jboss</groupId>
@@ -138,18 +138,18 @@
             <artifactId>jai_core</artifactId>
           </exclusion>
         </exclusions>
-	  </dependency>
-	  <dependency>
-		<groupId>org.bouncycastle</groupId>
-		<artifactId>bcprov-jdk18on</artifactId>
-		<version>1.80</version>
-	  </dependency>
-	  <dependency>
-		<groupId>org.bouncycastle</groupId>
-		<artifactId>bcprov-ext-jdk18on</artifactId>
-		<version>1.78.1</version>
-	  </dependency>
-	  <!-- PDF Panel -->
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>1.80</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-ext-jdk18on</artifactId>
+        <version>1.80</version>
+      </dependency>
+      <!-- PDF Panel -->
       
       <!-- Commons apache -->
       <dependency>
@@ -171,6 +171,11 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
         <version>1.27.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm</artifactId>
+        <version>9.7.1</version>
       </dependency>
       <dependency>
         <groupId>org.tukaani</groupId>
@@ -377,7 +382,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>5.15.2</version>
+        <version>5.16.1</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -540,15 +545,14 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
+          <argLine>-XX:+IgnoreUnrecognizedVMOptions -XX:+EnableDynamicAgentLoading --add-opens=java.base/java.io=ALL-UNNAMED --enable-native-access=ALL-UNNAMED</argLine>
           <!-- need to always fork as ClassUtils.loadJarInSystemClassLoader() mangles the system class loader -->
           <forkCount>1</forkCount>
           <reuseForks>false</reuseForks>
           <skipTests>${skipUnitTests}</skipTests>
           <systemPropertyVariables>
             <java.locale.providers>JRE,CLDR,SPI</java.locale.providers>
-<!--
-            <org.jboss.weld.development>true</org.jboss.weld.development>
- -->
+            <org.apache.lucene.store.MMapDirectory.enableMemorySegments>false</org.apache.lucene.store.MMapDirectory.enableMemorySegments>
           </systemPropertyVariables>
         </configuration>
       </plugin>
@@ -1011,6 +1015,18 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
+      </plugin>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>12.1.0</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
