@@ -399,12 +399,6 @@
       </dependency>
       <dependency>
         <groupId>org.easytesting</groupId>
-        <artifactId>fest-assert</artifactId>
-        <version>1.4</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.easytesting</groupId>
         <artifactId>fest-util</artifactId>
         <version>1.2.5</version>
         <scope>test</scope>
@@ -455,6 +449,12 @@
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
         <version>12.1.0</version>
+        <configuration>
+          <skipProvidedScope>true</skipProvidedScope>
+          <suppressionFiles>
+            <suppressionFile>project-suppression.xml</suppressionFile>
+          </suppressionFiles>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -1036,11 +1036,6 @@
           <findbugsXmlOutput>true</findbugsXmlOutput>
           <effort>Max</effort>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.6.0</version>
       </plugin>
     </plugins>
   </reporting>
