@@ -78,7 +78,7 @@ public class UserInputPanel extends IzPanel
 
     private final List<GUIField> views = new ArrayList<GUIField>();
 
-    private JPanel panel;
+    private final JPanel panel;
 
     private JComponent firstFocusedComponent;
 
@@ -136,7 +136,7 @@ public class UserInputPanel extends IzPanel
                           RulesEngine rules, ObjectFactory factory, final PlatformModelMatcher matcher, Prompt prompt)
     {
         super(panel, parent, installData, resources);
-
+        this.panel = new JPanel();
         this.rules = rules;
         this.factory = factory;
         this.matcher = matcher;
@@ -188,8 +188,6 @@ public class UserInputPanel extends IzPanel
 
         init();
         addScrollPane();
-        Dimension size = getMaximumSize();
-        setSize(size.width, size.height);
         buildUI();
         updateUIElements();
         validate();
@@ -271,8 +269,6 @@ public class UserInputPanel extends IzPanel
         views.clear();
 
         setLayout(new BorderLayout());
-
-        panel = new JPanel();
 
         if (spec == null)
         {
@@ -358,6 +354,7 @@ public class UserInputPanel extends IzPanel
         // need to recreate the panel as TwoColumnLayout doesn't correctly support component removal
         panel.removeAll();
         panel.setLayout(createPanelLayout());
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         for (GUIField view : views)
         {
@@ -402,7 +399,9 @@ public class UserInputPanel extends IzPanel
                 for (Component component : view.getComponents())
                 {
                     component.setEnabled(enabled);
-                    panel.add(component.getComponent(), component.getConstraints());
+                    JComponent jcomponent = component.getComponent();
+                    jcomponent.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    panel.add(jcomponent, component.getConstraints());
                 }
                 String var = view.getVariable();
                 if (var != null)
@@ -411,6 +410,8 @@ public class UserInputPanel extends IzPanel
                 }
             }
         }
+        panel.setPreferredSize(panel.getMinimumSize());
+
         getMetadata().setAffectedVariableNames(affectedVariables);
     }
 
