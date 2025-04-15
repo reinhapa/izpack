@@ -335,7 +335,7 @@ public abstract class GUIField extends AbstractFieldView
             label.setBackground(UIManager.getColor("label.background"));
             label.setMargin(new Insets(3, 0, 3, 0));
             // workaround to cut out layout problems
-            label.getPreferredSize();
+//            label.getPreferredSize();
             // end of workaround.
 
             addComponent(label, constraints);
