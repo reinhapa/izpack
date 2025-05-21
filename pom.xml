@@ -31,14 +31,14 @@
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus snapshot repository</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
     </snapshotRepository>
     <!-- We do not deploy directly to the staging repository, but via the Nexus staging plugin -->
     <!--
     <repository>
       <id>sonatype-nexus-staging</id>
       <name>Sonatype Nexus release repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2</url>
     </repository>
     -->
   </distributionManagement>
@@ -120,7 +120,7 @@
       <dependency>
         <groupId>org.apache.pdfbox</groupId>
         <artifactId>pdfbox</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
         <exclusions>
           <exclusion>
             <groupId>org.junit.jupiter</groupId>
@@ -131,7 +131,7 @@
       <dependency>
         <groupId>com.github.pcorless.icepdf</groupId>
         <artifactId>icepdf-viewer</artifactId>
-        <version>7.2.4_P01</version>
+        <version>7.2.5</version>
         <exclusions>
           <exclusion>
             <groupId>javax.media</groupId>
@@ -382,7 +382,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>5.17.0</version>
+        <version>5.18.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -593,14 +593,12 @@
 
       <!-- Deployment -->
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.7.0</version>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.7.0</version>
         <extensions>true</extensions>
         <configuration>
-          <serverId>sonatype-nexus-staging</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <publishingServerId>sonatype-nexus-staging</publishingServerId>
         </configuration>
       </plugin>
 
