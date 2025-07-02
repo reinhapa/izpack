@@ -107,6 +107,7 @@ public class Compiler
      */
     private static final Logger logger = Logger.getLogger(Compiler.class.getName());
 
+    private static final Map<String, Integer> PARSED_VERSIONS = new HashMap<>();
 
     /**
      * Constructs a <tt>Compiler</tt>.
@@ -425,19 +426,24 @@ public class Compiler
             throw new CompilerException("Class file cannot be read: " + fileStr);
         }
         dis.readUnsignedShort();
-        int major = dis.readUnsignedShort();
+        final int major = dis.readUnsignedShort();
         setJavaVersionExpected(major);
-        String[] splitMinimalVersion = minimalJavaVersion.split("\\.");
-        int minimalVersion = Integer.parseInt(splitMinimalVersion[0]);
-        if (minimalVersion < 10 && splitMinimalVersion.length > 1) 
-        {
-        	minimalVersion = Integer.parseInt(splitMinimalVersion[1]);
-        }
-        
-        if (major > (44 + minimalVersion) )
+        final int minimalVersion = PARSED_VERSIONS.computeIfAbsent(minimalJavaVersion, Compiler::parseMinimalVersion);
+        if (major < minimalVersion)
         {
             setJavaVersionCorrect(false);
         }
+    }
+
+    private static int parseMinimalVersion(String minimalJavaVersion)
+    {
+        final String[] splitMinimalVersion = minimalJavaVersion.split("\\.");
+        final int minimalVersion = Integer.parseInt(splitMinimalVersion[0]) + 44;
+        if (minimalVersion < 10 && splitMinimalVersion.length > 1)
+        {
+        	return Integer.parseInt(splitMinimalVersion[1]) + 44;
+        }
+        return minimalVersion;
     }
 
     /**
