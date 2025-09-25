@@ -1,0 +1,6 @@
+IzPack - Copyright (C) ${year} Julien Ponge, All Rights Reserved.
+
+info@exist-db.org
+http://izpack.org/
+
+SPDX-License-Identifier: Apache-2.0
