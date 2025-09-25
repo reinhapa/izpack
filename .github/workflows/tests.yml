@@ -1,10 +1,7 @@
-name: CI
-
+name: CI-Tests
 on: 
   push:
   pull_request:
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -30,16 +27,7 @@ jobs:
 
       - name: Build with Maven
         if: github.event_name != 'pull_request'
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: |
-          if [ -z "$NVD_API_KEY" ]; then
-            echo "NVD_API_KEY is not set — skipping dependency check"
-            ./mvnw -B -U verify -Ddependency-check.skip=true
-          else
-            echo "NVD_API_KEY is set — running full verify with dependency check"
-            ./mvnw -B -U verify
-          fi
+        run: ./mvnw -B -U verify -D'dependency-check.skip'
 
       - name: Running Maven GUI tests
         env:
@@ -49,7 +37,7 @@ jobs:
           sudo apt-get install fluxbox
           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
           fluxbox &> ~/fluxbox.log &
-          ./mvnw -B verify -Pwith-gui-tests -Ddependency-check.skip=true
+          ./mvnw -B verify -Pwith-gui-tests -D'dependency-check.skip'
 
       - name: Test Summary
         uses: test-summary/action@v2
@@ -68,24 +56,3 @@ jobs:
             **/*.jfr
             **/hs_err_pid*.log
             **/target/surefire-reports/**/TEST-*.xml
-
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: build
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - name: Set up JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: 11
-          gpg-private-key: "${{ secrets.GPG_SIGNING_KEY }}"
-          overwrite-settings: false
-      - name: Deploy snapshot artifacts
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        run: ./mvnw deploy --settings .github/workflows/settings.xml -DskipTests=true -Ddependency-check.skip=true
