@@ -433,7 +433,11 @@
         <artifactId>dependency-check-maven</artifactId>
         <version>12.1.6</version>
         <configuration>
-          <skipProvidedScope>true</skipProvidedScope>
+          <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+          <!-- The OSS Index Server (https://ossindex.sonatype.org) can sometimes be flaky -->
+          <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
+          <ossIndexUsername>${env.OSSINDEX_USERNAME}</ossIndexUsername>
+          <ossIndexPassword>${env.OSSINDEX_TOKEN}</ossIndexPassword>
           <suppressionFiles>
             <suppressionFile>project-suppression.xml</suppressionFile>
           </suppressionFiles>
@@ -773,16 +777,6 @@
           <version>3.12.0</version>
           <configuration>
             <doclint>none</doclint>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.owasp</groupId>
-          <artifactId>dependency-check-maven</artifactId>
-          <version>12.1.6</version>
-          <configuration>
-            <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
-            <!-- The OSS Index Server (https://ossindex.sonatype.org) can sometimes be flaky -->
-            <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
           </configuration>
         </plugin>
       </plugins>
