@@ -18,7 +18,7 @@ jobs:
           cache: 'maven'
 
       - name: OWASP dependency check
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           OSSINDEX_API_USER: ${{ secrets.OSSINDEX_API_USER }}
