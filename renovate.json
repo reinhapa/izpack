@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "group:all",
+    "schedule:daily"
+  ],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "matchDepNames": [
+        "org.easytesting:fest-util"
+      ],
+      "allowedVersions": "<1.2.0"
+    }
+  ],
+  "schedule": [
+    "at any time"
+  ]
+}
