@@ -21,9 +21,9 @@ jobs:
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-          OSSINDEX_API_USER: ${{ secrets.OSSINDEX_API_USER }}
-          OSSINDEX_API_KEY: ${{ secrets.OSSINDEX_API_KEY }}
-        run: mvn -V -B dependency-check:check
+          OSSINDEX_USERNAME: ${{ secrets.OSSINDEX_USERNAME }}
+          OSSINDEX_PASSWORD: ${{ secrets.OSSINDEX_PASSWORD }}
+        run: ./mvnw -V -B --settings .github/workflows/settings.xml dependency-check:check
         timeout-minutes: 5
   build:
     runs-on: ${{ matrix.os }}
