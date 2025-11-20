@@ -88,7 +88,10 @@ jobs:
     name: Security & License Checks
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ secrets.NVD_API_KEY != '' && secrets.OSSINDEX_USERNAME != '' && secrets.OSSINDEX_PASSWORD != '' }}
+    if: |
+      secrets.NVD_API_KEY != '' && 
+      secrets.OSSINDEX_USERNAME != '' && 
+      secrets.OSSINDEX_PASSWORD != ''
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
