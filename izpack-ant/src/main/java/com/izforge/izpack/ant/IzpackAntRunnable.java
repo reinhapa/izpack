@@ -4,7 +4,10 @@ import com.izforge.izpack.compiler.CompilerConfig;
 import com.izforge.izpack.compiler.container.CompilerContainer;
 import com.izforge.izpack.compiler.data.CompilerData;
 import com.izforge.izpack.compiler.data.PropertyManager;
+import com.izforge.izpack.compiler.util.CompilerClassLoader;
+import com.izforge.izpack.compiler.util.DefaultClassNameMapper;
 import org.apache.tools.ant.BuildException;
+import org.picocontainer.MutablePicoContainer;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -41,8 +44,14 @@ public class IzpackAntRunnable implements Runnable
     @Override
     public void run()
     {
-        CompilerContainer compilerContainer = new CompilerContainer();
-		compilerContainer.addConfig("installFile", input == null ? "<config>" : input);
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        CompilerContainer compilerContainer = new CompilerContainer() {
+            @Override
+            protected void fillContainer() {
+                addComponent(CompilerClassLoader.class, new CompilerClassLoader(contextClassLoader, new DefaultClassNameMapper()));
+            }
+        };
+        compilerContainer.addConfig("installFile", input == null ? "<config>" : input);
         compilerContainer.addComponent(CompilerData.class, compilerData);
         compilerContainer.addComponent(Handler.class, logHandler);
 

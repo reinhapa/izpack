@@ -51,7 +51,7 @@ public class CompilerClassLoader extends URLClassLoader
      */
     public CompilerClassLoader(ClassNameMapper mapper)
     {
-        this(CompilerClassLoader.class.getClassLoader(), mapper);
+        this(Thread.currentThread().getContextClassLoader(), mapper);
     }
 
     /**
@@ -64,6 +64,7 @@ public class CompilerClassLoader extends URLClassLoader
     {
         super(new URL[0], parent);
         this.mapper = mapper;
+        new Exception(String.format("CompilerClassLoader(%s, %s)", parent, mapper)).printStackTrace();
     }
 
     /**
