@@ -30,12 +30,10 @@ import com.izforge.izpack.panels.userinput.field.ValidationStatus;
 import com.izforge.izpack.panels.userinput.field.text.TextArea;
 import com.izforge.izpack.panels.userinput.gui.GUIField;
 
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -71,11 +69,12 @@ public class GUITextArea extends GUIField implements FocusListener, DocumentList
         textArea.setCaretPosition(0);
         textArea.getDocument().addDocumentListener(this);
         textArea.addFocusListener(this);
-        textArea.setMargin(new Insets(2, 2, 2, 2));
+//        textArea.setMargin(new Insets(2, 2, 2, 2));
         textArea.setEditable(true);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         scrollPane = new JScrollPane(textArea, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.CYAN));
         addField(scrollPane);
         addTooltip();
     }

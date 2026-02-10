@@ -401,6 +401,7 @@ public class UserInputPanel extends IzPanel
                     component.setEnabled(enabled);
                     JComponent jcomponent = component.getComponent();
                     jcomponent.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    jcomponent.setToolTipText(jcomponent.getName());
                     panel.add(jcomponent, component.getConstraints());
                 }
                 String var = view.getVariable();
