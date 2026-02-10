@@ -773,7 +773,7 @@ public class TwoColumnLayout implements LayoutManager2
             {
                 component = constraints.component;
                 width = (int) component.getMinimumSize().getWidth();
-                height = (int) component.getMinimumSize().getHeight();
+                height = (int) component.getPreferredSize().getHeight();
 
                 if (constraints.position == TwoColumnConstraints.WEST)
                 {
@@ -796,8 +796,6 @@ public class TwoColumnLayout implements LayoutManager2
                         component.setBounds(0, 0, (rightRule - leftRule), height);
                     }
                 }
-
-                height = (int) component.getMinimumSize().getHeight();
             }
         }
         // ----------------------------------------------------
