@@ -146,6 +146,12 @@ public class XMLElementImpl implements IXMLElement
         }
     }
 
+    public XMLElementImpl addChild(String name)
+    {
+        hasChanged = true;
+        return new XMLElementImpl(element.appendChild(element.getOwnerDocument().createElement(name)));
+    }
+
     @Override
     public void removeChild(IXMLElement child)
     {
@@ -171,7 +177,7 @@ public class XMLElementImpl implements IXMLElement
         if (hasChanged)
         {
             hasChanged = false;
-            childrenList = new ArrayList<IXMLElement>();
+            childrenList = new ArrayList<>();
             for (Node child = element.getFirstChild(); child != null; child = child.getNextSibling())
             {
                 if (child.getNodeType() == Node.ELEMENT_NODE)
@@ -265,7 +271,7 @@ public class XMLElementImpl implements IXMLElement
     public Enumeration<String> enumerateAttributeNames()
     {
         NamedNodeMap namedNodeMap = element.getAttributes();
-        Hashtable<String,String> properties = new Hashtable<String, String>();
+        Hashtable<String,String> properties = new Hashtable<>();
         for (int i = 0; i < namedNodeMap.getLength(); i++)
         {
             Node node = namedNodeMap.item(i);
