@@ -579,7 +579,7 @@
 
     <xs:complexType name="packType">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="description" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
             <xs:element name="depends" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:attribute name="packname" type="xs:string" use="required"/>
