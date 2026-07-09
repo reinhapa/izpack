@@ -87,7 +87,7 @@ jobs:
         - uses: actions/cache@v6
           with:
             key: owasp-data
-            path: ~/.m2/repository//org/owasp/dependency-check-data
+            path: ~/.m2/repository/org/owasp/dependency-check-data
 
         - name: OWASP dependency check
           if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
@@ -96,7 +96,7 @@ jobs:
             OSSINDEX_USERNAME: ${{ secrets.OSSINDEX_USERNAME }}
             OSSINDEX_PASSWORD: ${{ secrets.OSSINDEX_PASSWORD }}
           run: ./mvnw -V -B --settings .github/workflows/settings.xml dependency-check:check
-          timeout-minutes: 90
+          timeout-minutes: 120
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
