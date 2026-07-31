@@ -2,6 +2,11 @@
   <servers>
     <!-- Sonatype Nexus -->
     <server>
+      <id>ossindex</id>
+      <username>${env.OSSINDEX_USERNAME}</username>
+      <password>${env.OSSINDEX_PASSWORD}</password>
+    </server>
+    <server>
       <id>sonatype-nexus-snapshots</id>
       <username>${env.USERNAME}</username>
       <password>${env.PASSWORD}</password>

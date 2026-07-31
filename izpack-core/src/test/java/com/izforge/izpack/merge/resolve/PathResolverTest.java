@@ -29,11 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.hamcrest.Matchers;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsCollectionContaining;
-import org.hamcrest.core.IsInstanceOf;
-import org.hamcrest.core.IsNot;
-import org.hamcrest.core.StringContains;
+import org.hamcrest.beans.HasPropertyWithValue;
+import org.hamcrest.core.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,7 +59,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testGetMergeableFromJar() throws Exception
+    public void testGetMergeableFromJar()
     {
         List<Mergeable> jarMergeList = pathResolver.getMergeableFromPath("junit/framework");
         assertThat(jarMergeList.size(), Is.is(1));
@@ -81,7 +78,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testResolvePathOfFileAndJar() throws Exception
+    public void testResolvePathOfFileAndJar()
     {
         Set<URL> urlList = pathResolver.resolvePath("META-INF/MANIFEST.MF");
         assertThat(getListPathFromListURL(urlList), IsCollectionContaining.hasItems(
@@ -91,7 +88,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testResolvePathOfDirectory() throws Exception
+    public void testResolvePathOfDirectory()
     {
         Collection<URL> urlList = pathResolver.resolvePath("com/izforge/izpack/merge/");
         assertThat(getListPathFromListURL(urlList), IsCollectionContaining.hasItems(
@@ -100,7 +97,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void ftestGetMergeableFromFile() throws Exception
+    public void testGetMergeableFromFile()
     {
         List<Mergeable> mergeables = pathResolver.getMergeableFromPath("com/izforge/izpack/merge/file/FileMerge.class");
         Mergeable mergeable = mergeables.get(0);
@@ -109,7 +106,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testGetMergeableFromFileWithDestination() throws Exception
+    public void testGetMergeableFromFileWithDestination()
     {
         List<Mergeable> mergeables = pathResolver.getMergeableFromPath("com/izforge/izpack/merge/file/FileMerge.class", "a/dest/FileMerge.class");
         Mergeable mergeable = mergeables.get(0);
@@ -118,7 +115,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testGetMergeableFromDirectory() throws Exception
+    public void testGetMergeableFromDirectory()
     {
         List<Mergeable> mergeables = pathResolver.getMergeableFromPath("com/izforge/izpack/merge/");
         assertThat(mergeables, IsCollectionContaining.hasItem(
@@ -126,7 +123,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testGetMergeableFromDirectoryWithDestination() throws Exception
+    public void testGetMergeableFromDirectoryWithDestination()
     {
         List<Mergeable> mergeables = pathResolver.getMergeableFromPath("com/izforge/izpack/merge/", "a/dest/");
         assertThat(mergeables,
@@ -135,7 +132,7 @@ public class PathResolverTest
     }
 
     @Test
-    public void testGetMergeableFromPackage() throws Exception
+    public void testGetMergeableFromPackage()
     {
         List<Mergeable> mergeables = pathResolver.getMergeableFromPackageName("com.izforge.izpack.merge");
         assertThat(mergeables, IsCollectionContaining.hasItem(
@@ -153,9 +150,9 @@ public class PathResolverTest
     }
 
     @Test
-    public void testIsJarWithURL() throws Exception
+    public void testIsJarWithURL()
     {
-        URL fileResource = ClassLoader.getSystemResource("com/izforge/izpack/merge/AbstractMerge.class");
+        URL fileResource = ClassLoader.getSystemResource("com/izforge/izpack/merge/file/FileMerge.class");
         URL jarResource = ClassLoader.getSystemResource("com/izforge/izpack/merge/test/jar-hellopanel-1.0-SNAPSHOT.jar");
         assertThat(ResolveUtils.isJar(
                 fileResource),
@@ -166,9 +163,9 @@ public class PathResolverTest
     }
 
     @Test
-    public void testIsJarWithFile() throws Exception
+    public void testIsJarWithFile()
     {
-        File fileResource = FileUtil.convertUrlToFile(ClassLoader.getSystemResource("com/izforge/izpack/merge/AbstractMerge.class"));
+        File fileResource = FileUtil.convertUrlToFile(ClassLoader.getSystemResource("com/izforge/izpack/merge/jar/JarMerge.class"));
         File jarResource = FileUtil.convertUrlToFile(ClassLoader.getSystemResource("com/izforge/izpack/merge/test/jar-hellopanel-1.0-SNAPSHOT.jar"));
         assertThat(ResolveUtils.isJar(
                 fileResource),
@@ -180,17 +177,24 @@ public class PathResolverTest
 
 
     @Test
-    public void pathResolverShouldTransformClassNameToPackagePath() throws Exception
+    public void pathResolverShouldTransformClassNameToPackagePath()
     {
         String pathFromClassName = ResolveUtils.getPanelsPackagePathFromClassName("com.test.sora.UneClasse");
         assertThat(pathFromClassName, Is.is("com/test/sora/"));
     }
 
     @Test
-    public void pathResolverShouldReturnDefaultPackagePath() throws Exception
+    public void pathResolverShouldReturnDefaultPackagePath()
     {
         String pathFromClassName = ResolveUtils.getPanelsPackagePathFromClassName("UneClasse");
         assertThat(pathFromClassName, Is.is("com/izforge/izpack/panels/"));
     }
 
+    @Test
+    public void findResourcesWithMultiReleaseJar()
+    {
+        Set<URL> resources = pathResolver.findResources("org/jsoup");
+        assertThat(resources, IsCollectionContaining.hasItem(HasPropertyWithValue.hasProperty("path", StringEndsWith.endsWith("!/META-INF/versions/11/org/jsoup/"))));
+        assertThat(resources, IsCollectionContaining.hasItem(HasPropertyWithValue.hasProperty("path", StringEndsWith.endsWith("!/org/jsoup/"))));
+    }
 }

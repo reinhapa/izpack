@@ -12,7 +12,7 @@
 <izpack:installation version="5.0"
                      xmlns:izpack="http://izpack.org/schema/installation"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
+                     xsi:schemaLocation="http://izpack.org/schema/installation https://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
 
     <!--
         The info section.
@@ -65,6 +65,7 @@
     <resources>
         <res id="LicencePanel.licence" src="Licence.txt"/>
         <res id="InfoPanel.info" src="Readme.txt"/>
+        <res id="HTMLInfoPanel.readme" src="readme.html"/>
     </resources>
 
     <!-- 
@@ -74,6 +75,7 @@
     <panels>
         <panel classname="HelloPanel"/>
         <panel classname="InfoPanel"/>
+        <panel classname="HTMLInfoPanel" id="readme"/>
         <panel classname="LicencePanel"/>
         <panel classname="TargetPanel"/>
         <panel classname="InstallPanel"/>
