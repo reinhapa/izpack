@@ -18,7 +18,6 @@ package com.izforge.izpack.core.substitutor;
 
 import com.izforge.izpack.api.data.Variables;
 import com.izforge.izpack.api.substitutor.SubstitutionType;
-import com.izforge.izpack.util.IoHelper;
 
 import java.io.IOException;
 import java.io.PushbackReader;
@@ -30,6 +29,11 @@ import java.nio.CharBuffer;
  */
 public class VariableSubstitutorReader extends Reader
 {
+    /**
+     * Separator between a variable name and its default value inside braces.
+     */
+    private static final char DEFAULT_VALUE_SEPARATOR = ':';
+
     private PushbackReader pushbackReader = null;
     /**
      * The replacement variables
@@ -146,9 +150,7 @@ public class VariableSubstitutorReader extends Reader
 
         data = pushbackReader.read();
         while (
-                data >= ' ' && (inBraces && data != '}')
-                || (inBraces && ((data == '[') || (data == ']')))
-                || isAllowedCharInVariableName(data)
+                data >= ' ' && inBraces && data != '}' || isAllowedCharInVariableName(data)
         )
         {
             varNameBuffer.append((char) data);
@@ -157,14 +159,29 @@ public class VariableSubstitutorReader extends Reader
 
         boolean variable = wasItPlausibleVariableName(data);
         String name = varNameBuffer.toString();
-        if (variable && name.length() > 0)
+
+        // a braced reference may carry a default value, separated by a colon:
+        // ${name:defaultValue}, the colon is searched behind an optional
+        // ENV[...]/SYSTEM[...] selector to not cut inside of it
+        String defaultValue = null;
+        if (inBraces)
+        {
+            int separatorIndex = name.indexOf(DEFAULT_VALUE_SEPARATOR, name.lastIndexOf(']') + 1);
+            if (separatorIndex > 0)
+            {
+                defaultValue = name.substring(separatorIndex + 1);
+                name = name.substring(0, separatorIndex);
+            }
+        }
+
+        if (variable && !name.isEmpty())
         {
             // check for environment variables
             if (inBraces && name.startsWith("ENV[")
                     && (name.lastIndexOf(']') == name.length() - 1))
             {
                 varValue = System.getenv(name.substring(4, name.length() - 1));
-                if (varValue == null)
+                if (varValue == null && defaultValue == null)
                 {
                     varValue = "";
                 }
@@ -203,11 +220,19 @@ public class VariableSubstitutorReader extends Reader
 
         if(varValue == null)
         {
-            varValue = variable_start
-                    + (inBraces ? "{" : "")
-                    + varNameBuffer.toString()
-                    + (inBraces && !unclosedBraces ? "}" : "")
-                    + (variable_end != '\0' && variable ? variable_end : "");
+            if (defaultValue != null && !unclosedBraces)
+            {
+                // the reference could not be resolved, fall back to its default value
+                varValue = defaultValue;
+            }
+            else
+            {
+                varValue = variable_start
+                        + (inBraces ? "{" : "")
+                        + varNameBuffer.toString()
+                        + (inBraces && !unclosedBraces ? "}" : "")
+                        + (variable_end != '\0' && variable ? variable_end : "");
+            }
         }
         else
         {
@@ -216,7 +241,8 @@ public class VariableSubstitutorReader extends Reader
 
         inBraces = false;
 
-        if(varValue.length() == 0){
+        if (varValue.isEmpty())
+        {
             return read();
         }
 
@@ -251,12 +277,12 @@ public class VariableSubstitutorReader extends Reader
     }
 
     @Override
-    public int read(char cbuf[]) throws IOException {
+    public int read(char[] cbuf) throws IOException {
         return read(cbuf, 0, cbuf.length);
     }
 
     @Override
-    public int read(char cbuf[], int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len) throws IOException {
         int charsRead = 0;
         for(int i=0; i<len; i++){
             int nextChar = read();

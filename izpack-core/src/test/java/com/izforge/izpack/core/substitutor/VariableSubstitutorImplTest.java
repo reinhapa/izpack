@@ -97,6 +97,9 @@ public class VariableSubstitutorImplTest
                 variableSubstitutor.substitute("@{MY_PROP}", SubstitutionType.TYPE_ANT),
                 Is.is("@{MY_PROP}"));
         assertThat(
+                variableSubstitutor.substitute("@{MY_PROP:defaultValue}", SubstitutionType.TYPE_ANT),
+                Is.is("defaultValue"));
+        assertThat(
                 variableSubstitutor.substitute("Variable @{MY_PROP}@ and @MY_PROP2@", SubstitutionType.TYPE_ANT),
                 Is.is("Variable one and two"));
         assertThat(
