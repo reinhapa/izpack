@@ -47,7 +47,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
     <!-- Maven 2 confuses the usage of the Nexus staging plugin and would require further customization -->
@@ -96,7 +96,7 @@
       <dependency>
         <groupId>org.picocontainer</groupId>
         <artifactId>picocontainer</artifactId>
-        <version>2.15.2</version>
+        <version>2.16</version>
       </dependency>
 
       <!-- PDF Panel -->
@@ -125,7 +125,7 @@
       <dependency>
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcprov-jdk18on</artifactId>
-        <version>1.85</version>
+        <version>1.85.2</version>
       </dependency>
       <!-- PDF Panel -->
 
@@ -171,7 +171,7 @@
       <dependency>
         <groupId>org.apache.tika</groupId>
         <artifactId>tika-core</artifactId>
-        <version>3.3.2</version>
+        <version>4.0.0</version>
       </dependency>
 
       <!-- Maven API -->
